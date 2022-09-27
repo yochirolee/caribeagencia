@@ -8,7 +8,7 @@ export const Dashboard = () => {
 	return (
 		<DashboardLayout>
 			<Routes>
-				<Route path="inicio" element={<Inicio />} />
+				<Route path="/" element={<Inicio />} />
 				<Route path="create_order" element={<CreateOrders />} />
 				<Route path="list_orders" element={<ListOrders />} />
 			</Routes>

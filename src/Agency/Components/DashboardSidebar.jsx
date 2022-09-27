@@ -24,7 +24,7 @@ export const DashboardSidebar = () => {
 						<Sidebar.Items>
 							<Sidebar.ItemGroup>
 								<div className="flex flex-col ">
-									<Link to="inicio" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
+									<Link to="/" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
 										Inicio
 									</Link>
 									<Sidebar.Collapse icon={HiShoppingBag} label="Ordenes">
