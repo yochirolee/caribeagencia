@@ -36,7 +36,6 @@ export const DashboardSidebar = () => {
 												Listado de Ordenes
 											</Link>
 										</div>
-										<Sidebar.Item href="#">Listado de Ordenes</Sidebar.Item>
 										<Sidebar.Item href="#">Listado de Paquetes</Sidebar.Item>
 										<Sidebar.Item href="#">Historia de Ordenes</Sidebar.Item>
 									</Sidebar.Collapse>

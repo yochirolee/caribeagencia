@@ -1,4 +1,4 @@
-import { Label, TextInput,Button } from "flowbite-react";
+import { Label, TextInput, Button } from "flowbite-react";
 import { React } from "react";
 export const CustomerForm = () => {
 	return (
@@ -27,8 +27,6 @@ export const CustomerForm = () => {
 				</div>
 				<TextInput id="repeat-password" type="password" required={true} shadow={true} />
 			</div>
-
-			<Button type="submit">Register new account</Button>
 		</form>
 	);
 };
