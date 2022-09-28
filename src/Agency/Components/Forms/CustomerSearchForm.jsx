@@ -1,7 +1,7 @@
 import { React } from "react";
 export const CustomerSearchForm = () => {
 	return (
-		<form className="my-2">
+		<form className="my-2 md:w-1/2 mx-auto">
 			<label
 				htmlFor="default-search"
 				className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
