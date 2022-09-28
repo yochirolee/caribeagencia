@@ -9,6 +9,7 @@ import { Tabs } from "flowbite-react";
 import { RecieverForm } from "../../Components/Forms/RecieverForm";
 import { ProductForm } from "../../Components/Forms/ProductForm";
 import { ServiceForm } from "../../Components/Forms/ServiceForm";
+import { Factura } from "../../Components/Pdf/Factura";
 
 export const CreateOrder = () => {
 	/*const customersResult = async () => {
@@ -23,7 +24,6 @@ export const CreateOrder = () => {
 	const [formStep, setFormStep] = useState(0);
 
 	const handleNextStep = () => {
-		
 		setFormStep(formStep + 1);
 	};
 	const handlePrevStep = () => {
@@ -43,7 +43,9 @@ export const CreateOrder = () => {
 			case 2:
 				return <ProductForm handleNextStep={handleNextStep} handlePrevStep={handlePrevStep} />;
 			case 3:
-				return <ServiceForm handlePrevStep={handlePrevStep} />;
+				return <ServiceForm handlePrevStep={handlePrevStep} handleNextStep={handleNextStep} />;
+			case 4:
+				return <Factura />;
 
 			default:
 				break;

@@ -2,13 +2,13 @@ import { React } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Button } from "flowbite-react";
-import { addProduct } from "../../Store/Slices/ProductSlice";
-import { addProductsToCurrentOrder } from "../../Store/Slices/Orders/OrdersSlice";
+import { addProduct } from "../../Store/Slices/Products/ProductSlice";
+import { addOrderTypeToCurrentOrder, addProductsToCurrentOrder } from "../../Store/Slices/Orders/OrdersSlice";
 import { HiOutlineArrowRight } from "react-icons/hi";
 
 export const ProductForm = ({ handleNextStep }) => {
 	const dispatch = useDispatch();
-	const { productList } = useSelector((state) => state.ProductSlice);
+	const { productList, totalWeight, totalProducts } = useSelector((state) => state.ProductSlice);
 
 	const {
 		register,
@@ -19,7 +19,7 @@ export const ProductForm = ({ handleNextStep }) => {
 
 	const onSubmit = async (data) => {
 		//const customer_created = await db_CreateCustomer(data);
-		console.log(data, "Product form data");
+
 		data.productId = productList.length;
 
 		dispatch(addProduct(data));
@@ -29,6 +29,7 @@ export const ProductForm = ({ handleNextStep }) => {
 
 	const handleContinue = () => {
 		dispatch(addProductsToCurrentOrder(productList));
+		dispatch(addOrderTypeToCurrentOrder("Regular"))
 		handleNextStep();
 	};
 
@@ -36,8 +37,21 @@ export const ProductForm = ({ handleNextStep }) => {
 		<div>
 			<div className="flex  flex-row-reverse gap-4  justify-around">
 				<div className="md: w-2/3">
-					<h3 className="pb-2">Productos Adicionados</h3>
-					<p>{productList.length} Cant</p>
+					<div className="flex justify-between  ">
+						<h3 className="mb-5 text-lg font-medium text-gray-900 dark:text-white">
+							Lista de Productos:
+						</h3>
+						<div className="flex">
+							<span className="mt-1 h-6 flex items-center  bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5  rounded dark:bg-blue-200 dark:text-blue-800">
+								<i className="fas fa-box mx-2"></i>
+								<span>{totalProducts}</span>
+							</span>
+							<span className="mt-1 h-6 flex items-center  bg-green-100 text-green-600 text-xs font-semibold mr-2 px-2.5  rounded dark:bg-green-200 dark:text-green-800">
+								<i className="fas fa-scale-balanced mx-2"></i>
+								<span>{totalWeight} Lbs</span>
+							</span>
+						</div>
+					</div>
 					<div id="products-list">
 						{productList?.map((product) => (
 							<div
@@ -54,8 +68,12 @@ export const ProductForm = ({ handleNextStep }) => {
 										<p>{product.product_name}</p>
 									</div>
 									<div className="text-center">
-										<small>Peso (Lbs)</small>
-										<p>{product.product_weight}</p>
+										<small>Peso x U (Lbs)</small>
+										<p>{parseFloat(product.product_weight)}</p>
+									</div>
+									<div className="text-center">
+										<small>Peso Total (Lbs)</small>
+										<p>{parseFloat(product.product_weight * product.product_quantity)}</p>
 									</div>
 									<div className="text-center">
 										<small>Cant</small>

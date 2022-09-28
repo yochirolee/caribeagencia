@@ -3,12 +3,14 @@ export const OrdersSlice = createSlice({
 	name: "Orders",
 
 	initialState: {
-		isLoading: false,
+		isLoadingOrders: false,
 		allOrders: [],
 		currentOrder: {
+			order_type: "",
 			customer: {},
 			reciever: {},
 			products: [],
+			service: "",
 		},
 	},
 
@@ -21,16 +23,19 @@ export const OrdersSlice = createSlice({
 		getAllOrders: (state, action) => {},
 
 		editCustomerCurrentOrder: (state, action) => {
-			console.log(action, "FROM REDUCER");
 			state.currentOrder.customer = { ...action.payload };
 		},
 		editRecieverCurrentOrder: (state, action) => {
-			console.log(action, "FROM REDUCER");
 			state.currentOrder.reciever = { ...action.payload };
 		},
+		addOrderTypeToCurrentOrder: (state, action) => {
+			state.currentOrder.order_type = action.payload;
+		},
 		addProductsToCurrentOrder: (state, action) => {
-			console.log(action.payload);
 			state.currentOrder.products = action.payload;
+		},
+		addServiceToCurrentOrder: (state, action) => {
+			state.currentOrder.service = action.payload;
 		},
 	},
 });
@@ -42,4 +47,6 @@ export const {
 	editCustomerCurrentOrder,
 	editRecieverCurrentOrder,
 	addProductsToCurrentOrder,
+	addServiceToCurrentOrder,
+	addOrderTypeToCurrentOrder
 } = OrdersSlice.actions;

@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import { React } from "react";
+import { useSelector } from "react-redux";
+import { json } from "react-router-dom";
 
-export const FaturaPDF = () => {
-	const [numPages, setNumPages] = useState(null);
-	const [pageNumber, setPageNumber] = useState(1);
-
-	const onDocumentLoadSuccess = ({ numPages }) => {
-		setNumPages(numPages);
-	};
+export const Factura = () => {
+	const { currentOrder } = useSelector((state) => state.OrdersSlice);
 	return (
-    <></>)
+		<>
+			<h1> Factura</h1>
+			<pre><code>{JSON.stringify(currentOrder,0,2)}</code></pre>
+		</>
+	);
 };
