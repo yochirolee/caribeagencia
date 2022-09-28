@@ -4,20 +4,20 @@ import { MdDashboard } from "react-icons/md";
 import { Button, Checkbox, Label, Tabs, TextInput, Timeline } from "flowbite-react";
 import { CustomerForm } from "../../Components/Forms/CustomerForm";
 import { VerticalTimeLine } from "../../Components/TimeLine/VerticalTimeLine";
+import { CustomerSearchForm } from "../../Components/Forms/CustomerSearchForm";
 
 export const CreateOrders = () => {
 	return (
 		<Tabs.Group aria-label="Tabs with icons" style="underline">
 			<Tabs.Item active={true} title="Regular" icon={HiUserCircle}>
-				<VerticalTimeLine/>
-			
-					<div className="border grid grid-rows-1 md:grid-cols-2 md:grid-rows-2 gap-4 space-x-8">
+				<div className="flex-col md:flex-row mx-auto md:w-1/2">
+					<VerticalTimeLine />
+					<CustomerSearchForm />
+
+					<div className=" border   bg-white rounded-lg p-6 justify-center">
 						<CustomerForm />
-						<CustomerForm />
-						<button>Siguiente</button>
 					</div>
-					
-			
+				</div>
 			</Tabs.Item>
 			<Tabs.Item title="ENA" icon={MdDashboard}>
 				ENA
