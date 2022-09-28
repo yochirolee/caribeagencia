@@ -13,7 +13,7 @@ export const CustomerForm = () => {
 
 	return (
 		<div>
-			<h3 className="p-2 m-2 text-center font-bold text-gray-500">Entrar Datos del Cliente que Envia:</h3>
+			<h3 className="p-2 m-2 text-center font-bold text-gray-500">Datos del Cliente:</h3>
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
 				<div className="relative">
 					<input
