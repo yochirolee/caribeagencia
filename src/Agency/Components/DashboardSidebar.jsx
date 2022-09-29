@@ -13,10 +13,13 @@ import {
 } from "react-icons/hi";
 import { BsBoxSeam } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { uiSlice } from "../Store/Slices/Ui/uiSlice";
 
 export const DashboardSidebar = () => {
+	const {toggleMainMenu}=useSelector(state=>state.uiSlice)
 	return (
-		<div className="h-screen  hidden lg:block shadow-lg relative w-80">
+		<div className={` ${toggleMainMenu ? "":"hidden"} h-screen   lg:block z-20 md:relative shadow-lg absolute w-80`}>
 			<div className="bg-white h-full dark:bg-gray-700">
 				<div className="flex items-center justify-start pt-6 ml-8">
 					<p className="font-bold dark:text-white text-xl">Caribe Agencia</p>

@@ -2,13 +2,13 @@ import { Button } from "flowbite-react";
 import { React } from "react";
 export const ProductSearch = ({ setIsVisible }) => {
 	return (
-		<div className="flex justify-between items-center py-4 bg-white dark:bg-gray-800">
+		<div className="flex flex-col md:flex-row gap-4 justify-between items-center py-4 bg-white dark:bg-gray-800">
 			<label htmlFor="table-search" className="sr-only">
 				Buscar
 			</label>
 
 			<div className="relative">
-				<div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+				<div className="flex  absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
 					<svg
 						className="w-5 h-5 text-gray-500 dark:text-gray-400"
 						aria-hidden="true"

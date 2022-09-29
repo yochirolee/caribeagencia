@@ -1,6 +1,10 @@
 import { Navbar, Dropdown, Avatar } from "flowbite-react";
 import { React } from "react";
+import { useDispatch } from "react-redux";
+import { setToggleMainMenu } from "../Store/Slices/Ui/uiSlice";
 export const DashboardNavbar = () => {
+	const dispatch=useDispatch();
+
 	return (
 		<Navbar fluid={true}>
 			<div></div>
@@ -26,7 +30,7 @@ export const DashboardNavbar = () => {
 					<Dropdown.Divider />
 					<Dropdown.Item>Sign out</Dropdown.Item>
 				</Dropdown>
-				<Navbar.Toggle />
+				<Navbar.Toggle onClick={()=>dispatch(setToggleMainMenu())} />
 			</div>
 		</Navbar>
 	);
