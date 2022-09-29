@@ -1,5 +1,5 @@
 import { db_CreateProduct, db_getProducts } from "../../../../Supabase/Products_db/Products_db";
-import { createProduct, setProducts } from "../../Slices/Products/ProductsSlice";
+import { createProduct, setIsLoading, setProducts } from "../../Slices/Products/ProductsSlice";
 //CREATE NEW PRODUCT
 
 export const productThunks_createProduct = (product) => {
@@ -17,8 +17,10 @@ export const productThunks_createProduct = (product) => {
 export const productThunks_getProducts = () => {
 	return async (dispatch) => {
 		try {
+			dispatch(setIsLoading());
 			const products = await db_getProducts();
 			dispatch(setProducts(products))
+			dispatch(setIsLoading());
 		} catch (error) {
 			console.log(error);
 		}

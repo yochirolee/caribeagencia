@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "flowbite-react";
 import {
 	addProductToCurrentOrder,
-	changeSelectedProduct,
+	
 } from "../../Store/Slices/Orders/OrdersSlice";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import { db_getProductsByType } from "../../../Supabase/Products_db/Products_db";
@@ -146,7 +146,7 @@ export const ProductForm = ({ handleNextStep }) => {
 								</label>
 							</div>
 							<div className="flex justify-end">
-								<Button type="submit" color="gray">
+								<Button type="submit" color="warning">
 									Adicionar Producto
 									<HiOutlineArrowRight className="ml-2 h-5 w-5" />
 								</Button>
@@ -177,9 +177,8 @@ export const ProductForm = ({ handleNextStep }) => {
 								className="flex px-2 mb-2 items-center  border rounded-lg justify-between "
 							>
 								<div className="flex text-xs px-4  justify-between gap-4 ">
-									<div className="text-center">
-										<small>Tipo de Producto</small>
-										<p>{product.product_type}</p>
+									<div className="align-center">
+										<small className="text-center align-center">{product.product_type}</small>
 									</div>
 									<div className="text-center">
 										<small>Producto</small>

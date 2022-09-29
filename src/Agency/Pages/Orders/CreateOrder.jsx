@@ -57,9 +57,11 @@ export const CreateOrder = () => {
 			<Tabs.Item active={true} title="Regular" icon={HiUserCircle}>
 				<div className="flex-col md:flex-row mx-auto">
 					<VerticalTimeLine formStep={formStep} handleSetFormStep={handleSetFormStep} />
-					{formStep === 0 ? <CustomerSearchForm /> : ""}
 
-					<div className=" border   bg-white rounded-lg p-6 justify-center">{getStepContent()}</div>
+					<div className=" border   bg-white rounded-lg p-6 justify-center">
+						{formStep === 0 ? <CustomerSearchForm /> : ""}
+						{getStepContent()}
+					</div>
 				</div>
 			</Tabs.Item>
 			<Tabs.Item title="ENA" icon={MdDashboard}>
