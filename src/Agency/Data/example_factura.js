@@ -1,0 +1,41 @@
+export const Factura = {
+	order_type: "Regular",
+	customer: {
+		customer_name: "Yochiro",
+		customer_last_name: "Lee Cruz",
+		customer_email: "yleecruz@gmail.com",
+		customer_document_type: "Carne Identidad",
+		customer_document: "84011112446",
+		customer_mobile: "7864509223",
+		customer_address: "Avenida 31 entre 30 y 34 no 3008",
+	},
+	reciever: {
+		reciever_name: "Valentina",
+		reciever_last_name: "Lee Torres",
+		reciever_email: "valentina@gmail.com",
+		reciever_ci: "84011112446",
+		reciever_passport: "J44444",
+		reciever_mobile: "53798283",
+		reciever_phone: "72023834",
+		reciever_address: "Calle 62 entre 23 y 35 No 2703 Apto 3",
+	},
+	products: [
+		{
+			product_type: "Producto",
+			product_name: "Bicicleta",
+			product_quantity: "1",
+			product_weight: "10",
+			product_description: "Bicicleta ",
+			productId: 0,
+		},
+		{
+			product_type: "Producto Online",
+			product_name: "Generador Electrico",
+			product_quantity: "1",
+			product_weight: "250",
+			product_description: "Generador Electrico Gasolina",
+			productId: 1,
+		},
+	],
+	service: "Palco Duradero",
+};

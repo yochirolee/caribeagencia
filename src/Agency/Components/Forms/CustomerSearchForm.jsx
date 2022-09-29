@@ -1,7 +1,26 @@
 import { React } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { db_Get_Customer_By_Mobile } from "../../../Supabase/Customers_db/Customers_db";
+import { thunks_getCustomerByMobile } from "../../Store/Slices/Customers/thunks";
+
 export const CustomerSearchForm = () => {
+	//const customer = db_Get_Customer_By_Mobile();
+	const dispatch = useDispatch();
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
+
+	const onSubmit = async (data, e) => {
+		e.preventDefault();
+		dispatch(thunks_getCustomerByMobile(data.search));
+	};
+
 	return (
-		<form className="my-2 md:w-1/2 mx-auto">
+		<form onSubmit={handleSubmit(onSubmit)} className="my-2 md:w-1/2 mx-auto">
 			<label
 				htmlFor="default-search"
 				className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
@@ -28,10 +47,10 @@ export const CustomerSearchForm = () => {
 				</div>
 				<input
 					type="search"
-					id="default-search"
+					id="search"
 					className="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					placeholder="Buscar Cliente "
-					required
+					{...register("search")}
 				></input>
 				<button
 					type="submit"

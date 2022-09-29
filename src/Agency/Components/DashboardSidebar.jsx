@@ -9,7 +9,9 @@ import {
 	HiInbox,
 	HiArrowSmRight,
 	HiTable,
+	HiOutlineClipboardList,
 } from "react-icons/hi";
+import { BsBoxSeam } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 export const DashboardSidebar = () => {
@@ -27,7 +29,7 @@ export const DashboardSidebar = () => {
 									<Link to="/" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
 										Inicio
 									</Link>
-									<Sidebar.Collapse icon={HiShoppingBag} label="Ordenes">
+									<Sidebar.Collapse icon={HiOutlineClipboardList} label="Ordenes">
 										<div className="flex flex-col ">
 											<Link to="create_order" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
 												Crear Orden
@@ -39,21 +41,17 @@ export const DashboardSidebar = () => {
 										<Sidebar.Item href="#">Listado de Paquetes</Sidebar.Item>
 										<Sidebar.Item href="#">Historia de Ordenes</Sidebar.Item>
 									</Sidebar.Collapse>
-									<Sidebar.Item href="#" icon={HiInbox}>
-										Inbox
-									</Sidebar.Item>
-									<Sidebar.Item href="#" icon={HiUser}>
-										Users
-									</Sidebar.Item>
-									<Sidebar.Item href="#" icon={HiShoppingBag}>
-										Products
-									</Sidebar.Item>
-									<Sidebar.Item href="#" icon={HiArrowSmRight}>
-										Sign In
-									</Sidebar.Item>
-									<Sidebar.Item href="#" icon={HiTable}>
-										Sign Up
-									</Sidebar.Item>
+
+									<Sidebar.Collapse icon={BsBoxSeam} label="Productos">
+										<div className="flex flex-col ">
+											<Link to="create_product" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
+												Crear Producto
+											</Link>
+											<Link to="list_product" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
+												Listado de Productos
+											</Link>
+										</div>
+									</Sidebar.Collapse>
 								</div>
 							</Sidebar.ItemGroup>
 						</Sidebar.Items>

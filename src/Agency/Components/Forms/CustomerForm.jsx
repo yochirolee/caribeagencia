@@ -1,26 +1,37 @@
-import { React } from "react";
-import { useDispatch } from "react-redux";
+import { React, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { db_CreateCustomer } from "../../../Supabase/Customers_db/Customers_db";
-import { editOrder, editCustomerCurrentOrder, addOrderTypeToCurrentOrder } from "../../Store/Slices/Orders/OrdersSlice";
+import {
+	editOrder,
+	editCustomerCurrentOrder,
+	addOrderTypeToCurrentOrder,
+} from "../../Store/Slices/Orders/OrdersSlice";
+import { CustomersSlice } from "../../Store/Slices/Customers/CustomersSlices";
 
 export const CustomerForm = ({ handleNextStep }) => {
+	const { currentCustomer,isLoading } = useSelector((state) => state.CustomersSlice );
 	const dispatch = useDispatch();
+
+	
 
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm();
+
+	useEffect(() => {
+		reset(currentCustomer);
+	}, [currentCustomer]);
 
 	const onSubmit = async (data) => {
 		//const customer_created = await db_CreateCustomer(data);
 		dispatch(editCustomerCurrentOrder(data));
-		dispatch(addOrderTypeToCurrentOrder('Current'))
+		dispatch(addOrderTypeToCurrentOrder("Current"));
 		handleNextStep();
 	};
-
-	console.log(errors);
 
 	return (
 		<div className="md:w-1/2 mx-auto">
