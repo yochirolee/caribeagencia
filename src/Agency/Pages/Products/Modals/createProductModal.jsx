@@ -27,7 +27,7 @@ export const CreateProductModal = ({ isVisible, setIsVisible }) => {
 			aria-hidden="true"
 			className={`${
 				isVisible ? "" : "hidden"
-			} overflow-y-auto bg-gray-500/50 grid  overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center p-4 w-full md:inset-0 h-modal md:h-full`}
+			} overflow-y-auto bg-gray-500/50 md:grid  overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center p-4 w-full md:inset-0 h-modal md:h-full`}
 		>
 			<div className="relative w-full max-w-2xl h-full md:h-auto">
 				{/*-- Modal content */}
