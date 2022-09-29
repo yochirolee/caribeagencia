@@ -21,7 +21,7 @@ export const CreateOrder = () => {
 		customersResult();
 	}, []);
 */
-	const [formStep, setFormStep] = useState(2);
+	const [formStep, setFormStep] = useState(0);
 
 	const handleNextStep = () => {
 		setFormStep(formStep + 1);
@@ -56,7 +56,6 @@ export const CreateOrder = () => {
 		<Tabs.Group aria-label="Tabs with icons" style="underline">
 			<Tabs.Item active={true} title="Regular" icon={HiUserCircle}>
 				<div className="flex-col md:flex-row mx-auto">
-					
 					<VerticalTimeLine formStep={formStep} handleSetFormStep={handleSetFormStep} />
 					{formStep === 0 ? <CustomerSearchForm /> : ""}
 
