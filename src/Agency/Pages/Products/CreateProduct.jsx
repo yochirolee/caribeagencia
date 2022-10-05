@@ -15,7 +15,7 @@ export const CreateProduct = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(productThunks_getProducts());
-		console.log(isVisible)
+	
 	}, []);
 
 	return (

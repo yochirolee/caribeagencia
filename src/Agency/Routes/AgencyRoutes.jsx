@@ -1,6 +1,7 @@
 import { React } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { DashboardLayout } from "../Layout/DashboardLayout";
+import { Customers } from "../Pages/Customers/Customers";
 import { Inicio } from "../Pages/Inicio/Inicio";
 import { CreateOrder } from "../Pages/Orders/CreateOrder";
 import { ListOrders } from "../Pages/Orders/ListOrders";
@@ -13,6 +14,7 @@ export const AgencyRoutes = () => {
 				<Route path="create_order" element={<CreateOrder />} />
 				<Route path="list_orders" element={<ListOrders />} />
 				<Route path="create_product" element={<CreateProduct />} />
+				<Route path="customers" element={<Customers />} />
 				<Route path="/*" element={<Navigate to="/" />} />
 			</Routes>
 		</DashboardLayout>

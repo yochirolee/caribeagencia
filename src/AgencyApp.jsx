@@ -3,5 +3,6 @@ import { RouterApp } from "./Router/RouterApp";
 
 export const AgencyApp = () => {
 	//return <RouterApp />;
-	return   <BasicDocument/>
+	
+	return <BasicDocument />;
 };

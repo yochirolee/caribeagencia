@@ -9,6 +9,7 @@ import {
 	HiInbox,
 	HiArrowSmRight,
 	HiTable,
+	HiOutlineUsers,
 	HiOutlineClipboardList,
 } from "react-icons/hi";
 import { BsBoxSeam } from "react-icons/bs";
@@ -17,9 +18,13 @@ import { useSelector } from "react-redux";
 import { uiSlice } from "../Store/Slices/Ui/uiSlice";
 
 export const DashboardSidebar = () => {
-	const {toggleMainMenu}=useSelector(state=>state.uiSlice)
+	const { toggleMainMenu } = useSelector((state) => state.uiSlice);
 	return (
-		<div className={` ${toggleMainMenu ? "":"hidden"} h-screen   lg:block z-20 md:relative shadow-lg absolute w-80`}>
+		<div
+			className={` ${
+				toggleMainMenu ? "" : "hidden"
+			} h-screen   lg:block z-20 md:relative shadow-lg absolute w-80`}
+		>
 			<div className="bg-white h-full dark:bg-gray-700">
 				<div className="flex items-center justify-start pt-6 ml-8">
 					<p className="font-bold dark:text-white text-xl">Caribe Agencia</p>
@@ -52,6 +57,13 @@ export const DashboardSidebar = () => {
 											</Link>
 											<Link to="list_product" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
 												Listado de Productos
+											</Link>
+										</div>
+									</Sidebar.Collapse>
+									<Sidebar.Collapse icon={HiOutlineUsers} label="Clientes">
+										<div className="flex flex-col ">
+											<Link to="customers" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
+												Listado de Clientes
 											</Link>
 										</div>
 									</Sidebar.Collapse>

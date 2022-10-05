@@ -8,12 +8,14 @@ export const CustomersSlice = createSlice({
 	},
 	reducers: {
 		isLoading: (state /*action*/) => {
-			state.value += 1;
+			state.isLoading = !state.isLoading;
 		},
+
 		getCustomers: (state, action) => {
-			state.value += action.payload;
+			state.customers = action.payload;
 		},
 		setCurrentCustomer: (state, action) => {
+			
 			state.currentCustomer = action.payload;
 		},
 	},

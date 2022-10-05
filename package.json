@@ -9,14 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-pdf-viewer/core": "3.7.0",
-    "@react-pdf/renderer": "^3.0.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@supabase/supabase-js": "^1.35.7",
     "flowbite": "^1.5.3",
     "flowbite-react": "^0.1.11",
-    "jspdf": "^2.5.1",
-    "pdfjs-dist": "2.15.349",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.36.1",

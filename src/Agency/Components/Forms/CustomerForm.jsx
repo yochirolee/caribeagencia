@@ -13,7 +13,7 @@ export const CustomerForm = ({ handleNextStep }) => {
 	const { currentCustomer,isLoading } = useSelector((state) => state.CustomersSlice );
 	const dispatch = useDispatch();
 
-	
+	 
 
 	const {
 		register,
