@@ -1,9 +1,5 @@
 export const product_categories = [
-	{
-		id: 1,
-		product_category: "COMESTIBLES, BEBIDAS, TABACOS Y CIGARROS.",
-		isActive: false,
-	},
+
 	{
 		id: 1,
 		product_category: "COMESTIBLES, BEBIDAS, TABACOS Y CIGARROS.",

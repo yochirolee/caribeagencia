@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { productThunks_getProducts } from "../../Store/Slices/Products/ProductsThunks";
+import { action_getProducts } from "../../Store/Slices/Products/ProductsActions";
 import { CreateProductModal } from "./Modals/createProductModal";
 import { ProductsTable } from "./ProdcutsTables/ProductsTables";
 import { ProductSearch } from "./ProductSearch/ProductSearch";
@@ -14,7 +14,7 @@ export const CreateProduct = () => {
 	const { products, isLoading } = useSelector((state) => state.ProductsSlice);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(productThunks_getProducts());
+		dispatch(action_getProducts());
 	
 	}, []);
 

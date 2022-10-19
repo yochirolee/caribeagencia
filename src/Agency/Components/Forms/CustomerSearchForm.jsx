@@ -1,8 +1,7 @@
 import { React } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { db_Get_Customer_By_Mobile } from "../../../Supabase/Customers_db/Customers_db";
-import { thunks_getCustomerByMobile } from "../../Store/Slices/Customers/thunks";
+import { action_SearchCustomer } from "../../Store/Slices/Customers/CustomersActions";
 
 export const CustomerSearchForm = () => {
 	//const customer = db_Get_Customer_By_Mobile();
@@ -16,7 +15,7 @@ export const CustomerSearchForm = () => {
 
 	const onSubmit = async (data, e) => {
 		e.preventDefault();
-		dispatch(thunks_getCustomerByMobile(data.search));
+		dispatch(action_SearchCustomer(data.search));
 	};
 
 	return (

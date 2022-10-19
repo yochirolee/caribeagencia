@@ -2,6 +2,7 @@ import { Button } from "flowbite-react";
 import { React } from "react";
 import { useSelector } from "react-redux";
 import { ProductsTable } from "../../Pages/Products/ProdcutsTables/ProductsTables";
+import { Invoice } from "./Components/Invoice";
 
 /*
  "customer": {
@@ -49,66 +50,7 @@ export const Factura = () => {
 
 	return (
 		<>
-			<div className="flex justify-between">
-				<div></div>
-				<div>
-					<h3>Factura</h3>
-				</div>
-			</div>
-			<div className="flex justify-between">
-				<div>
-					<h3 className="font-bold ">Cliente / Shipper</h3>
-					<div className="flex gap-2">
-						<span>Nombre:</span>
-						<p>{currentOrder.customer.customer_name}</p>
-					</div>
-					<div className="flex gap-2">
-						<span>Apellidos:</span>
-						<p>{currentOrder.customer.customer_last_name}</p>
-					</div>
-					<div className="flex gap-2">
-						<span>Celular:</span>
-						<p>{currentOrder.customer.customer_mobile}</p>
-					</div>
-					<div className="flex gap-2">
-						<span>Direccion:</span>
-						<p>{currentOrder.customer.customer_address}</p>
-					</div>
-				</div>
-				<div>
-					<h3 className="font-bold">Destinatario / Reciever</h3>
-					<div className="flex gap-2">
-						<span>Nombre:</span>
-						<p>{currentOrder.reciever.reciever_name}</p>
-					</div>
-					<div className="flex gap-2">
-						<span>Apellidos:</span>
-						<p>{currentOrder.reciever.reciever_last_name}</p>
-					</div>
-					<div className="flex gap-2">
-						<span>Celular:</span>
-						<p>{currentOrder.reciever.reciever_mobile}</p>
-					</div>
-					<div className="flex gap-2">
-						<span>Carne de Identidad:</span>
-						<p>{currentOrder.reciever.reciever_ci}</p>
-					</div>
-					<div className="flex gap-2">
-						<span>Direccion:</span>
-
-						<p>{currentOrder.reciever.reciever_address}</p>
-					</div>
-				</div>
-			</div>
-			<div>
-				<div className="pt-4">
-					<ProductsTable products={currentOrder.products}/>
-				</div>
-			</div>
-			<div>
-			
-			</div>
-		     <Button onClick={()=>print()}> Factura</Button>
+			<Invoice pdfMode={true} />
 		</>
 	);
 };

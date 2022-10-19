@@ -1,17 +1,26 @@
-import { React } from "react";
-import { useDispatch } from "react-redux";
+import { React, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { db_CreateCustomer } from "../../../Supabase/Customers_db/Customers_db";
 import { editRecieverCurrentOrder } from "../../Store/Slices/Orders/OrdersSlice";
+import { SelectRecieverForm } from "./SelectRecieverForm";
+import { current } from "@reduxjs/toolkit";
 
-export const RecieverForm = ({handleNextStep,handlePrevStep}) => {
+export const RecieverForm = ({ handleNextStep, handlePrevStep }) => {
 	const dispatch = useDispatch();
+	const { currentReciever } = useSelector((state) => state.RecieversSlice);
 
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm();
+
+	useEffect(() => {
+		reset(currentReciever);
+		console.log(currentReciever,'USEEFEECt')
+	}, [currentReciever]);
 
 	const onSubmit = async (data) => {
 		//const customer_created = await db_CreateCustomer(data);
@@ -19,23 +28,26 @@ export const RecieverForm = ({handleNextStep,handlePrevStep}) => {
 		handleNextStep();
 	};
 
+	
 	return (
 		<div className="md:w-1/2 mx-auto">
+			<SelectRecieverForm />
+
 			<h3 className="p-2 m-2 text-center font-bold text-gray-500">Datos del Destinatario:</h3>
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
 				<div className="relative">
 					<input
 						type="text"
-						id="reciever_name"
+						id="FirstName"
 						className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 						placeholder=" "
-						{...register("reciever_name", { required: true, maxLength: 80 })}
+						{...register("FirstName", { required: true, maxLength: 80 })}
 					/>
 					{errors.reciever_name && (
 						<span className="text-red-400  text-xs pl-2">Este campo es requerido</span>
 					)}
 					<label
-						htmlFor="reciever_name"
+						htmlFor="FirstName"
 						className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
 					>
 						Nombre
@@ -45,10 +57,10 @@ export const RecieverForm = ({handleNextStep,handlePrevStep}) => {
 				<div className="relative">
 					<input
 						type="text"
-						id="reciever_last_name"
+						id="LastName"
 						className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 						placeholder=" "
-						{...register("reciever_last_name", { required: true, maxLength: 80 })}
+						{...register("LastName", { required: true, maxLength: 80 })}
 					/>
 					{errors.reciever_last_name && (
 						<span className="text-red-400  text-xs pl-2">Este campo es requerido</span>
@@ -64,10 +76,10 @@ export const RecieverForm = ({handleNextStep,handlePrevStep}) => {
 				<div className="relative">
 					<input
 						type="text"
-						id="reciever_email"
+						id="Email"
 						className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 						placeholder=" "
-						{...register("reciever_email", { pattern: /^\S+@\S+$/i })}
+						{...register("Email", { pattern: /^\S+@\S+$/i })}
 					/>
 					{errors.reciever_email && (
 						<span className="text-red-400  text-xs pl-2">Este campo es requerido</span>
@@ -83,16 +95,16 @@ export const RecieverForm = ({handleNextStep,handlePrevStep}) => {
 				<div className="relative">
 					<input
 						type="number"
-						id="reciever_ci"
+						id="CI"
 						className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 						placeholder=" "
-						{...register("reciever_ci", { required: true, maxLength: 80 })}
+						{...register("CI", { required: true, maxLength: 80 })}
 					/>
 					{errors.reciever_ci && (
 						<span className="text-red-400  text-xs pl-2">Este campo es requerido</span>
 					)}
 					<label
-						htmlFor="reciever_ci"
+						htmlFor="CI"
 						className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
 					>
 						Carne de Identidad
@@ -102,16 +114,16 @@ export const RecieverForm = ({handleNextStep,handlePrevStep}) => {
 				<div className="relative">
 					<input
 						type="text"
-						id="reciever_passport"
+						id="Passport"
 						className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 						placeholder=" "
-						{...register("reciever_passport", { required: true, maxLength: 80 })}
+						{...register("Passport", { required: true, maxLength: 80 })}
 					/>
-					{errors.reciever_passport && (
+					{errors.Passport && (
 						<span className="text-red-400  text-xs pl-2">Este campo es requerido</span>
 					)}
 					<label
-						htmlFor="reciever_passport"
+						htmlFor="Passport"
 						className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
 					>
 						Passaporte
@@ -121,16 +133,16 @@ export const RecieverForm = ({handleNextStep,handlePrevStep}) => {
 				<div className="relative">
 					<input
 						type="number"
-						id="reciever_mobile"
+						id="Mobile"
 						className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 						placeholder=" "
-						{...register("reciever_mobile", { required: true, maxLength: 80 })}
+						{...register("Mobile", { required: true, maxLength: 80 })}
 					/>
 					{errors.reciever_mobile && (
 						<span className="text-red-400  text-xs pl-2">Este campo es requerido</span>
 					)}
 					<label
-						htmlFor="reciever_mobile"
+						htmlFor="Mobile"
 						className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
 					>
 						Celular
@@ -140,16 +152,16 @@ export const RecieverForm = ({handleNextStep,handlePrevStep}) => {
 				<div className="relative">
 					<input
 						type="number"
-						id="reciever_phone"
+						id="Phone"
 						className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 						placeholder=" "
-						{...register("reciever_phone", { required: true, maxLength: 80 })}
+						{...register("Phone", { required: true, maxLength: 80 })}
 					/>
 					{errors.reciever_phone && (
 						<span className="text-red-400  text-xs pl-2">Este campo es requerido</span>
 					)}
 					<label
-						htmlFor="reciever_phone"
+						htmlFor="Phone"
 						className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
 					>
 						Telefono Fijo
@@ -159,13 +171,13 @@ export const RecieverForm = ({handleNextStep,handlePrevStep}) => {
 				<div className="relative">
 					<input
 						type="text"
-						id="reciever_address"
+						id="Address"
 						className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 						placeholder=" "
-						{...register("reciever_address", { required: true, maxLength: 80 })}
+						{...register("Address", { required: true, maxLength: 80 })}
 					/>
 					<label
-						htmlFor="reciever_address"
+						htmlFor="Address"
 						className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
 					>
 						Direccion

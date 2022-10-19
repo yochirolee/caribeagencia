@@ -58,7 +58,7 @@ export const CreateOrder = () => {
 				<div className="flex-col md:flex-row mx-auto">
 					<VerticalTimeLine formStep={formStep} handleSetFormStep={handleSetFormStep} />
 
-					<div className=" border   bg-white rounded-lg p-6 justify-center">
+					<div className="mt-6 ">
 						{formStep === 0 ? <CustomerSearchForm /> : ""}
 						{getStepContent()}
 					</div>

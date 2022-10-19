@@ -14,11 +14,12 @@ import {
 } from "react-icons/hi";
 import { BsBoxSeam } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { uiSlice } from "../Store/Slices/Ui/uiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setToggleMainMenu } from "../Store/Slices/Ui/uiSlice";
 
 export const DashboardSidebar = () => {
 	const { toggleMainMenu } = useSelector((state) => state.uiSlice);
+	const dispatch = useDispatch();
 	return (
 		<div
 			className={` ${
@@ -38,25 +39,27 @@ export const DashboardSidebar = () => {
 										Inicio
 									</Link>
 									<Sidebar.Collapse icon={HiOutlineClipboardList} label="Ordenes">
-										<div className="flex flex-col ">
-											<Link to="create_order" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
+										<div className="flex flex-col ml-4 ">
+											<Link
+												to="create_order"
+												className=" pl-10 rounded-lg hover:bg-gray-100 p-2"
+												onClick={() => dispatch(setToggleMainMenu())}
+											>
 												Crear Orden
 											</Link>
 											<Link to="list_orders" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
 												Listado de Ordenes
 											</Link>
 										</div>
-										<Sidebar.Item href="#">Listado de Paquetes</Sidebar.Item>
-										<Sidebar.Item href="#">Historia de Ordenes</Sidebar.Item>
 									</Sidebar.Collapse>
 
 									<Sidebar.Collapse icon={BsBoxSeam} label="Productos">
-										<div className="flex flex-col ">
-											<Link to="create_product" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
-												Crear Producto
+										<div className="flex flex-col ml-4 ">
+											<Link to="categories" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
+												Categorias
 											</Link>
-											<Link to="list_product" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
-												Listado de Productos
+											<Link to="create_product" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
+												Productos
 											</Link>
 										</div>
 									</Sidebar.Collapse>
