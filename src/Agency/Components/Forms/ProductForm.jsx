@@ -59,8 +59,8 @@ export const ProductForm = ({ handleNextStep }) => {
 	};
 
 	return (
-		<div className="grid grid-cols-5 md:grid-cols-3 gap-10">
-			<div className="flex flex-col  border-r p-4 h-screen overflow-y-auto bg-gray-50">
+		<div className=" flex flex-col lg:grid  gap-10">
+			<div className="flex flex-col  border-r p-4 md:h-screen overflow-y-auto bg-gray-50">
 				<h3 className="pb-2">Datos de Producto</h3>
 
 				<div className="flex flex-col gap-4 mb-4 ">
