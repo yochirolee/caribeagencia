@@ -16,15 +16,7 @@ export const CategoryList = ({ categories, handleSelectedCategory, handleDeleteC
 						onClick={() => handleDeleteCategory(category.CategoryId)}
 						className="fas fa-trash text-red-400 p-2.5  hover:text-red-500 hover:border hover:rounded-full hover:bg-red-200"
 					></i>
-					{category.CategoryId == selectedCategory.CategoryId ? (
-						<i
-							onClick={() => handleDeleteCategory(category.CategoryId)}
-							className="fa fa-chevron-right
-						text-red-400 p-2.5  hover:text-red-500 hover:border hover:rounded-full hover:bg-red-200"
-						></i>
-					) : (
-						""
-					)}
+					
 				</div>
 			))}
 		</div>
