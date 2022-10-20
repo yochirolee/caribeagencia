@@ -14,7 +14,7 @@ export const ServiceForm = ({handleNextStep}) => {
 	const dispatch = useDispatch();
 
 	const onSubmit = async (data) => {
-		console.log(data.service, "DATA");
+		
 		dispatch(addServiceToCurrentOrder(data.service));
 		handleNextStep();
 	};

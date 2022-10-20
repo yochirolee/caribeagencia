@@ -1,56 +1,77 @@
 import { Button } from "flowbite-react";
 import { React } from "react";
 import { useSelector } from "react-redux";
+import { ListProductsInOrder } from "../../Pages/Orders/ListProductsInOrder/ListProductsInOrder";
+import { json } from "react-router-dom";
 import { ProductsTable } from "../../Pages/Products/ProdcutsTables/ProductsTables";
 import { Invoice } from "./Components/Invoice";
 
-/*
- "customer": {
-    "id": 2,
-    "created_at": "2022-09-28T00:03:23.687458+00:00",
-    "customer_name": "Yochiro",
-    "customer_last_name": "Lee Cruz",
-    "customer_email": "yleecruz@gmail.com",
-    "customer_address": "Avenida 31 entre 30 y 34 no 3008",
-    "customer_document": "84011112446",
-    "customer_document_type": "Carne Identidad",
-    "customer_mobile": "52678538"
-  },
-  "reciever": {
-    "reciever_name": "Valentina",
-    "reciever_last_name": "Lee Torres",
-    "reciever_email": "valentina@gmail.com",
-    "reciever_ci": "20124545412",
-    "reciever_passport": "J44444",
-    "reciever_mobile": "53798283",
-    "reciever_phone": "72023834",
-    "reciever_address": "Calle 62 entre 23 y 35 No 2703 Apto 3"
-  },
-   "products": [
-    {
-      "product_type": "Producto Online",
-      "product_name": "1",
-      "product_quantity": "1",
-      "product_weight": 264,
-      "product_description": "CICLOMOTOR ELECTRICO ECCO BIKE E09 Lithium 35AMP (Online)\t"
-    },
-    {
-      "product_type": "Producto Online",
-      "product_name": "1",
-      "product_quantity": "1",
-      "product_weight": 264,
-      "product_description": "CICLOMOTOR ELECTRICO ECCO BIKE E09 Lithium 35AMP (Online)\t"
-    },
-	"service": "Transcargo",
-  "weight": 528,
-  "count": 2*/
-
 export const Factura = () => {
 	const { currentOrder } = useSelector((state) => state.OrdersSlice);
-
+	const { customer, reciever, products } = currentOrder;
 	return (
 		<>
-			<Invoice pdfMode={true} />
+			<div className="grid grid-flow-col my-4 justify-center text-center">
+				<div className="flex flex-col">
+					<h2 className="text-xl font-bold">Caribe Cargo Inc.</h2>
+					<span className="text-sm">10230 NW 80th Ave Hialeah Gardens FL 33016</span>
+					<span className="text-sm">Telefono: +1 (305)-851-3004</span>
+				</div>
+			</div>
+			<div className="grid grid-flow- grid-cols-4  my-4 justify-between">
+				<div className=" flex flex-col items-center place-content-center  col-start-1 col-end-3 col-span-2">
+					<h2 className=" font-bold">Factura/Invoice</h2>
+					<h3 className="text-2xl">3343 - PM</h3>
+					<span className="text-sm">{Date.now().toLocaleString()}</span>
+				</div>
+				<div className="p-4 ">
+					<h3 className="font-bold mb-2">Cliente/Shipper</h3>
+					<div className="">
+						<i className="fas fa-user w-4  text-xs text-gray-500"></i>
+						<span className="mx-2 text-sm">{customer.FirstName + " " + customer.LastName}</span>
+					</div>
+					<div>
+						<i className="fa fa-id-card w-4  text-xs text-gray-500"></i>
+						<span className="mx-2 text-sm">{customer.Document}</span>
+					</div>
+					<div>
+						<i className="fas fa-mobile w-4  text-xs text-gray-500"></i>
+						<span className="mx-2 text-sm">{customer.Mobile}</span>
+					</div>
+					<div>
+						<i className="fas fa-phone w-4  text-xs  text-gray-500"></i>
+						<span className="mx-2 text-sm">{customer.Mobile}</span>
+					</div>
+					<div>
+						<i className="fas fa-map-marker w-4  text-xs text-gray-500"></i>
+						<span className="mx-2 text-sm">{customer.Address}</span>
+					</div>
+				</div>
+				<div className="p-4 ">
+					<h3 className="font-bold mb-2">Destinatario/Reciever</h3>
+					<div className="">
+						<i className="fas fa-user w-4 text-xs text-gray-500"></i>
+						<span className="mx-2 text-sm">{reciever.FirstName + " " + reciever.LastName}</span>
+					</div>
+					<div>
+						<i className="fa fa-id-card w-4  text-xs text-gray-500"></i>
+						<span className="mx-2 text-sm">{reciever.CI}</span>
+					</div>
+					<div className="">
+						<i className="fas fa-mobile w-4 text-xs text-gray-500"></i>
+						<span className="mx-2 text-sm">{reciever.Mobile}</span>
+					</div>
+					<div>
+						<i className="fas fa-phone w-4  text-xs  text-gray-500"></i>
+						<span className="mx-2 text-sm">{reciever.Mobile}</span>
+					</div>
+					<div>
+						<i className="fas fa-map-marker w-4   text-xs text-gray-500"></i>
+						<span className="mx-2 text-sm">{reciever.Address}</span>
+					</div>
+				</div>
+			</div>
+			{<ListProductsInOrder products={products} />}
 		</>
 	);
 };
