@@ -11,14 +11,13 @@ export const CustomersSlice = createSlice({
 			state.isLoading = !state.isLoading;
 		},
 
-		getCustomers: (state, action) => {
+		setCustomers: (state, action) => {
 			state.customers = action.payload;
 		},
 		setCurrentCustomer: (state, action) => {
-			
 			state.currentCustomer = action.payload;
 		},
 	},
 });
 
-export const { isLoading, getCustomers, setCurrentCustomer } = CustomersSlice.actions;
+export const { isLoading, setCustomers, setCurrentCustomer } = CustomersSlice.actions;

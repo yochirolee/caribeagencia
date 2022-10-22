@@ -1,18 +1,20 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setRecieverInOrder } from "../../Store/Slices/Orders/OrdersSlice";
+import { action_findRecieverByCustomerId } from "../../Store/Slices/Recievers/RecieversActions";
 import { setCurrentReciever } from "../../Store/Slices/Recievers/RecieversSlices";
 
 export const SelectRecieverForm = () => {
-	const { recieversByCustomer, isLoading } = useSelector((state) => state.RecieversSlice);
+	const { currentOrder, isLoading } = useSelector((state) => state.OrdersSlice);
+	const { customer, recieversList } = currentOrder;
 
 	const dispatch = useDispatch();
 
 	const handleOnSelect = (e) => {
-		console.log(recieversByCustomer);
-		const selectedReciever = recieversByCustomer.find(
+		const selectedReciever = recieversList.find(
 			(reciever) => reciever.RecieverId == e.target.value,
 		);
-		dispatch(setCurrentReciever(selectedReciever));
+		dispatch(setRecieverInOrder(selectedReciever));
 	};
 	return (
 		<>
@@ -21,7 +23,7 @@ export const SelectRecieverForm = () => {
 				onChange={(e) => handleOnSelect(e)}
 			>
 				<option>Seleccione un Destinatario</option>
-				{recieversByCustomer.map((reciever) => (
+				{recieversList.map((reciever) => (
 					<option key={reciever.RecieverId} value={reciever.RecieverId}>
 						{reciever.FirstName + " " + reciever.LastName}
 					</option>

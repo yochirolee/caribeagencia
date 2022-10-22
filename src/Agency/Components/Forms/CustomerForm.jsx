@@ -1,15 +1,13 @@
 import { React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import {
-	editCustomerCurrentOrder,
-	addOrderTypeToCurrentOrder,
-} from "../../Store/Slices/Orders/OrdersSlice";
-import { setCurrentCustomer } from "../../Store/Slices/Customers/CustomersSlices";
+import { addOrderTypeToCurrentOrder } from "../../Store/Slices/Orders/OrdersSlice";
+import { action_createCustomer } from "../../Store/Slices/Customers/CustomersActions";
 
 export const CustomerForm = ({ handleNextStep }) => {
-	const { currentCustomer, isLoading } = useSelector((state) => state.CustomersSlice);
-	
+	const { currentOrder } = useSelector((state) => state.OrdersSlice);
+	const { customer } = currentOrder;
+
 	const dispatch = useDispatch();
 
 	const {
@@ -20,12 +18,12 @@ export const CustomerForm = ({ handleNextStep }) => {
 	} = useForm();
 
 	useEffect(() => {
-		reset(currentCustomer);
-	}, [currentCustomer]);
+		reset(customer);
+	}, [customer]);
 
 	const onSubmit = async (data) => {
-		dispatch(setCurrentCustomer(data));
-		dispatch(editCustomerCurrentOrder(currentCustomer));
+		dispatch(action_createCustomer(data));
+
 		dispatch(addOrderTypeToCurrentOrder("Current"));
 		handleNextStep();
 	};

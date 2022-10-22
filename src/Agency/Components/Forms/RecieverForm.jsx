@@ -1,14 +1,16 @@
 import { React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { db_CreateCustomer } from "../../../Supabase/Customers_db/Customers_db";
-import { editRecieverCurrentOrder } from "../../Store/Slices/Orders/OrdersSlice";
 import { SelectRecieverForm } from "./SelectRecieverForm";
-import { current } from "@reduxjs/toolkit";
+import {
+	action_createReciever,
+	action_findRecieverByCustomerId,
+} from "../../Store/Slices/Recievers/RecieversActions";
 
 export const RecieverForm = ({ handleNextStep, handlePrevStep }) => {
 	const dispatch = useDispatch();
-	const { currentReciever } = useSelector((state) => state.RecieversSlice);
+	const { currentOrder } = useSelector((state) => state.OrdersSlice);
+	const { reciever, recieversList, customer } = currentOrder;
 
 	const {
 		register,
@@ -18,20 +20,24 @@ export const RecieverForm = ({ handleNextStep, handlePrevStep }) => {
 	} = useForm();
 
 	useEffect(() => {
-		reset(currentReciever);
-		console.log(currentReciever,'USEEFEECt')
-	}, [currentReciever]);
+		dispatch(action_findRecieverByCustomerId(customer.CustomerId));
+	}, []);
+
+	useEffect(() => {
+		reset(reciever);
+	}, [reciever]);
 
 	const onSubmit = async (data) => {
-		//const customer_created = await db_CreateCustomer(data);
-		dispatch(editRecieverCurrentOrder(data));
-		handleNextStep();
+		if (customer) {
+			data.CustomerId = customer.CustomerId;
+			dispatch(action_createReciever(data));
+			handleNextStep();
+		}
 	};
 
-	
 	return (
 		<div className="md:w-1/2 mx-auto">
-			<SelectRecieverForm />
+			{recieversList?.length ? <SelectRecieverForm /> : ""}
 
 			<h3 className="p-2 m-2 text-center font-bold text-gray-500">Datos del Destinatario:</h3>
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">

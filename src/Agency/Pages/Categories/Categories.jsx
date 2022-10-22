@@ -34,8 +34,8 @@ export const Categories = () => {
 	};
 
 	return (
-		<div className=" flex flex-col lg:grid  gap-10">
-			<div className="flex flex-col  border-r p-4 md:h-screen overflow-y-auto bg-gray-50">
+		<div className="grid grid-cols-12 gap-10">
+			<div className="col-span-3  flex flex-col  border-r p-4 md:h-screen overflow-y-auto bg-gray-50">
 				<div className="p-4 rounded-xl bg-white my-4">
 					<label
 						htmlFor="services"
@@ -64,7 +64,7 @@ export const Categories = () => {
 					handleDeleteCategory={handleDeleteCategory}
 				/>
 			</div>
-			<div className="col-start-2 col-end-6">
+			<div className="col-start-4 col-span-full">
 				<ProductListActions
 					selectedCategory={selectedCategory}
 					setShowProductModal={setShowProductModal}

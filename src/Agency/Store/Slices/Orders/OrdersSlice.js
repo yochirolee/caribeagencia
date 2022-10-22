@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 export const OrdersSlice = createSlice({
 	name: "Orders",
 
 	initialState: {
-		isLoadingOrders: false,
-		allOrders: [],
+		isLoading: false,
+		orders: [],
 		selectedProduct: {},
 		currentOrder: {
-			order_type: "",
+			type: "",
 			customer: {},
 			reciever: {},
+			recieversList: [],
 			products: [],
 			service: "",
 			weight: 0,
@@ -18,16 +20,28 @@ export const OrdersSlice = createSlice({
 	},
 
 	reducers: {
-		createOrder: (state /*action*/) => {},
+		setIsLoading: (state) => {
+			state.isLoading = !state.isLoading;
+		},
+		createOrder: (state, action) => {
+			state.orders.push(action.payload);
+		},
 		editOrder: (state, action) => {},
 		deleteOrder: (state, action) => {},
-		getAllOrders: (state, action) => {},
+		setOrders: (state, action) => {
+			state.orders = action.payload;
+		},
 
-		editCustomerCurrentOrder: (state, action) => {
+		setCustomerInOrder: (state, action) => {
 			state.currentOrder.customer = { ...action.payload };
 		},
-		editRecieverCurrentOrder: (state, action) => {
+		setRecieverInOrder: (state, action) => {
 			state.currentOrder.reciever = { ...action.payload };
+		},
+
+		setRecieversList: (state, action) => {
+			console.log(action.payload, "RECIEVERS LIST,SET RECIE");
+			state.currentOrder.recieversList = action.payload;
 		},
 		addOrderTypeToCurrentOrder: (state, action) => {
 			state.currentOrder.order_type = action.payload;
@@ -38,31 +52,41 @@ export const OrdersSlice = createSlice({
 		},
 		addProductToCurrentOrder: (state, action) => {
 			state.currentOrder.products.push(action.payload);
-
-			let weight = 0;
-			let count = 0;
-			state.currentOrder.products.map((product) => {
-				weight += parseFloat(product.product_weight * product.product_quantity);
-				count += parseInt(product.product_quantity);
-			}),
-				(state.currentOrder.weight = weight);
-			state.currentOrder.count = count;
 		},
 
 		changeSelectedProdcut: (state, action) => {
 			state.selectedProduct = action.payload;
+		},
+
+		resetOrder: (state) => {
+			(state.orders = []),
+				(state.selectedProduct = {}),
+				(state.currentOrder = {
+					type: "",
+					customer: {},
+					reciever: {},
+					products: [],
+					recieversList: [],
+					service: "",
+					weight: 0,
+					count: 0,
+				});
 		},
 	},
 });
 
 export const {
 	createOrder,
+	setIsLoading,
+	setOrders,
 	editOrder,
 	deleteOrder,
-	editCustomerCurrentOrder,
-	editRecieverCurrentOrder,
+	setCustomerInOrder,
+	setRecieverInOrder,
+	setRecieversList,
 	addServiceToCurrentOrder,
 	addOrderTypeToCurrentOrder,
 	addProductToCurrentOrder,
 	changeSelectedProduct,
+	resetOrder,
 } = OrdersSlice.actions;

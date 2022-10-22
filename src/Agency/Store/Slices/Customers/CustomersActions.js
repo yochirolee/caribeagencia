@@ -1,6 +1,6 @@
-import { getCustomers, isLoading, setCurrentCustomer } from "./CustomersSlices";
+import { setCustomers } from "./CustomersSlices";
 import { supabase } from "../../../../Supabase/SupabaseClient";
-import { setRecieversByCustomer } from "../Recievers/RecieversSlices";
+import { setCustomerInOrder, setIsLoading } from "../Orders/OrdersSlice";
 
 export const action_getCustomers = () => {
 	return async (dispatch) => {
@@ -9,7 +9,7 @@ export const action_getCustomers = () => {
 			let { data: customers, error } = await supabase.from("customers").select("*");
 
 			if (customers) {
-				dispatch(getCustomers(customers));
+				dispatch(setCustomers(customers));
 			}
 			dispatch(isLoading);
 		} catch (error) {
@@ -21,21 +21,44 @@ export const action_SearchCustomer = (search) => {
 	return async (dispatch) => {
 		try {
 			if (search.length < 8) return;
-			dispatch(isLoading);
-			const { data: customers, error } = await supabase
-				.from("customers")
-				.select("*")
-				.eq("Mobile", search);
-
-			if (customers.length > 0) {
-				dispatch(setCurrentCustomer(customers[0]));
-				const { data: recievers, error } = await supabase
-					.from("recievers")
-					.select("*")
-					.eq("CustomerId", customers[0].CustomerId);
-				dispatch(setRecieversByCustomer(recievers));
+			dispatch(setIsLoading(true));
+			const { data, error } = await supabase.from("customers").select("*").eq("Mobile", search);
+			let customer = {};
+			if (data?.length > 0) {
+				customer = data[0];
+			} else {
+				customer = {
+					FirstName: "",
+					LastName: "",
+					Email: "",
+					Document: null,
+					DocumentType: "",
+					Phone: null,
+					Mobile: null,
+					Address: "",
+				};
 			}
-			dispatch(isLoading);
+			dispatch(setIsLoading(false));
+			dispatch(setCustomerInOrder(customer));
+
+			if (error) throw error;
+		} catch (error) {
+			console.error(error);
+		}
+	};
+};
+
+export const action_createCustomer = (customer) => {
+	return async (dispatch) => {
+		try {
+			dispatch(setIsLoading(true));
+			const { data: newCustomer, error } = await supabase
+				.from("customers")
+				.upsert(customer)
+				.single();
+			dispatch(setCustomerInOrder(newCustomer));
+			dispatch(setIsLoading(false));
+			throw error;
 		} catch (error) {
 			console.log(error);
 		}

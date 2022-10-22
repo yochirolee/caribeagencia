@@ -1,14 +1,18 @@
-import { Button } from "flowbite-react";
 import { React } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ListProductsInOrder } from "../../Pages/Orders/ListProductsInOrder/ListProductsInOrder";
-import { json } from "react-router-dom";
-import { ProductsTable } from "../../Pages/Products/ProdcutsTables/ProductsTables";
-import { Invoice } from "./Components/Invoice";
+import { action_createOrder } from "../../Store/Slices/Orders/OrdersActions";
+import { resetOrder } from "../../Store/Slices/Orders/OrdersSlice";
 
 export const Factura = () => {
 	const { currentOrder } = useSelector((state) => state.OrdersSlice);
 	const { customer, reciever, products } = currentOrder;
+	const dispatch = useDispatch();
+
+	const handleCreateOrder = () => {
+		dispatch(action_createOrder(currentOrder));
+		dispatch(resetOrder());
+	};
 	return (
 		<>
 			<div className="grid grid-flow-col my-4 justify-center text-center">
@@ -72,6 +76,7 @@ export const Factura = () => {
 				</div>
 			</div>
 			{<ListProductsInOrder products={products} />}
+			<button onClick={() => handleCreateOrder()}>Facturar</button>
 		</>
 	);
 };

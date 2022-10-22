@@ -4,7 +4,6 @@ import { MdDashboard } from "react-icons/md";
 import { CustomerForm } from "../../Components/Forms/CustomerForm";
 import { VerticalTimeLine } from "../../Components/TimeLine/VerticalTimeLine";
 import { CustomerSearchForm } from "../../Components/Forms/CustomerSearchForm";
-import { db_GetCustomers } from "../../../Supabase/Customers_db/Customers_db";
 import { Tabs } from "flowbite-react";
 import { RecieverForm } from "../../Components/Forms/RecieverForm";
 import { ProductForm } from "../../Components/Forms/ProductForm";
@@ -12,15 +11,7 @@ import { ServiceForm } from "../../Components/Forms/ServiceForm";
 import { Factura } from "../../Components/Pdf/Factura";
 
 export const CreateOrder = () => {
-	/*const customersResult = async () => {
-		const { data, error } = await db_GetCustomers();
-		console.log(data, error, "CustomersList");
-	};
 
-	useEffect(() => {
-		customersResult();
-	}, []);
-*/
 	const [formStep, setFormStep] = useState(0);
 
 	const handleNextStep = () => {
