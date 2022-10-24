@@ -1,17 +1,17 @@
-import { setCustomers } from "./CustomersSlices";
+import { isLoading, setCustomers } from "./CustomersSlices";
 import { supabase } from "../../../../Supabase/SupabaseClient";
 import { setCustomerInOrder, setIsLoading } from "../Orders/OrdersSlice";
 
 export const action_getCustomers = () => {
 	return async (dispatch) => {
 		try {
-			dispatch(isLoading);
+			dispatch(setIsLoading(true));
 			let { data: customers, error } = await supabase.from("customers").select("*");
-
+			console.log(customers);
 			if (customers) {
 				dispatch(setCustomers(customers));
 			}
-			dispatch(isLoading);
+			setIsLoading(false);
 		} catch (error) {
 			console.log(error);
 		}

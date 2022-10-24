@@ -17,7 +17,7 @@ export const ListOrders = () => {
 					</label>
 					<div className="relative mt-1">
 						<div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-							<i className="fa fa-search"></i>
+							<i className="fa fa-search text-gray-500 "></i>
 						</div>
 						<input
 							type="text"
@@ -27,7 +27,7 @@ export const ListOrders = () => {
 						/>
 					</div>
 				</div>
-				<div className="col-start-3 col-end-10">
+				<div className="">
 					<div className="overflow-x-auto relative">
 						<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 							<thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

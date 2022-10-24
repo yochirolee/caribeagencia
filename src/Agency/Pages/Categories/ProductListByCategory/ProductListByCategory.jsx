@@ -9,7 +9,7 @@ export const ProductListByCategory = ({ products }) => {
 	};
 
 	return (
-		<div className="col-start-3 col-end-10">
+		<div className="">
 			<div className="overflow-x-auto relative">
 				<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 					<thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -47,7 +47,7 @@ export const ProductListByCategory = ({ products }) => {
 
 									{product.PricePerPound.toFixed(2)}
 								</td>
-								<td className="py-4 px-6  ">
+								<td className="py-4 px-6 a  ">
 									<small className=" text-center rounded-lg px-2 text-white ring ring-green-300 font-bold bg-green-500">
 										{product.Weight} Lbs
 									</small>

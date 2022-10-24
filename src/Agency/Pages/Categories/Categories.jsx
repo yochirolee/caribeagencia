@@ -34,8 +34,8 @@ export const Categories = () => {
 	};
 
 	return (
-		<div className="grid grid-cols-12 gap-10">
-			<div className="col-span-3  flex flex-col  border-r p-4 md:h-screen overflow-y-auto bg-gray-50">
+		<div className="grid lg:grid-cols-8 xl:grid-cols-10 gap-10">
+			<div className="col-span-3  flex flex-col  border-r p-4 lg:h-screen overflow-y-auto bg-gray-50">
 				<div className="p-4 rounded-xl bg-white my-4">
 					<label
 						htmlFor="services"

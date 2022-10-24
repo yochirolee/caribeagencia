@@ -1,4 +1,4 @@
-import { React, useEffect, useMemo, useState } from "react";
+import { React, useMemo, useState } from "react";
 export const ListProductsInOrder = ({ products }) => {
 	const [total, setTotal] = useState(0);
 
@@ -18,7 +18,8 @@ export const ListProductsInOrder = ({ products }) => {
 
 	return (
 		<div>
-			<div className="grid grid-cols-7 text-right gap-3 text-sm bg-gray-700 text-white px-1">
+			<div className="grid grid-cols-8 text-right gap-3 text-sm bg-gray-700 text-white px-1">
+				<div className=""></div>
 				<div className="col-span-3 text-center">Items</div>
 				<div>Precio</div>
 				<div>Peso (Lbs)</div>
@@ -26,11 +27,11 @@ export const ListProductsInOrder = ({ products }) => {
 				<div>Precio de Envio</div>
 			</div>
 			{products.map((product, index) => (
-				<div
-					key={index}
-					className="grid grid-cols-7 gap-3  items-center h-10 text-xs border-b  px-1"
-				>
-					<div className="col-span-3 text-center ">{product.ProductName}</div>
+				<div key={index} className="grid grid-cols-8   items-center h-10 text-xs border-b  px-1">
+					<div className=" text-center">
+						<i className="fa fa-trash text-gray-400 "></i>
+					</div>
+					<div className="col-span-3 text-lef ">{product.ProductName}</div>
 					<div className="text-right">{product.UnitPrice.toFixed(2)}</div>
 					<div className="text-right">{product.Weight.toFixed(2)}</div>
 					<div className="text-right">{product.PricePerPound.toFixed(2)}</div>
