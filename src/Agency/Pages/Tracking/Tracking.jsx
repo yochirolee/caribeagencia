@@ -30,7 +30,6 @@ export const Tracking = () => {
 				facingMode={selected}
 				constraints={{ facingMode: selected }}
 				delay={3000}
-				onScan={() => handleScan(result)}
 				onError={handleError}
 				onResult={(result, error) => {
 					if (!!result) {
