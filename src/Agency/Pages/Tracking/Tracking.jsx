@@ -8,7 +8,7 @@ export const Tracking = () => {
 	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
 	const handleScan = (data) => {
-		setItems([...items, data]);
+		setItems((items) => [...items, data]);
 		alert(items);
 	};
 
@@ -18,7 +18,7 @@ export const Tracking = () => {
 
 	return (
 		<>
-            {JSON.stringify(items,0,2)}
+			{JSON.stringify(items, 0, 2)}
 			<p>{data}</p>
 			<p>{error}</p>
 			<select onChange={(e) => setSelected(e.target.value)}>
@@ -46,7 +46,7 @@ export const Tracking = () => {
 			/>
 
 			<div>
-				<h1>List Items Sting {items.length}</h1>
+				<h1>List Items S{items.length}</h1>
 				{items.map((item) => (
 					<p>items:{item}</p>
 				))}
