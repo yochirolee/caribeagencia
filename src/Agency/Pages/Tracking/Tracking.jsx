@@ -24,6 +24,7 @@ export const Tracking = () => {
 			<p>{selected}</p>
 			<QrReader
 				facingMode={selected}
+				constraints={{ facingMode: selected }}
 				delay={500}
 				onScan={handleScan}
 				onError={handleError}
@@ -33,7 +34,7 @@ export const Tracking = () => {
 					}
 
 					if (!!error) {
-					handleError(error)
+						handleError(error);
 					}
 				}}
 				style={{ width: "100%" }}
