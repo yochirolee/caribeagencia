@@ -19,7 +19,7 @@ export const Tracking = () => {
 	const handleOnResult = async (scanText) => {
 		splitter = await scanText.split(",");
 		console.log(splitter);
-		const item = {
+		const newItem = {
 			OrderId: splitter[0],
 			TrackingId: splitter[1],
 			Product: splitter[2],
@@ -33,10 +33,10 @@ export const Tracking = () => {
 		};
 
 		const exist = null;
-		exist = items.find((item) => item.TrankingId == item.TrackingId);
+		exist = items.find((item) => item.TrankingId == newItem.TrackingId);
 		if (!exist) {
 			play();
-			setItems((items) => [...items, item]);
+			setItems((items) => [...items, newItem]);
 		} else {
 			setData("Agregado Anteriormente");
 		}
