@@ -12,6 +12,7 @@ import {
 	HiOutlineUsers,
 	HiOutlineClipboardList,
 } from "react-icons/hi";
+import { TbReportSearch } from "react-icons/tb";
 import { BsBoxSeam } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -67,6 +68,13 @@ export const DashboardSidebar = () => {
 										<div className="flex flex-col ">
 											<Link to="customers" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
 												Listado de Clientes
+											</Link>
+										</div>
+									</Sidebar.Collapse>
+									<Sidebar.Collapse  icon={TbReportSearch} label="Tracking">
+										<div className="flex flex-col ">
+											<Link to="tracking" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
+												Tracking
 											</Link>
 										</div>
 									</Sidebar.Collapse>
