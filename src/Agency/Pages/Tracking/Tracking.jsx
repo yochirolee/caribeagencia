@@ -4,10 +4,12 @@ import { setRecieverInOrder } from "../../Store/Slices/Orders/OrdersSlice";
 
 export const Tracking = () => {
 	const [data, setData] = useState("No result");
+	const [items, setItems] = useState([]);
 	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
 	const handleScan = (data) => {
-		setData(data);
+		setItems(...items, data);
+		data = "";
 	};
 
 	const handleError = (error) => {
@@ -41,6 +43,11 @@ export const Tracking = () => {
 			/>
 			<p>{data}</p>
 			<p>{error}</p>
+			<div>
+				{items.map((item) => (
+					<p>{item}</p>
+				))}
+			</div>
 		</>
 	);
 };
