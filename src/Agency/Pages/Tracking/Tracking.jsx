@@ -34,6 +34,7 @@ export const Tracking = () => {
 
 		const exist = null;
 		exist = items.find((item) => item.TrackingId == newItem.TrackingId);
+        setData(exits);
 		if (!exist) {
 			play();
 			setData("Agregado");
