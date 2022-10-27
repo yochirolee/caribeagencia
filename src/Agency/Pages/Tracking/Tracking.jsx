@@ -9,13 +9,8 @@ export const Tracking = () => {
 	const [items, setItems] = useState([]);
 	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
-	const [play] = useSound(ScanSound);
 
-    play();
-	const handleScan = (result) => {
-		setItems((items) => [...items, result]);
-		alert("scaned");
-	};
+	play();
 
 	const handleError = (error) => {
 		setRecieverInOrder(error);
@@ -34,8 +29,7 @@ export const Tracking = () => {
 			<QrReader
 				facingMode={selected}
 				constraints={{ facingMode: selected }}
-				delay={500}
-				onScan={() => handleScan(result)}
+				delay={1500}
 				onError={handleError}
 				onResult={(result, error) => {
 					if (!!result) {
