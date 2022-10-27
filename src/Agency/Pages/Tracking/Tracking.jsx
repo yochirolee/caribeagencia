@@ -36,6 +36,7 @@ export const Tracking = () => {
 		exist = items.find((item) => item.TrankingId == newItem.TrackingId);
 		if (!exist) {
 			play();
+			setData("Agregado");
 			setItems((items) => [...items, newItem]);
 		} else {
 			setData("Agregado Anteriormente");
