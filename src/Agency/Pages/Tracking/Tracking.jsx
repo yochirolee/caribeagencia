@@ -11,6 +11,7 @@ export const Tracking = () => {
 	const [selected, setSelected] = useState("environment");
 	const [play] = useSound(ScanSound);
 
+    play();
 	const handleScan = (result) => {
 		setItems((items) => [...items, result]);
 		alert("scaned");
