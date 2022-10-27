@@ -35,7 +35,7 @@ export const ProductForm = ({ handleNextStep }) => {
 	const onSubmit = async (data) => {
 		dispatch(addProductToCurrentOrder(data));
 		console.log("reset");
-		reset({ Weight: "", QuantityPerUnit: "", PricePerPound: "" });
+		reset({ Weight: 0, QuantityPerUnit: 1, PricePerPound: 0 });
 		setSelectedCategory("");
 		console.log(selectedCategory, "selectedCategory");
 		console.log("reset done");

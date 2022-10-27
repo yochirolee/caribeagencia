@@ -11,7 +11,7 @@ export const Customers = () => {
 	}, []);
 
 	return (
-		<div className="">
+		<div >
 			{isLoading ? (
 				<TableSkeleton />
 			) : (

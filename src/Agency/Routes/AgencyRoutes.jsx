@@ -8,6 +8,7 @@ import { Inicio } from "../Pages/Inicio/Inicio";
 import { CreateOrder } from "../Pages/Orders/CreateOrder";
 import { ListOrders } from "../Pages/Orders/ListOrders";
 import { CreateProduct } from "../Pages/Products/CreateProduct";
+import { Recievers } from "../Pages/Recievers/Recievers";
 export const AgencyRoutes = () => {
 	return (
 		<>
@@ -19,6 +20,7 @@ export const AgencyRoutes = () => {
 					<Route path="create_product" element={<CreateProduct />} />
 					<Route path="customers" element={<Customers />} />
 					<Route path="categories" element={<Categories />} />
+					<Route path="recievers" element={<Recievers />} />
 
 					<Route path="factura" element={<Factura />} />
 					<Route path="/*" element={<Navigate to="/" />} />
