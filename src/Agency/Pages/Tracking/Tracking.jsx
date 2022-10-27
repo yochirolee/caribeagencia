@@ -10,6 +10,7 @@ export const Tracking = () => {
 			<select onChange={(e) => setSelected(e.target.value)}>
 				<option value={"environment"}>Back Camera</option>
 				<option value={"user"}>Front Camera</option>
+				<option value={"rear"}>Back Camera</option>
 			</select>
 			<p>{selected}</p>
 			<QrReader
