@@ -8,8 +8,7 @@ export const Tracking = () => {
 	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
 	const handleScan = (data) => {
-		setItems(...items, data);
-		data = "";
+		setItems([...items, data]);
 	};
 
 	const handleError = (error) => {
@@ -45,8 +44,9 @@ export const Tracking = () => {
 			/>
 
 			<div>
+				<h1>List Items</h1>
 				{items.map((item) => (
-					<p>{item}</p>
+					<p>items:{item}</p>
 				))}
 			</div>
 		</>
