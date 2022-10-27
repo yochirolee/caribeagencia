@@ -46,7 +46,7 @@ export const Tracking = () => {
 			/>
 
 			<div>
-				<h1>List Items a {items.length}</h1>
+				<h1>List Items Sting {items.length}</h1>
 				{items.map((item) => (
 					<p>items:{item}</p>
 				))}
