@@ -11,6 +11,7 @@ export const Tracking = () => {
 				<option value={"environment"}>Back Camera</option>
 				<option value={"user"}>Front Camera</option>
 			</select>
+            <p>{selected}</p>
 			<QrReader
 				facingMode={selected}
 				delay={500}
