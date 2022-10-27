@@ -7,9 +7,9 @@ export const Tracking = () => {
 	const [items, setItems] = useState([]);
 	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
-	const handleScan = (data) => {
-		setItems((items) => [...items, data]);
-		alert(items);
+	const handleScan = (result) => {
+		setItems((items) => [...items, result]);
+		alert("scaned");
 	};
 
 	const handleError = (error) => {
@@ -31,7 +31,7 @@ export const Tracking = () => {
 				facingMode={selected}
 				constraints={{ facingMode: selected }}
 				delay={500}
-				onScan={handleScan}
+				onScan={()=>handleScan(result)}
 				onError={handleError}
 				onResult={(result, error) => {
 					if (!!result) {
