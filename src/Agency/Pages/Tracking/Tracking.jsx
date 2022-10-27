@@ -18,6 +18,7 @@ export const Tracking = () => {
 
 	return (
 		<>
+            {JSON.stringify(items,0,2)}
 			<p>{data}</p>
 			<p>{error}</p>
 			<select onChange={(e) => setSelected(e.target.value)}>
