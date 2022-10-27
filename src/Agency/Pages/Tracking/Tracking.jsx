@@ -33,8 +33,8 @@ export const Tracking = () => {
 		};
 
 		const exist = null;
-		exist = items.find((item) => item.TrankingId == newItem.TrackingId);
-		if (exist) {
+		exist = items.find((item) => item.TrackingId == newItem.TrackingId);
+		if (!exist) {
 			play();
 			setData("Agregado");
 			setItems((items) => [...items, newItem]);
