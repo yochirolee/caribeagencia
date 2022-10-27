@@ -9,6 +9,7 @@ export const Tracking = () => {
 	const [selected, setSelected] = useState("environment");
 	const handleScan = (data) => {
 		setItems([...items, data]);
+        alert(items)
 	};
 
 	const handleError = (error) => {
@@ -44,7 +45,7 @@ export const Tracking = () => {
 			/>
 
 			<div>
-				<h1>List Items</h1>
+				<h1>List Items {items.length}</h1>
 				{items.map((item) => (
 					<p>items:{item}</p>
 				))}
