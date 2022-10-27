@@ -9,10 +9,9 @@ export const Tracking = () => {
 	const [items, setItems] = useState([]);
 	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
-    const [play] = useSound(ScanSound);
+	const [play] = useSound(ScanSound);
 
 	const handleScan = (result) => {
-        play();
 		setItems((items) => [...items, result]);
 		alert("scaned");
 	};
@@ -39,6 +38,7 @@ export const Tracking = () => {
 				onError={handleError}
 				onResult={(result, error) => {
 					if (!!result) {
+						play();
 						setData(result?.text);
 						setItems((items) => [...items, result.text]);
 					}
