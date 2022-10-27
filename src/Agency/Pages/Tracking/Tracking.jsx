@@ -32,7 +32,7 @@ export const Tracking = () => {
 			State: splitter[9],
 		};
 
-		const exist = null;
+		let exist = null;
 		exist = items.find((item) => item.TrackingId == newItem.TrackingId);
         setData(exits);
 		if (!exist) {
