@@ -18,6 +18,8 @@ export const Tracking = () => {
 
 	return (
 		<>
+			<p>{data}</p>
+			<p>{error}</p>
 			<select onChange={(e) => setSelected(e.target.value)}>
 				<option value={"environment"}>Back Camera</option>
 				<option value={"user"}>Front Camera</option>
@@ -41,8 +43,7 @@ export const Tracking = () => {
 				}}
 				style={{ width: "100%" }}
 			/>
-			<p>{data}</p>
-			<p>{error}</p>
+
 			<div>
 				{items.map((item) => (
 					<p>{item}</p>
