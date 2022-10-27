@@ -33,7 +33,7 @@ export const Tracking = () => {
 					}
 
 					if (!!error) {
-						console.info(error);
+					handleError(error)
 					}
 				}}
 				style={{ width: "100%" }}
