@@ -31,8 +31,15 @@ export const Tracking = () => {
 			RecieverPhone: splitter[8],
 			State: splitter[9],
 		};
-		play();
-		setItems((items) => [...items, item]);
+
+		const exist = null;
+		exist = items.find((item) => item.TrankingId == item.TrackingId);
+		if (!exist) {
+			play();
+			setItems((items) => [...items, item]);
+		} else {
+			setData("Agregado Anteriormente");
+		}
 	};
 
 	const handleError = (error) => {
