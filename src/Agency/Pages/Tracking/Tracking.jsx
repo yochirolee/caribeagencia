@@ -32,7 +32,7 @@ export const Tracking = () => {
 		};
 		play();
 		let exist = items.find((item) => item.TrackingId == newItem.TrackingId);
-		setData(exist ? "Exist" : "No Data");
+		setData(exist);
 
 		setItems((items) => [...items, newItem]);
 	};
