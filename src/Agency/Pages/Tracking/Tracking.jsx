@@ -36,7 +36,7 @@ export const Tracking = () => {
 				onResult={(result, error) => {
 					if (!!result) {
 						setData(result?.text);
-						setItems((items) => [...items, result]);
+						setItems((items) => [...items, result.text]);
 					}
 
 					if (!!error) {
@@ -47,7 +47,7 @@ export const Tracking = () => {
 			/>
 
 			<div>
-				<h1>List Items S{items.length}</h1>
+				<h1>List Items Text{items.length}</h1>
 				{items.map((item) => (
 					<p>items:{item}</p>
 				))}
