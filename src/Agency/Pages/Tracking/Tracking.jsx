@@ -59,19 +59,46 @@ export const Tracking = () => {
 				style={{ width: "100%" }}
 			/>
 
-			<div>
-				<h1>
-					Total: <span className="bg-green-500 px-2 rounded-lg text-white">{items.length}</span>
-				</h1>
-				{items.map((item) => (
-					<div className="flex justify-around p-2 ">
-						<p>{item.OrderId}</p>
-						<p>{item.TrackingId}</p>
-						<p>{item.Product}</p>
-						<p>{item.Customer}</p>
-						<p>{item.State}</p>
-					</div>
-				))}
+			<div className="col-start-3 col-end-10">
+				<div className="overflow-x-auto relative">
+					<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+						<thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+							<tr>
+								<th scope="col" className="py-3 px-6">
+									OrderId
+								</th>
+								<th scope="col" className="py-3 px-6">
+									TrackingId
+								</th>
+								<th scope="col" className="py-3 px-6">
+									Product
+								</th>
+								<th scope="col" className="py-3 px-6">
+									Customer
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{items?.map((item) => (
+								<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+									<th
+										scope="row"
+										className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+									>
+										{item.OrderId}
+									</th>
+									<td className="py-4 px-6  ">
+										<small className=" text-center rounded-lg px-2 text-white ring ring-green-300 font-bold bg-green-500">
+											{item.TrackingId}
+										</small>
+									</td>
+									<td className="py-4 px-6"> {item.Product}</td>
+									<td className="py-4 px-6">{item.Customer}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</>
 	);
