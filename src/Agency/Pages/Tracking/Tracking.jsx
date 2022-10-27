@@ -31,11 +31,12 @@ export const Tracking = () => {
 				facingMode={selected}
 				constraints={{ facingMode: selected }}
 				delay={500}
-				onScan={()=>handleScan(result)}
+				onScan={() => handleScan(result)}
 				onError={handleError}
 				onResult={(result, error) => {
 					if (!!result) {
 						setData(result?.text);
+						setItems((items) => [...items, result]);
 					}
 
 					if (!!error) {
