@@ -1,13 +1,18 @@
 import { React, useState } from "react";
 import { QrReader } from "react-qr-reader";
 import { setRecieverInOrder } from "../../Store/Slices/Orders/OrdersSlice";
+import ScanSound from "../../../../public/ScanSound.mp3";
+import useSound from "use-sound";
 
 export const Tracking = () => {
 	const [data, setData] = useState("No result");
 	const [items, setItems] = useState([]);
 	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
+    const [play] = useSound(ScanSound);
+
 	const handleScan = (result) => {
+        play();
 		setItems((items) => [...items, result]);
 		alert("scaned");
 	};
@@ -18,7 +23,6 @@ export const Tracking = () => {
 
 	return (
 		<>
-			
 			<p>{data}</p>
 			<p>{error}</p>
 			<select onChange={(e) => setSelected(e.target.value)}>
