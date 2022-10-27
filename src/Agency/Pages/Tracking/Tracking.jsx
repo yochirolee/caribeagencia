@@ -18,7 +18,6 @@ export const Tracking = () => {
 	play();
 	const handleOnResult = async (scanText) => {
 		splitter = await scanText.split(",");
-		console.log(splitter);
 		const item = {
 			OrderId: splitter[0],
 			TrackingId: splitter[1],
@@ -32,6 +31,7 @@ export const Tracking = () => {
 			State: splitter[9],
 		};
 		play();
+        
 		setItems((items) => [...items, item]);
 	};
 
@@ -42,8 +42,8 @@ export const Tracking = () => {
 			<p>{data}</p>
 
 			<QrReader
-				constraints={{ facingMode: "environment" }}
-				delay={30000}
+				constraints={{ facingMode: "environment" ,	delay:30000}}
+			
 				onError={handleError}
 				onResult={(result, error) => {
 					if (!!result) {
