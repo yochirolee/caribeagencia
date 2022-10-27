@@ -7,6 +7,7 @@ export const Tracking = () => {
 		<>
 			<QrReader
 				facingMode={"environment"}
+				delay={500}
 				onResult={(result, error) => {
 					if (!!result) {
 						setData(result?.text);
