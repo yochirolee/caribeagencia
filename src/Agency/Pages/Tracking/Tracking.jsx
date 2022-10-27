@@ -8,7 +8,7 @@ const scanData =
 	"39996,CTE25062236460,CICLOMOTOR ELECTRICO ECCO BIKE E09 Lithium 35AMP (Online),260.00 Lb,1,ABEL GARCIA ,RIDEL HERRERA RODRIGUEZ,0 73010700207,58903924/58903924,Matanzas";
 
 export const Tracking = () => {
-	const [data, setData] = useState("No result");
+	const [data, setData] = useState("No Data");
 	const [items, setItems] = useState([]);
 	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
