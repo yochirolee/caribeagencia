@@ -15,7 +15,9 @@ export const Tracking = () => {
 	const [play] = useSound(ScanSound);
 
 	let splitter = "";
+    play();
 	const handleOnResult = async (scanText) => {
+
 		splitter = await scanText.split(",");
 		console.log(splitter);
 		const item = {
