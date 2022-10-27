@@ -1,9 +1,18 @@
 import { React, useState } from "react";
 import { QrReader } from "react-qr-reader";
+import { setRecieverInOrder } from "../../Store/Slices/Orders/OrdersSlice";
 
 export const Tracking = () => {
 	const [data, setData] = useState("No result");
+	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
+	const handleScan = (data) => {
+		setData(data);
+	};
+
+	const handleError = (error) => {
+		setRecieverInOrder(error);
+	};
 
 	return (
 		<>
@@ -16,6 +25,8 @@ export const Tracking = () => {
 			<QrReader
 				facingMode={selected}
 				delay={500}
+				onScan={handleScan}
+				onError={handleError}
 				onResult={(result, error) => {
 					if (!!result) {
 						setData(result?.text);
@@ -28,6 +39,7 @@ export const Tracking = () => {
 				style={{ width: "100%" }}
 			/>
 			<p>{data}</p>
+			<p>{error}</p>
 		</>
 	);
 };
