@@ -8,7 +8,7 @@ const scanData =
 	"39996,CTE25062236460,CICLOMOTOR ELECTRICO ECCO BIKE E09 Lithium 35AMP (Online),260.00 Lb,1,ABEL GARCIA ,RIDEL HERRERA RODRIGUEZ,0 73010700207,58903924/58903924,Matanzas";
 
 export const Tracking = () => {
-	const [data, setData] = useState("No Data");
+	const [data, setData] = useState("No result");
 	const [items, setItems] = useState([]);
 	const [error, setError] = useState("noError");
 	const [selected, setSelected] = useState("environment");
@@ -19,7 +19,7 @@ export const Tracking = () => {
 	const handleOnResult = async (scanText) => {
 		splitter = await scanText.split(",");
 		console.log(splitter);
-		const newItem = {
+		const item = {
 			OrderId: splitter[0],
 			TrackingId: splitter[1],
 			Product: splitter[2],
@@ -31,22 +31,11 @@ export const Tracking = () => {
 			RecieverPhone: splitter[8],
 			State: splitter[9],
 		};
-
-		let exist = null;
-		exist = items.find((item) => item.TrackingId == newItem.TrackingId);
-        setData(exits);
-		if (!exist) {
-			play();
-			setData("Agregado");
-			setItems((items) => [...items, newItem]);
-		} else {
-			setData("Agregado Anteriormente");
-		}
+		play();
+		setItems((items) => [...items, item]);
 	};
 
-	const handleError = (error) => {
-		setRecieverInOrder(error);
-	};
+	const handleError = (error) => {};
 	//play();
 	return (
 		<>
