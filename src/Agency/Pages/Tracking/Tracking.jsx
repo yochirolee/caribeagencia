@@ -18,7 +18,7 @@ export const Tracking = () => {
 	play();
 	const handleOnResult = async (scanText) => {
 		splitter = await scanText.split(",");
-		const item = {
+		const newItem = {
 			OrderId: splitter[0],
 			TrackingId: splitter[1],
 			Product: splitter[2],
@@ -31,8 +31,10 @@ export const Tracking = () => {
 			State: splitter[9],
 		};
 		play();
+		let exist = items.find((item) => item.TrackingId == newItem);
+		setData(exist);
 
-		setItems((items) => [...items, item]);
+		setItems((items) => [...items, newItem]);
 	};
 
 	const handleError = (error) => {};
