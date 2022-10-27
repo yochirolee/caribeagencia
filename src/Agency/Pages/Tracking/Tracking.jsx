@@ -31,7 +31,7 @@ export const Tracking = () => {
 			State: splitter[9],
 		};
 		play();
-        
+
 		setItems((items) => [...items, item]);
 	};
 
@@ -42,8 +42,7 @@ export const Tracking = () => {
 			<p>{data}</p>
 
 			<QrReader
-				constraints={{ facingMode: "environment" ,	delay:30000}}
-			
+				constraints={{ facingMode: "environment", delay: 30000 }}
 				onError={handleError}
 				onResult={(result, error) => {
 					if (!!result) {
@@ -74,6 +73,15 @@ export const Tracking = () => {
 								<th scope="col" className="py-3 px-6">
 									Customer
 								</th>
+								<th scope="col" className="py-3 px-6">
+									State
+								</th>
+								<th scope="col" className="py-3 px-6">
+									CustomerPhone
+								</th>
+								<th scope="col" className="py-3 px-6">
+									RecieverPhone
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -92,6 +100,9 @@ export const Tracking = () => {
 									</td>
 									<td className="py-4 px-6"> {item.Product}</td>
 									<td className="py-4 px-6">{item.Customer}</td>
+									<td className="py-4 px-6">{item.State}</td>
+									<td className="py-4 px-6">{item.CustomerPhone}</td>
+									<td className="py-4 px-6">{item.RecieverPhone}</td>
 								</tr>
 							))}
 						</tbody>
