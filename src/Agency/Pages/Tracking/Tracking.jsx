@@ -14,7 +14,7 @@ export const Tracking = () => {
 	const handleError = (error) => {
 		setRecieverInOrder(error);
 	};
-
+	play();
 	return (
 		<>
 			<p>{data}</p>
