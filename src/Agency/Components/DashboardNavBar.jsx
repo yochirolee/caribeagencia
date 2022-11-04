@@ -8,7 +8,7 @@ export const DashboardNavbar = () => {
 	return (
 		<Navbar fluid={true}>
 			<div></div>
-			<div className="flex space-x-2   justify-self-end md:order-2">
+			<div className="flex space-x-2    justify-self-end md:order-2">
 				<Dropdown
 					arrowIcon={false}
 					inline={true}

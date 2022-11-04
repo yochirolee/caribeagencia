@@ -348,6 +348,16 @@
   dependencies:
     "@floating-ui/dom" "^1.0.0"
 
+"@headlessui/react@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.3.tgz#853c598ff47b37cdd192c5cbee890d9b610c3ec0"
+  integrity sha512-LGp06SrGv7BMaIQlTs8s2G06moqkI0cb0b8stgq7KZ3xcHdH3qMP+cRyV7qe5x4XEW/IGY48BW4fLesD6NQLng==
+
+"@heroicons/react@^2.0.12":
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-2.0.12.tgz#7e5a16c82512f89a30266dd36f8b8465b3e3e216"
+  integrity sha512-FZxKh3i9aKIDxyALTgIpSF2t6V6/eZfF5mRu41QlwkX3Oxzecdm1u6dpft6PQGxIBwO7TKYWaMAYYL8mp/EaOg==
+
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz#e5d2e450306a9491e3bd77e323e38d7aff315996"
@@ -1498,6 +1508,18 @@ graceful-fs@^4.1.6, graceful-fs@^4.2.0:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
 
+gridjs-react@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/gridjs-react/-/gridjs-react-5.1.0.tgz#3934d9677d84cfdd4a92cd2634ff1af4269c04b1"
+  integrity sha512-FBrXEVKI4poixjBLgRIeW4xH4RZTjqDFL+mU5fR332La7CVjMo/IwMJPrEjs70eIFRRaKzUe3pOhKFDIykrV2g==
+
+gridjs@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/gridjs/-/gridjs-5.1.0.tgz#77563e766c1faf6e8042577404098bb05ec514d0"
+  integrity sha512-ElT4RccHVZXR6mAn0Neh7jRv0yLPYLl9tWr9EC1tIJ7UC035kScGc/VMSJlPmOTyUU6qPUz1mtmzg/i8+IT24g==
+  dependencies:
+    preact "^10.10.6"
+
 has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
@@ -2034,6 +2056,11 @@ postcss@^8.4.14, postcss@^8.4.16:
     nanoid "^3.3.4"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
+
+preact@^10.10.6:
+  version "10.11.2"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.11.2.tgz#e43f2a2f2985dedb426bb4c765b7bb037734f8a8"
+  integrity sha512-skAwGDFmgxhq1DCBHke/9e12ewkhc7WYwjuhHB8HHS8zkdtITXLRmUMTeol2ldxvLwYtwbFeifZ9uDDWuyL4Iw==
 
 punycode@^2.1.0:
   version "2.1.1"

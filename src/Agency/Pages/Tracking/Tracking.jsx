@@ -1,7 +1,7 @@
 import { React, useDeferredValue, useEffect, useState } from "react";
 import { QrReader } from "react-qr-reader";
 import { setRecieverInOrder } from "../../Store/Slices/Orders/OrdersSlice";
-import ScanSound from "../../../../public/ScanSound.mp3";
+import ScanSound from "../../../assets/ScanSound.mp3";
 import useSound from "use-sound";
 
 const scanData =

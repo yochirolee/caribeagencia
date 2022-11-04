@@ -1,8 +1,10 @@
 import { React } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Login } from "../Pages/Login";
 export const AuthRoutes = () => {
 	return (
-		<>
-			<h1> AuthRoutes</h1>
-		</>
+		<Routes>
+			<Route path="/*" element={<Login />} />
+		</Routes>
 	);
 };

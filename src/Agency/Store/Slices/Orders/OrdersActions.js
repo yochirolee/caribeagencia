@@ -14,8 +14,7 @@ export const action_getOrders = () => {
             recievers:RecieverId (*),
             productsInOrders(*)
            
-          `);
-			console.log(orders, "ORDERSSS");
+          `).limit(2);
 			dispatch(setOrders(orders));
 			dispatch(setIsLoading());
 		} catch (error) {

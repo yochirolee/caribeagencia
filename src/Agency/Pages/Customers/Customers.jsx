@@ -2,6 +2,7 @@ import { React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { action_getCustomers } from "../../Store/Slices/Customers/CustomersActions";
 import { TableSkeleton } from "../Products/Skeleton/TableSkeleton";
+import { CustomersTable } from "./CustomersTable";
 export const Customers = () => {
 	const dispatch = useDispatch();
 	const { customers, isLoading } = useSelector((state) => state.CustomersSlice);
@@ -12,6 +13,7 @@ export const Customers = () => {
 
 	return (
 		<div >
+			<CustomersTable customers={customers}/>
 			{isLoading ? (
 				<TableSkeleton />
 			) : (

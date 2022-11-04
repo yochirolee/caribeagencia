@@ -1,7 +1,9 @@
-import { React, useDeferredValue, useEffect, useInsertionEffect, useState } from "react";
+import { React } from "react";
 import { useForm } from "react-hook-form";
-import { useGetCities } from "../../../../hooks/useGetCities";
-import { useGetStates } from "../../../../hooks/useGetStates";
+import StatesSelect from "../ui/StatesSelect";
+import { useGetCities } from "../../hooks/useGetCities";
+import { useGetStates } from "../../hooks/useGetStates";
+import CitiesSelect from "../ui/CitiesSelect";
 
 export const NewRecieverForm = () => {
 	const { states, selectedState, setSelectedState, isLoadingStates } = useGetStates();
@@ -18,16 +20,8 @@ export const NewRecieverForm = () => {
 
 	console.log(errors);
 
-	const handleSelectedStateChange = (e) => {
-		setSelectedState(states.find((st) => st.StateId == e.target.value));
-	};
-
-	const handleSelectedCity = (e) => {
-		setSelectedCity(cities.find((city) => city.CityId == e.target.value));
-	};
-
 	return (
-		<form className="lg:px-40 " onSubmit={handleSubmit(onSubmit)}>
+		<form className="lg:px-20 " onSubmit={handleSubmit(onSubmit)}>
 			<div className="grid gap-6 mb-6 md:grid-cols-2">
 				<div className="pb-4">
 					<label
@@ -59,6 +53,7 @@ export const NewRecieverForm = () => {
 						Pasaporte
 					</label>
 					<input
+						{...register("Passport", {})}
 						type="text"
 						id="Passport"
 						className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -74,6 +69,7 @@ export const NewRecieverForm = () => {
 						Movil
 					</label>
 					<input
+				       {...register("Mobile", {})}
 						type="number"
 						id="Mobile"
 						className="bg-gray-50 border appearance-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -89,6 +85,7 @@ export const NewRecieverForm = () => {
 						Telefono Fijo
 					</label>
 					<input
+						{...register("Phone", {})}
 						type="number"
 						id="Phone"
 						className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -106,6 +103,7 @@ export const NewRecieverForm = () => {
 						Primer Nombre
 					</label>
 					<input
+						{...register("FirstName", {})}
 						type="text"
 						id="FirstName"
 						className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -121,6 +119,7 @@ export const NewRecieverForm = () => {
 						Segundo Nombre
 					</label>
 					<input
+						{...register("SecondName", {})}
 						type="text"
 						id="SecondName"
 						className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -151,6 +150,7 @@ export const NewRecieverForm = () => {
 						Segundo Apellido
 					</label>
 					<input
+						{...register("SecondLastName", {})}
 						type="text"
 						id="SecondLastName"
 						className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -176,41 +176,18 @@ export const NewRecieverForm = () => {
 				/>
 			</div>
 			<div className="bg-gray-100 p-4 border rounded-lg">
-				<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-					Provincia
-				</label>
-				<select
-					onChange={(e) => handleSelectedStateChange(e)}
-					className="block p-2 mb-6 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-				>
-					{isLoadingStates ? (
-						<option>Loading...</option>
-					) : (
-						states?.map((st) => (
-							<option key={st.StateId} value={st.StateId}>
-								{st.StateName}
-							</option>
-						))
-					)}
-				</select>
-				<label className=" mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-					Municipio
-				</label>
-				<select
-					onChange={(e) => handleSelectedCity(e)}
-					className=" mb-6 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-				>
-					{isLoadingCities ? (
-						<option>Loading...</option>
-					) : (
-						cities?.map((city) => (
-							<option key={city.CityId} value={city.CityId}>
-								{city.CityName}
-							</option>
-						))
-					)}
-				</select>
-				<div className="grid gap-6 mb-6 md:grid-cols-2">
+				<StatesSelect
+					states={states}
+					selectedState={selectedState}
+					setSelectedState={setSelectedState}
+				/>
+
+				<CitiesSelect
+					cities={cities}
+					selectedCity={selectedCity}
+					setSelectedCity={setSelectedCity}
+				/>
+				<div className="grid gap-6 mt-4 mb-6 md:grid-cols-2">
 					<div>
 						<label
 							htmlFor="Avenue"
@@ -219,6 +196,7 @@ export const NewRecieverForm = () => {
 							Avenida, Calle:
 						</label>
 						<input
+							{...register("Avenue", {})}
 							type="text"
 							id="Avenue"
 							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -234,6 +212,7 @@ export const NewRecieverForm = () => {
 							Entre Calles:
 						</label>
 						<input
+							{...register("Street", {})}
 							type="text"
 							id="Street"
 							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -245,12 +224,13 @@ export const NewRecieverForm = () => {
 					<div className="grid grid-cols-3 gap-6">
 						<div>
 							<label
-								htmlFor="Apto"
+								htmlFor="Number"
 								className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 							>
 								No.
 							</label>
 							<input
+								{...register("Number", {})}
 								type="number"
 								id="Apartamento"
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -266,6 +246,7 @@ export const NewRecieverForm = () => {
 								Apartamento
 							</label>
 							<input
+								{...register("Apto", {})}
 								type="number"
 								id="Apartamento"
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -281,6 +262,7 @@ export const NewRecieverForm = () => {
 								Zip
 							</label>
 							<input
+								{...register("Zip", {})}
 								type="number"
 								id="Apartamento"
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -292,12 +274,13 @@ export const NewRecieverForm = () => {
 					</div>
 					<div>
 						<label
-							htmlFor="SecondName"
+							htmlFor="Zone"
 							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 						>
 							Reparto
 						</label>
 						<input
+							{...register("Zone", {})}
 							type="text"
 							id="Reparto"
 							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

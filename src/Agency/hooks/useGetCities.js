@@ -7,12 +7,17 @@ export const useGetCities = (StateId) => {
 	const [selectedCity, setSelectedCity] = useState({});
 
 	const getCities = async () => {
-		let { data: cities, error } = await supabase.from("cities").select("*").eq("StateId", StateId).order("CityName");
-		if (!error) {
-			setCities(cities);
-			setSelectedCity(cities[0]);
+		if (StateId) {
+			let { data: cities, error } = await supabase
+				.from("cities")
+				.select("*")
+				.eq("StateId", StateId)
+				.order("CityName");
+			if (!error) {
+				setCities(cities);
+				setSelectedCity(cities[0]);
+			}
 		}
-		return error;
 	};
 
 	useEffect(() => {

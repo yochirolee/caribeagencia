@@ -13,12 +13,12 @@ export const VerticalTimeLine = ({ handleSetFormStep, formStep }) => {
 			<div className="grid grid-cols-4  ">
 				{steps.map((step) => (
 					<span
-						className={` text-left relative ${step.id === 3 ? "border-none" : "border-t"} `}
+						className={`  relative ${step.id === 3 ? "border-none" : "border-t"} `}
 						key={step.id}
 						onClick={() => handleSetFormStep(step.id)}
 					>
 						<span
-							className={`absolute -top-1  text-center   w-2 h-2 rounded-full bg-blue-300 ring ${
+							className={`absolute -top-1     w-2 h-2 rounded-full bg-blue-300 ring ${
 								formStep >= step.id ? "ring-blue-600" : ""
 							}  dark:ring-gray-900 dark:bg-blue-900`}
 						></span>

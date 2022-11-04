@@ -9,9 +9,10 @@ import { RecieverForm } from "../../Components/Forms/RecieverForm";
 import { ProductForm } from "../../Components/Forms/ProductForm";
 import { ServiceForm } from "../../Components/Forms/ServiceForm";
 import { Factura } from "../../Components/Pdf/Factura";
+import { Layout } from "../../Layout/Layout";
+import { NewRecieverForm } from "../../Components/Recievers/NewRecieverForm";
 
 export const CreateOrder = () => {
-
 	const [formStep, setFormStep] = useState(0);
 
 	const handleNextStep = () => {
@@ -30,7 +31,7 @@ export const CreateOrder = () => {
 			case 0:
 				return <CustomerForm handleNextStep={handleNextStep} />;
 			case 1:
-				return <RecieverForm handleNextStep={handleNextStep} handlePrevStep={handlePrevStep} />;
+				return <NewRecieverForm handleNextStep={handleNextStep} handlePrevStep={handlePrevStep} />;
 			case 2:
 				return <ProductForm handleNextStep={handleNextStep} handlePrevStep={handlePrevStep} />;
 			case 3:

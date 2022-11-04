@@ -39,6 +39,7 @@ export const DashboardSidebar = () => {
 									<Link to="/" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
 										Inicio
 									</Link>
+									
 									<Sidebar.Collapse icon={HiOutlineClipboardList} label="Ordenes">
 										<div className="flex flex-col ml-4 ">
 											<Link
@@ -67,13 +68,13 @@ export const DashboardSidebar = () => {
 									<Sidebar.Collapse icon={HiOutlineUsers} label="Clientes">
 										<div className="flex flex-col ">
 											<Link to="customers" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
-												Listado de Clientes
+												<span className="text-sm">Listado de Clientes</span>
 											</Link>
 										</div>
 									</Sidebar.Collapse>
-									<Sidebar.Collapse  icon={TbReportSearch} label="Tracking">
-										<div className="flex flex-col ">
-											<Link to="tracking" className=" pl-10 rounded-lg hover:bg-gray-100 p-2">
+									<Sidebar.Collapse  icon={TbReportSearch}  label="Tracking">
+										<div className="flex flex-col text-sm ">
+											<Link to="tracking" className=" pl-10  rounded-lg hover:bg-gray-100 p-2">
 												Tracking
 											</Link>
 										</div>
