@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { OrdersDropDownMenu } from "./OrdersDropDownMenu";
 import { SettingsDropDownMenu } from "./SettingsDropDownMenu copy";
-import {  TrackingDropDownMenu } from "./TrackingDropDownMenu";
+import { TrackingDropDownMenu } from "./TrackingDropDownMenu";
 export const Sidebar = () => {
-	const [toggle, setToggle] = useState(true);
+	const { toggleSideBar } = useSelector((state) => state.uiSlice);
 	const { user } = useSelector((state) => state.UserSlice);
 
 	return (
-		<aside aria-label="Sidebar" className="hidden lg:block">
+		<aside aria-label="Sidebar" className={` md:block ${toggleSideBar ? "block" : "hidden"}`}>
 			<div className="overflow-y-auto px-8  w-72   h-screen bg-gray-50 rounded dark:bg-gray-800">
 				<div className="border-b pb-4 flex flex-nowrap gap-4  mt-20 mb-8 mx-4">
 					<img
