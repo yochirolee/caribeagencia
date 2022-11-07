@@ -6,6 +6,7 @@ import { supabase } from "../../Supabase/SupabaseClient";
 export const Login = () => {
 	const [mail, setMail] = useState("");
 	const [pass, setPass] = useState("");
+	const [error, setError] = useState("");
 
 	const signIn = async () => {
 		const { user, error } = await supabase.auth.signIn({
@@ -13,7 +14,7 @@ export const Login = () => {
 			password: pass,
 		});
 
-		error ? console.log(error) : console.log(user);
+		if (error) setError(error);
 	};
 
 	return (
@@ -72,6 +73,14 @@ export const Login = () => {
 										value={pass}
 										onChange={(e) => setPass(e.target.value)}
 									/>
+								</div>
+
+								<div
+									className={`flex text-xs justify-center items-center text-red-400 bg-red-200  border rounded-lg h-10 ${
+										error ? "" : "hidden"
+									}`}
+								>
+									{error.message}
 								</div>
 
 								<button

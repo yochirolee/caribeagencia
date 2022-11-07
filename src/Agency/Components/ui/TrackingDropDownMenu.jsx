@@ -11,7 +11,7 @@ export const TrackingDropDownMenu = () => {
 					onClick={() => setToggle(!toggle)}
 					className="flex   items-center p-2  font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
 				>
-					<i className="fa fa-gear text-blue-500 mr-4"></i>
+					<i className="fa fa-location-dot text-blue-500 mr-4"></i>
 					<h3>Tracking</h3>
 					<i
 						className={`ml-auto text-xs text-blue-500  ${
@@ -25,7 +25,7 @@ export const TrackingDropDownMenu = () => {
 						toggle ? "flex" : "hidden"
 					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
 				>
-					<i className="fas fa-shopping-cart text-gray-500"></i>
+					<i className="fas fa-users-viewfinder text-gray-500"></i>
 					<span className="flex-1 ml-3 whitespace-nowrap">Escanear Items</span>
 				</Link>
 				<Link

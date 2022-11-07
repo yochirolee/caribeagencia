@@ -9,7 +9,7 @@ export const Sidebar = () => {
 	const { user } = useSelector((state) => state.UserSlice);
 
 	return (
-		<aside aria-label="Sidebar" className={` md:block ${toggleSideBar ? "block" : "hidden"}`}>
+		<aside aria-label="Sidebar" className={` lg:block ${toggleSideBar ? "block" : "hidden"}`}>
 			<div className="overflow-y-auto px-8  w-72   h-screen bg-gray-50 rounded dark:bg-gray-800">
 				<div className="border-b pb-4 flex flex-nowrap gap-4  mt-20 mb-8 mx-4">
 					<img

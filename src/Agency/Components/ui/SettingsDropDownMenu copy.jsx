@@ -21,23 +21,15 @@ export const SettingsDropDownMenu = () => {
 						}`}
 					></i>
 				</div>
+			
 				<Link
-					to="/create_order"
+					to="/categories"
 					className={`${
 						toggle ? "flex" : "hidden"
 					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
 				>
-					<i className="fas fa-shopping-cart text-gray-500"></i>
-					<span className="flex-1 ml-3 whitespace-nowrap">Crear Orden</span>
-				</Link>
-				<Link
-					to="/orders"
-					className={`${
-						toggle ? "flex" : "hidden"
-					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
-				>
-					<i className="fa fa-list  text-gray-500"> </i>
-					<span className="flex-1 ml-3 whitespace-nowrap">Listado de Ordenes</span>
+					<i className="fa fa-user-group  text-gray-500"> </i>
+					<span className="flex-1 ml-3 whitespace-nowrap">Servicios y Categorias</span>
 				</Link>
 			</div>
 		</li>

@@ -3,11 +3,10 @@ import { Navbar } from "../Components/ui/Navbar";
 import { Sidebar } from "../Components/ui/Sidebar";
 
 export const Layout = ({ children }) => {
-	console.log("Layout")
+	console.log("Layout");
 	return (
 		<div className="flex  ">
-			<div className='relative  z-30'>
-			<Sidebar /></div>
+			<Sidebar />
 			<div className=" w-full  h-screen overflow-y-auto ">
 				<Navbar />
 				<div className="    relative top-10 ">{children}</div>
