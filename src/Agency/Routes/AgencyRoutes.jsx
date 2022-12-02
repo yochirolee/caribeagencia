@@ -13,6 +13,7 @@ import { ListOrders } from "../Pages/Orders/ListOrders";
 import { CreateProduct } from "../Pages/Products/CreateProduct";
 import { Recievers } from "../Pages/Recievers/Recievers";
 import { Tracking } from "../Pages/Tracking/Tracking";
+import { Items } from "../Pages/Tracking/Items";
 export const AgencyRoutes = () => {
 	return (
 		<Layout>
@@ -26,6 +27,7 @@ export const AgencyRoutes = () => {
 				<Route path="categories" element={<Categories />} />
 				<Route path="recievers" element={<Recievers />} />
 				<Route path="tracking" element={<Tracking />} />
+				<Route path="items" element={<Items />} />
 
 				<Route path="factura" element={<Factura />} />
 				<Route path="/*" element={<Navigate to="/" />} />
