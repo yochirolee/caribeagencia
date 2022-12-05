@@ -3,10 +3,12 @@ import { read, utils, writeFile } from "xlsx";
 import axios from "axios";
 import { supabase } from "../../../../Supabase/SupabaseClient";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useRef } from "react";
 
-export const UploadModal = ({ showModal, setShowModal }) => {
-	const [items, setItems] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
+export const UploadModal = ({ showModal, setShowModal, location, isLoading, setIsLoading }) => {
+	const [itemsToUpdate, setItemsToUpdate] = useState([]);
+	const inputFileRef = useRef();
 
 	const {
 		register,
@@ -15,25 +17,31 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 		formState: { errors },
 	} = useForm();
 
+	useEffect(() => {
+		setItemsToUpdate([]);
+		inputFileRef.current.value = "";
+	}, [showModal]);
+
 	const handleImport = async (event) => {
 		const files = event.target.files;
-		setIsLoading(true);
+
 		if (files.length) {
 			const file = files[0];
 			const reader = new FileReader();
 			reader.onload = (event) => {
 				const wb = read(event.target.result);
 				const sheets = wb.SheetNames;
+				console.log(sheets, wb);
 
 				if (sheets.length) {
 					const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
 
 					let listItems = rows.map((row) => {
-						if (!!row) return { TrackingId: row.HBL, Location: "Entregado" };
+						if (!!row) return { TrackingId: row.HBL, Location: location };
 					});
 
 					if (listItems.length > 0) {
-						setItems(listItems);
+						setItemsToUpdate(listItems);
 					}
 				}
 			};
@@ -43,16 +51,22 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 
 	const onSubmit = async (data, e) => {
 		e.preventDefault();
-		let newTracking = { TrackingId: data.TrackingId, Location: "Entregado" };
+		if (data.TrackingId.length > 8) {
+			let newTracking = { TrackingId: data.TrackingId, Location: location };
 
-		setItems([...items, newTracking]);
-		reset();
+			setItemsToUpdate([...itemsToUpdate, newTracking]);
+
+			reset();
+		}
 	};
 
 	const handleOnSave = async () => {
-		const { data, error } = await supabase.from("tracking").upsert(items);
-		console.log(data, error), "DATA FROM UPSERT";
+		setIsLoading(true);
+		const { data, error } = await supabase
+			.from("tracking")
+			.upsert(itemsToUpdate, { onConflict: "TrackingId" });
 		if (data) setShowModal(false);
+		setIsLoading(false);
 	};
 
 	const ItemsExist = async (listItems) => {
@@ -77,7 +91,7 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 		<div
 			className={`${
 				showModal
-					? "absolute w-full h-screen overflow-y-hidden  grid items-center   bg-gray-200 justify-center mx-auto"
+					? "absolute w-full z-30 h-screen overflow-y-hidden  grid items-center   bg-gray-200/80 justify-center mx-auto"
 					: "hidden"
 			}  `}
 		>
@@ -88,10 +102,12 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 				aria-hidden="true"
 				className="top-0 left-0 right-0 z-50  w-full p-4   md:inset-0 h-modal md:h-full"
 			>
-				<div className="relative w-full h-full max-w-2xl md:h-auto">
-					<div className="relative bg-white text-center rounded-lg shadow dark:bg-gray-700">
+				<div className="relative w-full h-full max-w-2xl  md:h-auto">
+					<div className="relative flex flex-col gap-2 bg-white text-center rounded-lg shadow dark:bg-gray-700">
 						<div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-							<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Static modal</h3>
+							<h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+								Cambiar a {location}
+							</h3>
 							<button
 								onClick={() => setShowModal(false)}
 								type="button"
@@ -117,6 +133,7 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 								<div className="py-2">
 									<div className="custom-file">
 										<input
+											ref={inputFileRef}
 											type="file"
 											name="file"
 											className="custom-file-input"
@@ -138,7 +155,7 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 									<input {...register("TrackingId")} type="text"></input>
 									<button
 										type="submit"
-										className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+										className="text-blue-400 border  border-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 									>
 										Adicionar
 									</button>
@@ -147,7 +164,7 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 
 							<div
 								className={`${
-									items.length > 0 ? " mt-10 h-80 overflow-y-scroll text-xs" : "hidden"
+									itemsToUpdate.length > 0 ? " mt-10 h-80 overflow-y-scroll text-xs" : "hidden"
 								} `}
 							>
 								<table>
@@ -159,8 +176,8 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 										</tr>
 									</thead>
 									<tbody>
-										{items.length ? (
-											items.map((item, index) => (
+										{itemsToUpdate.length ? (
+											itemsToUpdate.map((item, index) => (
 												<tr
 													key={index}
 													class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -193,6 +210,7 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 								</table>
 							</div>
 						</div>
+						<span className=" w-1/2 mx-auto border p-2 bg-gray-100 rounded-lg text-sm">Total de Items: {itemsToUpdate.length}</span>
 						<div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
 							<button
 								onClick={() => handleOnSave()}
@@ -200,7 +218,7 @@ export const UploadModal = ({ showModal, setShowModal }) => {
 								type="button"
 								className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 							>
-								Guardar
+								{isLoading ? "Actualizando" : "Guardar"}
 							</button>
 							<button
 								onClick={() => setShowModal(false)}

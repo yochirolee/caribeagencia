@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Layout } from "../Agency/Layout/Layout";
 import { AgencyRoutes } from "../Agency/Routes/AgencyRoutes";
-import { setUser } from "../Agency/Store/Slices/Users/UserSlice";
+import { login, logout } from "../Agency/Store/Auth/AuthSlice";
 import { AuthRoutes } from "../Auth/Routes/AuthRoutes";
 import { supabase } from "../Supabase/SupabaseClient";
 
 export const RouterApp = () => {
-	const [status, setStatus] = useState("no-authenticated");
+	const { user } = useSelector((state) => state.Auth);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		console.log("useEffect on RouterApp");
+		console.log("useEffect on RouterApp", user);
+		//if (!user) return dispatch(logout());
 		supabase.auth.onAuthStateChange((event, session) => {
-			if (session) {
-				setStatus(session.user.aud);
-				dispatch(setUser(session.user));
+			console.log(event, session, "SESSION EVENT");
+			if (!session?.user) {
+				dispatch(logout());
+			} else {
+				dispatch(login(session.user));
 			}
 		});
 	}, []);
 
 	return (
-		
 		<Routes>
-			{status === "authenticated" ? (
+			{user?.aud === "authenticated" ? (
 				<Route path="/*" element={<AgencyRoutes />} />
 			) : (
 				<Route path="/auth/*" element={<AuthRoutes />} />
@@ -38,6 +39,5 @@ export const RouterApp = () => {
 			{/*<Route path="/*" element={<JournalRoutes />}></Route>
 			 */}
 		</Routes>
-		
 	);
 };

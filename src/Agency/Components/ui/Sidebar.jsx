@@ -1,12 +1,11 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { OrdersDropDownMenu } from "./OrdersDropDownMenu";
 import { SettingsDropDownMenu } from "./SettingsDropDownMenu copy";
 import { TrackingDropDownMenu } from "./TrackingDropDownMenu";
 export const Sidebar = () => {
 	const { toggleSideBar } = useSelector((state) => state.uiSlice);
-	const { user } = useSelector((state) => state.UserSlice);
+	const { user } = useSelector((state) => state.Auth);
 
 	return (
 		<aside aria-label="Sidebar" className={` lg:block ${toggleSideBar ? "block" : "hidden"}`}>
