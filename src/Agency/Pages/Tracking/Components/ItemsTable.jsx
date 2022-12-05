@@ -76,11 +76,11 @@ export const ItemsTable = ({ items, setItems }) => {
 				</table>
 				
 					<div className="w-1/3  ">
-						<p className=" ">HBL: {itemDetails.codigo_paquete}</p>
-						<p className=" ">Descripcion: {itemDetails.descripcion}</p>
+						<p className=" ">HBL: {itemDetails?.codigo_paquete}</p>
+						<p className=" ">Descripcion: {itemDetails?.descripcion}</p>
 						<p className=" ">
 							Destinatario:{" "}
-							{itemDetails.destinatario.name + " " + itemDetails.destinatario.lastName}
+							{itemDetails?.destinatario?.name + " " + itemDetails?.destinatario?.lastName}
 						</p>
 					</div>
 				
