@@ -1,6 +1,7 @@
 import { React } from "react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../../../../Supabase/SupabaseClient";
+import axios from "axios";
 
 export const Search = ({ items, setItems }) => {
 	const {

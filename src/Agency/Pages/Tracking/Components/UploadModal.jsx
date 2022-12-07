@@ -5,10 +5,41 @@ import { supabase } from "../../../../Supabase/SupabaseClient";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useRef } from "react";
+import { QrReader } from "react-qr-reader";
+import ScanSound from "../../../../assets/ScanSound.mp3";
+import useSound from "use-sound";
 
 export const UploadModal = ({ showModal, setShowModal, location, isLoading, setIsLoading }) => {
 	const [itemsToUpdate, setItemsToUpdate] = useState([]);
 	const inputFileRef = useRef();
+	const [scan, setScan] = useState(false);
+
+	const [play] = useSound(ScanSound);
+
+	let splitter = "";
+	play();
+	const handleOnResult = async (scanText) => {
+		splitter = await scanText.split(",");
+		const newItem = {
+			OrderId: splitter[0],
+			TrackingId: splitter[1],
+			Product: splitter[2],
+			Weight: splitter[3],
+			Service: splitter[4],
+			Customer: splitter[5],
+			Reciever: splitter[6],
+			CustomerPhone: splitter[7],
+			RecieverPhone: splitter[8],
+			State: splitter[9],
+		};
+		play();
+		let exist = items.find((item) => item.TrackingId == newItem.TrackingId);
+		setData(exist?.TrackingId);
+
+		setItems((items) => [...items, newItem]);
+	};
+
+	const handleError = (error) => {};
 
 	const {
 		register,
@@ -91,7 +122,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 		<div
 			className={`${
 				showModal
-					? "absolute w-full z-30 h-screen overflow-y-hidden  grid items-center   bg-gray-200/80 justify-center mx-auto"
+					? "absolute w-full z-30    grid items-center   bg-gray-200/80 justify-center mx-auto"
 					: "hidden"
 			}  `}
 		>
@@ -128,46 +159,71 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 								</svg>
 							</button>
 						</div>
-						<div className=" p-10 ">
-							<div className="border p-2 text-sm rounded-lg">
-								<div className="py-2">
-									<div className="custom-file">
-										<input
-											ref={inputFileRef}
-											type="file"
-											name="file"
-											className="custom-file-input"
-											id="inputGroupFile"
-											required
-											onChange={(event) => handleImport(event)}
-											accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-										/>
-										<label className="custom-file-label" htmlFor="inputGroupFile">
-											Choose file
-										</label>
-									</div>
-								</div>
-							</div>
-							<p>o</p>
-							<div className="mt-5 border rounded-lg p-2">
-								<form onSubmit={handleSubmit(onSubmit)} className="flex gap-2 items-center">
-									<label>Ingrese HBL</label>
-									<input {...register("TrackingId")} type="text"></input>
-									<button
-										type="submit"
-										className="text-blue-400 border  border-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-									>
-										Adicionar
-									</button>
-								</form>
-							</div>
+						<div>
+							<button onClick={() => setScan(!scan)}>Scan</button>
+						</div>
 
+						<div className=" p-10 ">
+							{scan ? (
+								<div>
+									{" "}
+									<QrReader
+										constraints={{ facingMode: "environment", delay: 30000 }}
+										onError={handleError}
+										onResult={(result, error) => {
+											if (!!result) {
+												handleOnResult(result.text);
+											}
+
+											if (!!error) {
+												handleError(error);
+											}
+										}}
+										style={{ width: "100%" }}
+									/>
+								</div>
+							) : (
+								<>
+									<div className="border p-2 text-sm rounded-lg">
+										<div className="py-2">
+											<div className="custom-file">
+												<input
+													ref={inputFileRef}
+													type="file"
+													name="file"
+													className="custom-file-input"
+													id="inputGroupFile"
+													required
+													onChange={(event) => handleImport(event)}
+													accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+												/>
+												<label className="custom-file-label" htmlFor="inputGroupFile">
+													Choose file
+												</label>
+											</div>
+										</div>
+									</div>
+									<p>o</p>
+									<div className="mt-5 border rounded-lg p-2">
+										<form onSubmit={handleSubmit(onSubmit)} className="flex gap-2 items-center">
+											<label>Ingrese HBL</label>
+											<input {...register("TrackingId")} type="text"></input>
+											<button
+												type="submit"
+												className="text-blue-400 border  border-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+											>
+												Adicionar
+											</button>
+										</form>
+									</div>
+								</>
+							)}
 							<div
 								className={`${
-									itemsToUpdate.length > 0 ? " mt-10 h-80 overflow-y-scroll text-xs" : "hidden"
+									itemsToUpdate.length > 0 ? " mt-10 h-40  overflow-y-scroll text-xs" : "hidden"
 								} `}
 							>
-								<table>
+								<table className="w-full">
 									<thead>
 										<tr>
 											<th>HBL</th>
@@ -210,7 +266,10 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 								</table>
 							</div>
 						</div>
-						<span className=" w-1/2 mx-auto border p-2 bg-gray-100 rounded-lg text-sm">Total de Items: {itemsToUpdate.length}</span>
+
+						<span className=" w-1/2 mx-auto border p-2 bg-gray-100 rounded-lg text-sm">
+							Total de Items: {itemsToUpdate.length}
+						</span>
 						<div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
 							<button
 								onClick={() => handleOnSave()}
