@@ -35,7 +35,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 
 	useEffect(() => {
 		setItemsToUpdate([]);
-		inputFileRef.current.value = "";
+	
 	}, [showModal]);
 
 	const handleImport = async (event) => {
