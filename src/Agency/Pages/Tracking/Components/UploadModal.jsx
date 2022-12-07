@@ -17,26 +17,12 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 	const [play] = useSound(ScanSound);
 
 	let splitter = "";
-	play();
+
 	const handleOnResult = async (scanText) => {
 		splitter = await scanText.split(",");
-		const newItem = {
-			OrderId: splitter[0],
-			TrackingId: splitter[1],
-			Product: splitter[2],
-			Weight: splitter[3],
-			Service: splitter[4],
-			Customer: splitter[5],
-			Reciever: splitter[6],
-			CustomerPhone: splitter[7],
-			RecieverPhone: splitter[8],
-			State: splitter[9],
-		};
+		const newItem = { TrackingId: splitter[1], Location: location };
 		play();
-		let exist = items.find((item) => item.TrackingId == newItem.TrackingId);
-		setData(exist?.TrackingId);
-
-		setItems((items) => [...items, newItem]);
+		setItemsToUpdate([...itemsToUpdate, newItem]);
 	};
 
 	const handleError = (error) => {};
