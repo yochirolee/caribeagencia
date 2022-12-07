@@ -20,8 +20,9 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 		let splitter = "";
 		splitter = await scanText.split(",");
 		const newItem = { TrackingId: splitter[1], Location: location };
-		play();
+		() => play();
 		setItemsToUpdate([...itemsToUpdate, newItem]);
+		newItem = {};
 	};
 
 	const handleError = (error) => {};
@@ -35,7 +36,6 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 
 	useEffect(() => {
 		setItemsToUpdate([]);
-	
 	}, [showModal]);
 
 	const handleImport = async (event) => {
