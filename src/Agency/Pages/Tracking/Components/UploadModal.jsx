@@ -16,9 +16,8 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 
 	const [play] = useSound(ScanSound);
 
-	let splitter = "";
-
 	const handleOnResult = async (scanText) => {
+		let splitter = "";
 		splitter = await scanText.split(",");
 		const newItem = { TrackingId: splitter[1], Location: location };
 		play();
