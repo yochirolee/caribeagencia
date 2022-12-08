@@ -1,5 +1,6 @@
 import axios from "axios";
 import { React, useState } from "react";
+import { HistoryTimeLine } from "./HistoryTimeLine";
 import { Search } from "./Search";
 export const ItemsTable = ({ items, setItems }) => {
 	const [itemDetails, setItemDetails] = useState({});
@@ -24,10 +25,11 @@ export const ItemsTable = ({ items, setItems }) => {
 		setIsLoadingDetails(true);
 		try {
 			const { data, status } = await axios.get(
-				"https://caribe-cargo-api.vercel.app/api/items/" + item.TrackingId,
+				"https://caribe-cargo-api.vercel.app/api/items/" + item.HBL,
 			);
 			console.log(data.data);
 			data.data.Location = item.Location;
+			data.data.history = item.trackingHistory;
 			setItemDetails(data.data);
 			setIsLoadingDetails(false);
 		} catch (error) {
@@ -38,7 +40,7 @@ export const ItemsTable = ({ items, setItems }) => {
 	return (
 		<div className=" h-full">
 			<Search items={items} setItems={setItems} />
-			<div className="w-full grid justify-center items-center bg-gray-400  relative">
+			<div className="absolute w-full z-30    grid items-center   bg-gray-200/80 justify-center mx-auto">
 				<div
 					id="defaultModal"
 					tabindex="-1"
@@ -101,16 +103,17 @@ export const ItemsTable = ({ items, setItems }) => {
 									<p>Loading Please Wait</p>
 								</div>
 							) : (
-								<div className="p-6 space-y-6">
+								<div className="p-6 space-y-">
 									<div className="">
-										<div className=" p-4 my-4 flex flex-col text-sm gap-2 ">
-											<div className="flex items-center gap-2 border p-4 rounded-lg bg-gray-50 ">
+										<div className=" p-4  flex flex-col text-sm gap-2 ">
+											<div className='flex items-center gap-4'>
 												<span className="font-semibold">HBL:</span>
-												<p className="rounded p-2 bg-blue-600 text-white">{itemDetails?.HBL}</p>
-												<p className="rounded p-2  bg-green-600 text-white">
-													{itemDetails?.Location}
-												</p>
+												<p className="rounded my-6 p-2 bg-blue-600 text-white">{itemDetails?.HBL}</p>
+												<p className="rounded my-6 p-2 border border-green-500 text-green-700 ">{itemDetails?.Location}</p>
+												
 											</div>
+
+											<HistoryTimeLine history={itemDetails.history}/>
 
 											<div className="flex items-center gap-6 my-4">
 												<div className="flex flex-row items-center gap-2">
@@ -208,7 +211,7 @@ export const ItemsTable = ({ items, setItems }) => {
 										scope="row"
 										className="text-left font-medium text-gray-900 whitespace-nowrap dark:text-white"
 									>
-										{item.TrackingId}
+										{item.HBL}
 									</th>
 									<td className=" ">
 										<span className="border px-2 py-0.5 rounded-lg text-xs text-white bg-green-500">

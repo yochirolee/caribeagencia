@@ -12,7 +12,8 @@ export const Items = () => {
 	const [location, setLocation] = useState("En Almacen");
 
 	const getTrackingItems = async () => {
-		let { data: tracking, error } = await supabase.from("tracking").select("*").order('created_at', { ascending: true });
+		let { data: tracking, error } = await supabase.from("tracking").select("HBL,TrackingId,Location");
+		console.log(tracking, error, "GETING DATA FROM TRACKING");
 		setItems(tracking);
 	};
 
@@ -31,7 +32,7 @@ export const Items = () => {
 					isLoading={isLoading}
 					setIsLoading={setIsLoading}
 				/>
-				<ItemsTable items={items} setItems={setItems}/>
+				<ItemsTable items={items} setItems={setItems} />
 			</div>
 		</>
 	);

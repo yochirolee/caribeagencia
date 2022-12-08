@@ -37,7 +37,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 					const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
 
 					let listItems = rows.map((row) => {
-						if (!!row) return { TrackingId: row.HBL, Location: location };
+						if (!!row) return { HBL: row.HBL, Location: location };
 					});
 
 					if (listItems.length > 0) {
@@ -52,7 +52,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 	const onSubmit = async (data, e) => {
 		e.preventDefault();
 		if (data.TrackingId.length > 8) {
-			let newTracking = { TrackingId: data.TrackingId, Location: location };
+			let newTracking = { HBL: data.TrackingId, Location: location };
 
 			setItemsToUpdate([...itemsToUpdate, newTracking]);
 
@@ -62,9 +62,14 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 
 	const handleOnSave = async () => {
 		setIsLoading(true);
+		console.log(itemsToUpdate, "ITEMS");
 		const { data, error } = await supabase
 			.from("tracking")
-			.upsert(itemsToUpdate, { onConflict: "TrackingId" });
+			.upsert(itemsToUpdate, { onConflict: "HBL" });
+        console.log(data,"INSERTING ON HISTORY")
+		const { data: history, error: errorHistory } = await supabase
+			.from("trackingHistory")
+			.insert(data);
 		if (data) setShowModal(false);
 		setIsLoading(false);
 	};
@@ -167,7 +172,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 									itemsToUpdate.length > 0 ? " mt-10 h-40  overflow-y-scroll text-xs" : "hidden"
 								} `}
 							>
-								<table className='w-full'>
+								<table className="w-full">
 									<thead>
 										<tr>
 											<th>HBL</th>
@@ -186,7 +191,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 														scope="row"
 														class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 													>
-														{item.TrackingId}
+														{item.HBL}
 													</th>
 													<td class="py-4 px-6 ">
 														<span className="border px-2 py-0.5 rounded-lg text-xs text-white bg-green-500">
@@ -210,7 +215,9 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 								</table>
 							</div>
 						</div>
-						<span className=" w-1/2 mx-auto border p-2 bg-gray-100 rounded-lg text-sm">Total de Items: {itemsToUpdate.length}</span>
+						<span className=" w-1/2 mx-auto border p-2 bg-gray-100 rounded-lg text-sm">
+							Total de Items: {itemsToUpdate.length}
+						</span>
 						<div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
 							<button
 								onClick={() => handleOnSave()}

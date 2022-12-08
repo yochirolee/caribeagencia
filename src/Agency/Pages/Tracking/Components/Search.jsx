@@ -1,7 +1,6 @@
 import { React } from "react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../../../../Supabase/SupabaseClient";
-import axios from "axios";
 
 export const Search = ({ items, setItems }) => {
 	const {
@@ -14,8 +13,15 @@ export const Search = ({ items, setItems }) => {
 	const onSubmit = async (data) => {
 		let { data: tracking, error } = await supabase
 			.from("tracking")
-			.select("*")
-			.like("TrackingId", "%" + data.search + "%");
+			.select(
+				`
+			*,
+			trackingHistory (
+			 *
+			)`,
+			)
+			.order("CreatedAt", { foreignTable: "trackingHistory", ascending: false })
+			.like("HBL", "%" + data.search + "%");
 
 		console.log(tracking, "RESULT SEARCH");
 		setItems(tracking);
