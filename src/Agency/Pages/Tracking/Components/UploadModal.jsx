@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { read, utils, writeFile } from "xlsx";
+import { read, utils } from "xlsx";
 import axios from "axios";
 import { supabase } from "../../../../Supabase/SupabaseClient";
 import { useForm } from "react-hook-form";
@@ -96,7 +96,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 		<div
 			className={`${
 				showModal
-					? "absolute w-full z-30    grid items-center   bg-gray-200/80 justify-center mx-auto"
+					? "absolute w-full z-10  h-screen  grid items-center  bg-gray-200/80 justify-center mx-auto"
 					: "hidden"
 			}  `}
 		>
@@ -105,7 +105,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 				data-modal-backdrop="static"
 				tabindex="-1"
 				aria-hidden="true"
-				className="top-0 left-0 right-0 z-50  w-full p-4   md:inset-0 h-modal md:h-full"
+				className="top-0 left-0 right-0  w-full p-4   md:inset-0 h-modal md:h-full"
 			>
 				<div className="relative w-full h-full max-w-2xl  md:h-auto">
 					<div className="relative flex flex-col gap-2 bg-white text-center rounded-lg shadow dark:bg-gray-700">

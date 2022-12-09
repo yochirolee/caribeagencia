@@ -2,38 +2,27 @@ import React, { useState } from "react";
 import { ItemsTable } from "./Components/ItemsTable";
 import { Locations } from "./Components/Locations";
 import { UploadModal } from "./Components/UploadModal";
-import { supabase } from "../../../Supabase/SupabaseClient";
-import { useEffect } from "react";
+import { useGetItems } from "./hooks/useGetItems";
+import { LoadingSpinner } from "./Components/LoadingSpinner";
 
 export const Items = () => {
-	const [items, setItems] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
+	const { items, setItems, isLoadingItems } = useGetItems();
 	const [showModal, setShowModal] = useState(false);
 	const [location, setLocation] = useState("En Almacen");
 
-	const getTrackingItems = async () => {
-		let { data: tracking, error } = await supabase.from("tracking").select("HBL,TrackingId,Location");
-		console.log(tracking, error, "GETING DATA FROM TRACKING");
-		setItems(tracking);
-	};
-
-	useEffect(() => {
-		getTrackingItems();
-	}, [isLoading]);
-
 	return (
-		<>
-			<div className="flex flex-col gap-4 h-screen lg:gap-10 mx-2 lg:mx-10 relative">
+		<div className="relative grid mx-2  ">
+			<div className="flex flex-col gap-4 h-screen lg:gap-10 mx-2 lg:mx-10 ">
 				<Locations setLocation={setLocation} setShowModal={setShowModal} />
-				<UploadModal
-					showModal={showModal}
-					setShowModal={setShowModal}
-					location={location}
-					isLoading={isLoading}
-					setIsLoading={setIsLoading}
-				/>
-				<ItemsTable items={items} setItems={setItems} />
+
+				{isLoadingItems ? <LoadingSpinner /> : <ItemsTable items={items} setItems={setItems} />}
 			</div>
-		</>
+			<UploadModal
+				showModal={showModal}
+				setShowModal={setShowModal}
+				location={location}
+				isLoading={isLoadingItems}
+			/>
+		</div>
 	);
 };
