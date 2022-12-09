@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useRef } from "react";
 
-export const UploadModal = ({ showModal, setShowModal, location, isLoading, setIsLoading }) => {
+export const UploadModal = ({ showModal, setShowModal, location,isLoading,setIsLoading }) => {
+	
 	const [itemsToUpdate, setItemsToUpdate] = useState([]);
 	const inputFileRef = useRef();
 

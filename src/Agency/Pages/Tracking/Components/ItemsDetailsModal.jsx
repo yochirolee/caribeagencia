@@ -5,7 +5,6 @@ export const ItemsDetailsModal = ({
 	showModalDetails,
 	setShowModalDetails,
 	isLoadingDetails,
-    
 }) => {
 	return (
 		<div className="absolute w-full z-30    grid items-center   bg-gray-200/80 justify-center mx-auto">
@@ -82,64 +81,91 @@ export const ItemsDetailsModal = ({
 											</p>
 										</div>
 
-										<HistoryTimeLine history={itemDetails.history} />
-
-										<div className="flex items-center gap-6 my-4">
-											<div className="flex flex-row items-center gap-2">
-												<span className="font-semibold"> Factura:</span>
-												<p className="rounded p-2  text-blue-600 underline border bg-blue-200">
-													<a
-														target="_blank"
-														href={`https://systemcaribetravel.com/ordenes/factura_print.php?id=${itemDetails?.InvoiceId}`}
-													>
-														{itemDetails?.InvoiceId}
-													</a>
-												</p>
-											</div>
-											<div className="flex flex-row items-center gap-2">
-												<span className="font-semibold"> Etiquetas:</span>
-												<p className="rounded p-2  text-yellow-600 underline border bg-yellow-200">
-													<a
-														target="_blank"
-														href={`https://systemcaribetravel.com/ordenes/etiqueta_print_transcargo.php?id=${itemDetails?.InvoiceId}`}
-													>
-														{itemDetails?.InvoiceId}
-													</a>
-												</p>
-											</div>
-										</div>
-
-										<p className=" ">Descripcion: {itemDetails?.Description}</p>
-										<p>Contenedor: {itemDetails?.ContainerNumber}</p>
-										<p>Provincia: {itemDetails?.Reciever?.Province}</p>
-										<p>Municipio: {itemDetails?.Reciever?.Municipality}</p>
-										<p>Direccion: {itemDetails?.Reciever?.Address}</p>
+										<HistoryTimeLine history={itemDetails.trackingHistory} />
 									</div>
-									<div className="grid grid-cols-2 border-t pt-3 gap-10 justify-between text-xs">
-										<div className="flex flex-col gap-2">
-											<span className="font-semibold">Cliente:</span>
-											<div className="flex gap-2 ">
-												<p>Nombre:</p>
-												{itemDetails?.Customer?.Name + " " + itemDetails?.Customer?.LastName}
+									{itemDetails?.Details ? (
+										<div>
+											<div>
+												<div className="flex items-center gap-6 my-4">
+													<div className="flex flex-row items-center gap-2">
+														<span className="font-semibold"> Factura:</span>
+														<p className="rounded p-2  text-blue-600 underline border bg-blue-200">
+															<a
+																target="_blank"
+																href={`https://systemcaribetravel.com/ordenes/factura_print.php?id=${itemDetails?.Details?.InvoiceId}`}
+															>
+																{itemDetails?.Details?.InvoiceId}
+															</a>
+														</p>
+													</div>
+													<div className="flex flex-row items-center gap-2">
+														<span className="font-semibold"> Etiquetas:</span>
+														<p className="rounded p-2  text-yellow-600 underline border bg-yellow-200">
+															<a
+																target="_blank"
+																href={`https://systemcaribetravel.com/ordenes/etiqueta_print_transcargo.php?id=${itemDetails?.InvoiceId}`}
+															>
+																{itemDetails?.Details?.InvoiceId}
+															</a>
+														</p>
+													</div>
+												</div>
+												<div className="flex flex-col text-xs p-2 gap-2">
+													<p>
+														<span className="font-semibold">Descripcion:</span>{" "}
+														{itemDetails?.Details?.Description}
+													</p>
+													<p>
+														<span className="font-semibold">Contenedor:</span>{" "}
+														{itemDetails?.Details?.ContainerNumber}
+													</p>
+													<p>
+														<span className="font-semibold">Provincia:</span>{" "}
+														{itemDetails?.Details?.Reciever?.Province}
+													</p>
+													<p>
+														<span className="font-semibold">Municipio:</span>{" "}
+														{itemDetails?.Details?.Reciever?.Municipality}
+													</p>
+													<p>
+														<span className="font-semibold">Direccion:</span>{" "}
+														{itemDetails?.Details?.Reciever?.Address}
+													</p>
+												</div>
 											</div>
-											<div className="flex gap-2 ">
-												<p>Movil:</p>
-												{itemDetails?.Customer?.Mobile}
-											</div>
-										</div>
+											<div className="grid grid-cols-2 border-t pt-3 gap-10 justify-between text-xs">
+												<div className="flex flex-col gap-2">
+													<span className="font-semibold">Cliente:</span>
+													<div className="flex gap-2 ">
+														<p>Nombre:</p>
+														{itemDetails?.Details?.Customer?.Name +
+															" " +
+															itemDetails?.Details?.Customer?.LastName}
+													</div>
+													<div className="flex gap-2 ">
+														<p>Movil:</p>
+														{itemDetails?.Details?.Customer?.Mobile}
+													</div>
+												</div>
 
-										<div className="flex flex-col gap-2 ">
-											<span className="font-semibold">Cliente:</span>
-											<div className="flex gap-2 ">
-												<p>Nombre:</p>
-												{itemDetails?.Reciever?.Name + " " + itemDetails?.Reciever?.LastName}
-											</div>
-											<div className="flex gap-2 ">
-												<p>Movil:</p>
-												{itemDetails?.Reciever?.Mobile}
+												<div className="flex flex-col gap-2 ">
+													<span className="font-semibold">Cliente:</span>
+													<div className="flex gap-2 ">
+														<p>Nombre:</p>
+														{itemDetails?.Details?.Reciever?.Name +
+															" " +
+															itemDetails?.Details?.Reciever?.LastName}
+													</div>
+													<div className="flex gap-2 ">
+														<p>Movil:</p>
+														{itemDetails?.Details?.Reciever?.Mobile}
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
+									) : (
+										""
+									)}
 								</div>
 							</div>
 						)}

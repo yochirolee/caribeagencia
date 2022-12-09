@@ -13,6 +13,7 @@ export const Items = () => {
 	const { items, setItems, isLoadingItems } = useGetItems();
 	const [showModal, setShowModal] = useState(false);
 	const [location, setLocation] = useState("En Almacen");
+	const [isLoading,setIsLoading]=useState(false)
 
 	const [itemDetails, setItemDetails] = useState({});
 	const [showModalDetails, setShowModalDetails] = useState(false);
@@ -44,28 +45,28 @@ export const Items = () => {
 		)`,
 			)
 			.order("CreatedAt", { foreignTable: "trackingHistory", ascending: false })
-			.eq("HBL", item.HBL).single();
-		console.log(tracking, "ITEMSSS TARCKINg");
+			.eq("HBL", item.HBL)
+			.single();
+		
 		try {
 			const { data, status } = await axios.get(
 				"https://caribe-cargo-api.vercel.app/api/items/" + item.HBL,
 			);
 			console.log(data.data, status);
-
-			data.data.Location = tracking.Location;
-			data.data.history = tracking.trackingHistory;
-			setItemDetails(data.data);
+			tracking.Details = data.data;
+			setItemDetails(tracking);
+			console.log(tracking, "ITEMSSS TARCKINg");
 			setIsLoadingDetails(false);
 		} catch (error) {
-			setItemDetails(item);
+			setItemDetails(tracking);
 			console.log(error);
 			setIsLoadingDetails(false);
 		}
 	};
 
 	return (
-		<div className="relative grid mx-2  ">
-			<div className="flex flex-col gap-4 h-screen lg:gap-10 mx-2 lg:mx-10 ">
+		<div className=" grid mx-2   ">
+			<div className="flex flex-col  gap-4 h-screen lg:gap-10 mx-2 lg:mx-10 ">
 				<Locations setLocation={setLocation} setShowModal={setShowModal} />
 				<Search items={items} setItems={setItems} />
 				{isLoadingItems ? (
@@ -83,7 +84,8 @@ export const Items = () => {
 				showModal={showModal}
 				setShowModal={setShowModal}
 				location={location}
-				isLoading={isLoadingItems}
+				isLoading={isLoading}
+				setIsLoading={setIsLoading}
 			/>
 			<ItemsDetailsModal
 				itemDetails={itemDetails}

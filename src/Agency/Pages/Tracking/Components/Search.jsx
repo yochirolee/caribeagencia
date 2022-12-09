@@ -33,7 +33,7 @@ export const Search = ({ items, setItems }) => {
 	};
 
 	return (
-		<div className="flex justify-between items-center pb-4">
+		<div className="flex justify-between items-center ">
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<label for="table-search" className="sr-only">
 					Search

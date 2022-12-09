@@ -1,22 +1,14 @@
-
 import { React } from "react";
 
 export const ItemsTable = ({ items, getItemsDetails }) => {
-	
-
-
 	return (
-		<div className=" h-full">
-			
-		
-
-			<div className={`${items.length > 0 ? " mt-10 h-80  overflow-y-scroll text-xs" : "hidden"} `}>
+		<div className=" h-full ">
+			<div className={`${items.length > 0 ? "  h-1/2  overflow-y-scroll text-xs" : "hidden"} `}>
 				<table className="w-full">
 					<thead>
 						<tr className="text-left">
 							<th>HBL</th>
 							<th>Locacion</th>
-							<th>Fecha</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -34,14 +26,16 @@ export const ItemsTable = ({ items, getItemsDetails }) => {
 										{item.HBL}
 									</th>
 									<td className=" ">
-										<span className="border px-2 py-0.5 rounded-lg text-xs text-white bg-green-500">
+										<span className="rounded my-6 p-2 border bg-green-500 border-green-500 text-white ">
 											{item.Location}
 										</span>
 									</td>
 
-									<td className="py-4 ">{item.created_at}</td>
-									<td className="py-4 ">
-										<i className="fa fa-file-invoice" onClick={() =>getItemsDetails(item)}></i>
+									<td className="p-3 ">
+										<i
+											className="fa fa-file-invoice text-blue-500 text-base hover:text-blue-400"
+											onClick={() => getItemsDetails(item)}
+										></i>
 									</td>
 								</tr>
 							))
