@@ -8,14 +8,15 @@ export const useGetItems = () => {
 	const getItems = async () => {
 		try {
 			setIsLoadingItems(true);
-			let { data: items, error } = await supabase
+			let { data: items, error,count } = await supabase
 				.from("tracking")
-				.select("HBL,TrackingId,Location");
+				.select("HBL,TrackingId,Location",{ count: 'exact' });
 
 			if (!error) {
 				setItems(items);
 				setIsLoadingItems(false);
 			}
+			 console.log(items,'RESPONSE')
 			throw error;
 		} catch (error) {
 			console.log(error);

@@ -13,7 +13,7 @@ export const Items = () => {
 	const { items, setItems, isLoadingItems } = useGetItems();
 	const [showModal, setShowModal] = useState(false);
 	const [location, setLocation] = useState("En Almacen");
-	const [isLoading,setIsLoading]=useState(false)
+	const [isLoading, setIsLoading] = useState(false);
 
 	const [itemDetails, setItemDetails] = useState({});
 	const [showModalDetails, setShowModalDetails] = useState(false);
@@ -27,6 +27,24 @@ export const Items = () => {
 			console.log(data.data);
 			setItemDetails(data.data);
 			setIsLoadingDetails(false);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const getItemsById = async () => {
+		try {
+			let { data: tracking, error } = await supabase
+				.from("tracking")
+				.select(
+					`
+			*,
+			trackingHistory (
+			 *
+			)`,
+				)
+				.order("CreatedAt", { foreignTable: "trackingHistory", ascending: false })
+				.like("HBL", "%" + data.search + "%");
 		} catch (error) {
 			console.log(error);
 		}
@@ -47,15 +65,13 @@ export const Items = () => {
 			.order("CreatedAt", { foreignTable: "trackingHistory", ascending: false })
 			.eq("HBL", item.HBL)
 			.single();
-		
+
 		try {
 			const { data, status } = await axios.get(
 				"https://caribe-cargo-api.vercel.app/api/items/" + item.HBL,
 			);
-			console.log(data.data, status);
 			tracking.Details = data.data;
 			setItemDetails(tracking);
-			console.log(tracking, "ITEMSSS TARCKINg");
 			setIsLoadingDetails(false);
 		} catch (error) {
 			setItemDetails(tracking);

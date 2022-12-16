@@ -6,8 +6,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useRef } from "react";
 
-export const UploadModal = ({ showModal, setShowModal, location,isLoading,setIsLoading }) => {
-	
+export const UploadModal = ({ showModal, setShowModal, location, isLoading, setIsLoading }) => {
 	const [itemsToUpdate, setItemsToUpdate] = useState([]);
 	const inputFileRef = useRef();
 
@@ -67,11 +66,12 @@ export const UploadModal = ({ showModal, setShowModal, location,isLoading,setIsL
 		const { data, error } = await supabase
 			.from("tracking")
 			.upsert(itemsToUpdate, { onConflict: "HBL" });
-        console.log(data,"INSERTING ON HISTORY")
+		console.log(data, "INSERTING ON HISTORY");
 		const { data: history, error: errorHistory } = await supabase
 			.from("trackingHistory")
 			.insert(data);
 		if (data) setShowModal(false);
+
 		setIsLoading(false);
 	};
 

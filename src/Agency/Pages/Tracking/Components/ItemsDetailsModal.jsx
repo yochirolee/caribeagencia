@@ -103,7 +103,7 @@ export const ItemsDetailsModal = ({
 														<p className="rounded p-2  text-yellow-600 underline border bg-yellow-200">
 															<a
 																target="_blank"
-																href={`https://systemcaribetravel.com/ordenes/etiqueta_print_transcargo.php?id=${itemDetails?.InvoiceId}`}
+																href={`https://systemcaribetravel.com/ordenes/etiqueta_print_transcargo.php?id=${itemDetails?.Details?.InvoiceId}`}
 															>
 																{itemDetails?.Details?.InvoiceId}
 															</a>
@@ -149,7 +149,7 @@ export const ItemsDetailsModal = ({
 												</div>
 
 												<div className="flex flex-col gap-2 ">
-													<span className="font-semibold">Cliente:</span>
+													<span className="font-semibold">Recibe:</span>
 													<div className="flex gap-2 ">
 														<p>Nombre:</p>
 														{itemDetails?.Details?.Reciever?.Name +

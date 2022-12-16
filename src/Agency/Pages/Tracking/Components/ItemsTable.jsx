@@ -3,7 +3,7 @@ import { React } from "react";
 export const ItemsTable = ({ items, getItemsDetails }) => {
 	return (
 		<div className=" h-full ">
-			<div className={`${items.length > 0 ? "  h-1/2  overflow-y-scroll text-xs" : "hidden"} `}>
+			<div className={`${items?.length > 0 ? "  h-1/2  overflow-y-scroll text-xs" : "hidden"} `}>
 				<table className="w-full">
 					<thead>
 						<tr className="text-left">
@@ -13,7 +13,7 @@ export const ItemsTable = ({ items, getItemsDetails }) => {
 						</tr>
 					</thead>
 					<tbody>
-						{items.length ? (
+						{items?.length ? (
 							items.map((item, index) => (
 								<tr
 									key={index}
