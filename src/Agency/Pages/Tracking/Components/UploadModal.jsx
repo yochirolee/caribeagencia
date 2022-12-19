@@ -104,7 +104,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 			<div
 				id="staticModal"
 				data-modal-backdrop="static"
-				tabindex="-1"
+				tabIndex="-1"
 				aria-hidden="true"
 				className="top-0 left-0 right-0  w-full p-4   md:inset-0 h-modal md:h-full"
 			>

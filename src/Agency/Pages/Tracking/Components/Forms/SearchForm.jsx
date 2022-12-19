@@ -3,11 +3,10 @@ import { React } from "react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../../../../../Supabase/SupabaseClient";
 
-export const SearchForm = ({ search, setSearch, isSearching }) => {
+export const SearchForm = ({  setSearch, isSearching }) => {
 	const {
 		register,
 		handleSubmit,
-		reset,
 		formState: { errors },
 	} = useForm();
 
@@ -18,7 +17,7 @@ export const SearchForm = ({ search, setSearch, isSearching }) => {
 	return (
 		<div className="flex justify-between items-center mb-4 ">
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<label for="table-search" className="sr-only">
+				<label htmlFor="table-search" className="sr-only">
 					Search
 				</label>
 				<div className="relative flex flex-row gap-3">
@@ -31,9 +30,9 @@ export const SearchForm = ({ search, setSearch, isSearching }) => {
 							xmlns="http://www.w3.org/2000/svg"
 						>
 							<path
-								fill-rule="evenodd"
+								fillRule="evenodd"
 								d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-								clip-rule="evenodd"
+								clipRule="evenodd"
 							></path>
 						</svg>
 					</div>
@@ -53,7 +52,7 @@ export const SearchForm = ({ search, setSearch, isSearching }) => {
 						>
 							<svg
 								role="status"
-								class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
+								className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
 								viewBox="0 0 100 101"
 								fill="none"
 								xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +71,7 @@ export const SearchForm = ({ search, setSearch, isSearching }) => {
 					) : (
 						<button
 							type="submit"
-							className="py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center"
+							className="py-2.5 px-5 mr-2 text-sm font-medium text-blue-500  rounded-lg border border-blue-500 hover:bg-blue-500 hover:text-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center"
 						>
 							Buscar
 						</button>

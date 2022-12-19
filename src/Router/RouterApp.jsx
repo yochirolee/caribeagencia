@@ -5,7 +5,7 @@ import { AgencyRoutes } from "../Agency/Routes/AgencyRoutes";
 import { login, logout } from "../Agency/Store/Auth/AuthSlice";
 import { AuthRoutes } from "../Auth/Routes/AuthRoutes";
 import { supabase } from "../Supabase/SupabaseClient";
-
+// /user?.aud === "authenticated"
 export const RouterApp = () => {
 	const { user } = useSelector((state) => state.Auth);
 	const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export const RouterApp = () => {
 
 	return (
 		<Routes>
-			{user?.aud === "authenticated" ? (
+			{true ? (
 				<Route path="/*" element={<AgencyRoutes />} />
 			) : (
 				<Route path="/auth/*" element={<AuthRoutes />} />
