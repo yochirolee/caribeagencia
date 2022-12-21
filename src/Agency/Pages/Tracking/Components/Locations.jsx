@@ -25,12 +25,12 @@ export const Locations = ({ setLocation, setShowModal }) => {
 		setShowModal(true);
 	};
 	return (
-		<div className="flex flex-col container ">
+		<div className="flex flex-col  md:items-left container ">
 			<h3 className="mb-5 text-lg font-medium text-gray-900 dark:text-white">
 				Seleccione Ubicacion:
 			</h3>
 
-			<div className="flex flex-col md:flex-row gap-4 mb-4">
+			<div className="flex flex-col  md:flex-row gap-4 mb-4">
 				{LocationsData.map((location) => (
 					<button
 						onClick={(e) => handleSelection(e)}

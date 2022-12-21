@@ -27,13 +27,12 @@ export const Search = ({ items, setItems }) => {
 			.order("CreatedAt", { foreignTable: "trackingHistory", ascending: false })
 			.like("HBL", "%" + data.search + "%");
 
-		console.log(tracking, "RESULT SEARCH");
 		setIsSearching(false);
 		setItems(tracking);
 	};
 
 	return (
-		<div className="flex justify-between items-center ">
+		<div className="  container  ">
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<label for="table-search" className="sr-only">
 					Search
@@ -89,20 +88,13 @@ export const Search = ({ items, setItems }) => {
 					) : (
 						<button
 							type="submit"
-							className="py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center"
+							className="py-2.5 px-5 mr-2 text-sm font-medium  bg-blue-500  text-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center"
 						>
 							Buscar
 						</button>
 					)}
 				</div>
 			</form>
-			<span className="flex items-center">
-				Total:
-				<span class="inline-flex justify-center items-center px-2 ml-2 text-md font-semibold text-blue-800 bg-blue-200 rounded-full">
-					{items?.length}
-				</span>
-				
-			</span>
 		</div>
 	);
 };

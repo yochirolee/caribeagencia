@@ -81,7 +81,7 @@ export const Items = () => {
 	};
 
 	return (
-		<div className=" grid mx-2   ">
+		<div className=" flex flex-col">
 			<div className="flex flex-col  gap-4 h-screen lg:gap-10 mx-2 lg:mx-10 ">
 				<Locations setLocation={setLocation} setShowModal={setShowModal} />
 				<Search items={items} setItems={setItems} />

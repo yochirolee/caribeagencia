@@ -1,13 +1,14 @@
 import { React, useState } from "react";
 import { read, utils } from "xlsx";
-import axios from "axios";
 import { supabase } from "../../../../Supabase/SupabaseClient";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useRef } from "react";
+import { QrReader } from "react-qr-reader";
 
 export const UploadModal = ({ showModal, setShowModal, location, isLoading, setIsLoading }) => {
 	const [itemsToUpdate, setItemsToUpdate] = useState([]);
+	const [isScanning, setIsScanning] = useState(true);
 	const inputFileRef = useRef();
 
 	const {
@@ -17,10 +18,6 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 		formState: { errors },
 	} = useForm();
 
-	useEffect(() => {
-		setItemsToUpdate([]);
-		inputFileRef.current.value = "";
-	}, [showModal]);
 
 	const handleImport = async (event) => {
 		const files = event.target.files;
@@ -71,15 +68,21 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 		if (data) setShowModal(false);
 
 		setIsLoading(false);
+		setItemsToUpdate([]);
+		inputFileRef.current.value = "";
 	};
 
-	
+	const handleCloseModal = () => {
+		setItemsToUpdate([]);
+		inputFileRef.current.value = "";
+		setShowModal(false);
+	};
 
 	return (
 		<div
 			className={`${
 				showModal
-					? "absolute w-full z-10  h-screen  grid items-center  bg-gray-200/80 justify-center mx-auto"
+					? "absolute  w-full z-10 lg:grid h-screen  justify-center    bg-gray-200/80  mx-auto"
 					: "hidden"
 			}  `}
 		>
@@ -97,114 +100,111 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 								Cambiar a {location}
 							</h3>
 							<button
-								onClick={() => setShowModal(false)}
+								onClick={() => handleCloseModal()}
 								type="button"
 								className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
 								data-modal-toggle="staticModal"
 							>
-								<svg
-									className="w-5 h-5"
-									fill="currentColor"
-									viewBox="0 0 20 20"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										fill-rule="evenodd"
-										d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-										clip-rule="evenodd"
-									></path>
-								</svg>
+								<i className="fas fa-close text-md"></i>
 							</button>
 						</div>
-						<div className=" p-10 ">
-							<div className="border p-2 text-sm rounded-lg">
-								<div className="py-2">
-									<div className="custom-file">
-										<input
-											ref={inputFileRef}
-											type="file"
-											name="file"
-											className="custom-file-input"
-											id="inputGroupFile"
-											required
-											onChange={(event) => handleImport(event)}
-											accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-										/>
-										<label className="custom-file-label" htmlFor="inputGroupFile">
-											Choose file
-										</label>
+						{isScanning ? (
+							<QrReader/>
+						) : (
+							<div className="p-2 lg:p-10 ">
+								<div className="border p-2 text-sm rounded-lg">
+									<div className="py-2">
+										<div className=" ">
+											<input
+												ref={inputFileRef}
+												type="file"
+												name="file"
+												className="custom-file-input"
+												id="inputGroupFile"
+												required
+												onChange={(event) => handleImport(event)}
+												accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+											/>
+										</div>
 									</div>
 								</div>
-							</div>
-							<p>o</p>
-							<div className="mt-5 border rounded-lg p-2">
-								<form onSubmit={handleSubmit(onSubmit)} className="flex gap-2 items-center">
-									<label>Ingrese HBL</label>
-									<input {...register("TrackingId")} type="text"></input>
-									<button
-										type="submit"
-										className="text-blue-400 border  border-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+								<p>o</p>
+								<div className="mt-5 border rounded-lg p-4">
+									<form
+										onSubmit={handleSubmit(onSubmit)}
+										className="flex flex-col lg:flex-row gap-2 items-center"
 									>
-										Adicionar
-									</button>
-									<div>
-										<button className="border rounded-lg"><i className='fa fa-camera text-blue-500 text-lg p-1.5 px-2'></i></button>
-									</div>
-								</form>
-							</div>
+										<label className="text-xs">Ingrese HBL</label>
+										<input {...register("TrackingId")} type="text" className="rounded-lg "></input>
 
-							<div
-								className={`${
-									itemsToUpdate.length > 0 ? " mt-10 h-40  overflow-y-scroll text-xs" : "hidden"
-								} `}
-							>
-								<table className="w-full">
-									<thead>
-										<tr>
-											<th>HBL</th>
-											<th>Status</th>
-											<th>Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										{itemsToUpdate.length ? (
-											itemsToUpdate.map((item, index) => (
-												<tr
-													key={index}
-													class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-												>
-													<th
-														scope="row"
-														class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-													>
-														{item.HBL}
-													</th>
-													<td class="py-4 px-6 ">
-														<span className="border px-2 py-0.5 rounded-lg text-xs text-white bg-green-500">
-															{item.Location}
-														</span>
-													</td>
+										<div className="flex  gap-2">
+											<button
+												type="submit"
+												className="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+											>
+												Adicionar
+											</button>
+											<button className="border rounded-lg">
+												<i className="fa fa-camera text-blue-500 text-lg p-1.5 px-2"></i>
+											</button>
+										</div>
+									</form>
+								</div>
 
-													<td class="py-4 px-6">
-														<a href="#" class="font-medium text-red-400 dark:text-red-500 ">
-															<i className="fas fa-trash"></i>
-														</a>
-													</td>
-												</tr>
-											))
-										) : (
+								<div
+									className={`${
+										itemsToUpdate?.length > 0 ? " mt-10 h-40  overflow-y-scroll text-xs" : "hidden"
+									} `}
+								>
+									<table className="w-full">
+										<thead>
 											<tr>
-												<td className="text-center text-sm">No Found.</td>
+												<th>HBL</th>
+												<th>Status</th>
+												<th>Actions</th>
 											</tr>
-										)}
-									</tbody>
-								</table>
+										</thead>
+										<tbody>
+											{itemsToUpdate?.length ? (
+												itemsToUpdate.map((item, index) => (
+													<tr
+														key={index}
+														class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+													>
+														<th
+															scope="row"
+															class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+														>
+															{item.HBL}
+														</th>
+														<td class="py-4 px-6 ">
+															<span className="border px-2 py-0.5 rounded-lg text-xs text-white bg-green-500">
+																{item.Location}
+															</span>
+														</td>
+
+														<td class="py-4 px-6">
+															<a href="#" class="font-medium text-red-400 dark:text-red-500 ">
+																<i className="fas fa-trash"></i>
+															</a>
+														</td>
+													</tr>
+												))
+											) : (
+												<tr>
+													<td className="text-center text-sm">No Found.</td>
+												</tr>
+											)}
+										</tbody>
+									</table>
+								</div>
 							</div>
-						</div>
+						)}
+
 						<span className=" w-1/2 mx-auto border p-2 bg-gray-100 rounded-lg text-sm">
-							Total de Items: {itemsToUpdate.length}
+							Total de Items: {itemsToUpdate?.length}
 						</span>
-						<div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+						<div className="flex justify-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
 							<button
 								onClick={() => handleOnSave()}
 								data-modal-toggle="staticModal"
@@ -214,7 +214,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 								{isLoading ? "Actualizando" : "Guardar"}
 							</button>
 							<button
-								onClick={() => setShowModal(false)}
+								onClick={() => handleCloseModal()}
 								data-modal-toggle="staticModal"
 								type="button"
 								className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
