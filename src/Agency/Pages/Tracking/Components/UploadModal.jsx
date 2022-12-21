@@ -62,11 +62,9 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 
 	const handleOnSave = async () => {
 		setIsLoading(true);
-		console.log(itemsToUpdate, "ITEMS");
 		const { data, error } = await supabase
 			.from("tracking")
 			.upsert(itemsToUpdate, { onConflict: "HBL" });
-		console.log(data, "INSERTING ON HISTORY");
 		const { data: history, error: errorHistory } = await supabase
 			.from("trackingHistory")
 			.insert(data);
@@ -75,23 +73,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 		setIsLoading(false);
 	};
 
-	const ItemsExist = async (listItems) => {
-		const dataSend = JSON.stringify(listItems);
-		console.log(dataSend, "DATA SEND");
-		const config = {
-			headers: { "Content-Type": "application/json" },
-		};
-		try {
-			const { data, status } = await axios.post(
-				"https://caribe-cargo-api.vercel.app/api/items/",
-				dataSend,
-				config,
-			);
-			console.log(data.data);
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	
 
 	return (
 		<div
@@ -165,6 +147,9 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 									>
 										Adicionar
 									</button>
+									<div>
+										<button className="border rounded-lg"><i className='fa fa-camera text-blue-500 text-lg p-1.5 px-2'></i></button>
+									</div>
 								</form>
 							</div>
 

@@ -10,8 +10,6 @@ const scanData =
 export const Tracking = () => {
 	const [data, setData] = useState("No result");
 	const [items, setItems] = useState([]);
-	const [error, setError] = useState("noError");
-	const [selected, setSelected] = useState("environment");
 	const [play] = useSound(ScanSound);
 
 	let splitter = "";

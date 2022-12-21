@@ -35,7 +35,7 @@ const createLocation = (index, product) => {
 const createProductHistory = (product) => {
 	let trackingHistory = [];
 
-	for (let index = 0; index <= product.TrackingState; index++) {
+	for (let index = 0; index <= product.Location; index++) {
 		const history = createLocation(index, product);
 		trackingHistory = [...trackingHistory, history];
 	}
