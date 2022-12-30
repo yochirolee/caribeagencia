@@ -14,8 +14,7 @@ export const RouterApp = () => {
 		console.log("useEffect on RouterApp", user);
 		//if (!user) return dispatch(logout());
 		supabase.auth.onAuthStateChange((event, session) => {
-			console.log(event, session, "SESSION EVENT");
-			if (!session?.user) {
+			if (session === null) {
 				dispatch(logout());
 			} else {
 				dispatch(login(session.user));
@@ -25,7 +24,7 @@ export const RouterApp = () => {
 
 	return (
 		<Routes>
-			{true ? (
+			{user.aud === "authenticated" ? (
 				<Route path="/*" element={<AgencyRoutes />} />
 			) : (
 				<Route path="/auth/*" element={<AuthRoutes />} />

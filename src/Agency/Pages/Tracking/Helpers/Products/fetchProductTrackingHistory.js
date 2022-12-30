@@ -33,17 +33,21 @@ const createLocation = (index, product) => {
 };
 
 const createProductHistory = (product) => {
-	let trackingHistory = [];
+	if (!!product) {
+		let trackingHistory = [];
 
-	for (let index = 0; index <= product.Location; index++) {
-		const history = createLocation(index, product);
-		trackingHistory = [...trackingHistory, history];
+		for (let index = 0; index <= product.Location; index++) {
+			const history = createLocation(index, product);
+			trackingHistory = [...trackingHistory, history];
+		}
+		trackingHistory.reverse();
+		return trackingHistory;
 	}
-	trackingHistory.reverse();
-	return trackingHistory;
+	return null;
 };
 
 export const fetchProductTrackingHistory = async (product) => {
+	if (!product) return;
 	let productHistory = createProductHistory(product);
 
 	let { data: tracking, error } = await supabase

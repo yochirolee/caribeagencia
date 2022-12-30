@@ -2,13 +2,12 @@ import { React, useState } from "react";
 import { read, utils } from "xlsx";
 import { supabase } from "../../../../Supabase/SupabaseClient";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
 import { useRef } from "react";
 import { QrReader } from "react-qr-reader";
 
-export const UploadModal = ({ showModal, setShowModal, location, isLoading, setIsLoading }) => {
+export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setIsLoading }) => {
 	const [itemsToUpdate, setItemsToUpdate] = useState([]);
-	const [isScanning, setIsScanning] = useState(true);
+	const [isScanning, setIsScanning] = useState(false);
 	const inputFileRef = useRef();
 
 	const {
@@ -17,7 +16,6 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 		reset,
 		formState: { errors },
 	} = useForm();
-
 
 	const handleImport = async (event) => {
 		const files = event.target.files;
@@ -34,11 +32,12 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 					const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
 
 					let listItems = rows.map((row) => {
-						if (!!row) return { HBL: row.HBL, Location: location };
+						if (!!row) return { HBL: row.HBL, Location: Location.Location };
 					});
-
+					console.log(listItems, "LIST ITEMS");
 					if (listItems.length > 0) {
 						setItemsToUpdate(listItems);
+						console.log(listItems);
 					}
 				}
 			};
@@ -49,9 +48,10 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 	const onSubmit = async (data, e) => {
 		e.preventDefault();
 		if (data.TrackingId.length > 8) {
-			let newTracking = { HBL: data.TrackingId, Location: location };
+			let newTracking = { HBL: data.TrackingId, Location: Location.Location };
 
 			setItemsToUpdate([...itemsToUpdate, newTracking]);
+			console.log(itemsToUpdate);
 
 			reset();
 		}
@@ -59,14 +59,32 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 
 	const handleOnSave = async () => {
 		setIsLoading(true);
-		const { data, error } = await supabase
+		const response = await supabase
 			.from("tracking")
-			.upsert(itemsToUpdate, { onConflict: "HBL" });
-		const { data: history, error: errorHistory } = await supabase
+			.upsert(itemsToUpdate, { onConflict: "HBL" })
+			.select("*");
+		const { data, status, statusText } = response;
+		console.log(response, "RESPONSE");
+		console.log(data, status, statusText, "tracking SElecting");
+
+		const dataToInsert = itemsToUpdate.map((product) => {
+			product.HBLLocation = product.HBL + "-" + Location.LocationId;
+			product.Location = Location.Location;
+			return product;
+		});
+
+		console.log(dataToInsert, "DATA TO INSERT");
+		const {
+			data: history,
+			error: errorHistory,
+			statusText: statusText2,
+		} = await supabase
 			.from("trackingHistory")
-			.insert(data);
+			.upsert(dataToInsert, { onConflict: "HBLLocation" })
+			.select();
 		if (data) setShowModal(false);
 
+		console.log(history, errorHistory, statusText2, "SECOND UPDATE");
 		setIsLoading(false);
 		setItemsToUpdate([]);
 		inputFileRef.current.value = "";
@@ -74,7 +92,6 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 
 	const handleCloseModal = () => {
 		setItemsToUpdate([]);
-		inputFileRef.current.value = "";
 		setShowModal(false);
 	};
 
@@ -97,7 +114,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 					<div className="relative flex flex-col gap-2 bg-white text-center rounded-lg shadow dark:bg-gray-700">
 						<div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
 							<h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-								Cambiar a {location}
+								Cambiar a {Location.Location}
 							</h3>
 							<button
 								onClick={() => handleCloseModal()}
@@ -109,7 +126,7 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 							</button>
 						</div>
 						{isScanning ? (
-							<QrReader/>
+							"<QrReader />"
 						) : (
 							<div className="p-2 lg:p-10 ">
 								<div className="border p-2 text-sm rounded-lg">
@@ -150,57 +167,55 @@ export const UploadModal = ({ showModal, setShowModal, location, isLoading, setI
 										</div>
 									</form>
 								</div>
-
-								<div
-									className={`${
-										itemsToUpdate?.length > 0 ? " mt-10 h-40  overflow-y-scroll text-xs" : "hidden"
-									} `}
-								>
-									<table className="w-full">
-										<thead>
-											<tr>
-												<th>HBL</th>
-												<th>Status</th>
-												<th>Actions</th>
-											</tr>
-										</thead>
-										<tbody>
-											{itemsToUpdate?.length ? (
-												itemsToUpdate.map((item, index) => (
-													<tr
-														key={index}
-														class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-													>
-														<th
-															scope="row"
-															class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-														>
-															{item.HBL}
-														</th>
-														<td class="py-4 px-6 ">
-															<span className="border px-2 py-0.5 rounded-lg text-xs text-white bg-green-500">
-																{item.Location}
-															</span>
-														</td>
-
-														<td class="py-4 px-6">
-															<a href="#" class="font-medium text-red-400 dark:text-red-500 ">
-																<i className="fas fa-trash"></i>
-															</a>
-														</td>
-													</tr>
-												))
-											) : (
-												<tr>
-													<td className="text-center text-sm">No Found.</td>
-												</tr>
-											)}
-										</tbody>
-									</table>
-								</div>
 							</div>
 						)}
+						<div
+							className={`${
+								itemsToUpdate?.length > 0 ? " mt-10 h-40  overflow-y-scroll text-xs" : "hidden"
+							} `}
+						>
+							<table className="w-full">
+								<thead>
+									<tr>
+										<th>HBL</th>
+										<th>Status</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{itemsToUpdate?.length ? (
+										itemsToUpdate.map((item, index) => (
+											<tr
+												key={index}
+												className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+											>
+												<th
+													scope="row"
+													className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+												>
+													{item.HBL}
+												</th>
+												<td className="py-4 px-6 ">
+													<span className="border px-2 py-0.5 rounded-lg text-xs text-white bg-green-500">
+														{item.Location}
+													</span>
+												</td>
 
+												<td className="py-4 px-6">
+													<a href="#" className="font-medium text-red-400 dark:text-red-500 ">
+														<i className="fas fa-trash"></i>
+													</a>
+												</td>
+											</tr>
+										))
+									) : (
+										<tr>
+											<td className="text-center text-sm">No Found.</td>
+										</tr>
+									)}
+								</tbody>
+							</table>
+						</div>
 						<span className=" w-1/2 mx-auto border p-2 bg-gray-100 rounded-lg text-sm">
 							Total de Items: {itemsToUpdate?.length}
 						</span>

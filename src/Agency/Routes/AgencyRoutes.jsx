@@ -1,20 +1,20 @@
 import { React } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Factura } from "../Components/Pdf/Factura";
-import { DashboardLayout } from "../Layout/DashboardLayout";
 import { Layout } from "../Layout/Layout";
 import { AddReciever } from "../Pages/AddReciever";
 import { Categories } from "../Pages/Categories/Categories";
 import { Customers } from "../Pages/Customers/Customers";
 import { Dashboard } from "../Pages/Dashboard";
-import { Inicio } from "../Pages/Inicio/Inicio";
 import { CreateOrder } from "../Pages/Orders/CreateOrder";
 import { ListOrders } from "../Pages/Orders/ListOrders";
 import { CreateProduct } from "../Pages/Products/CreateProduct";
 import { Recievers } from "../Pages/Recievers/Recievers";
-import { Tracking } from "../Pages/Tracking/Tracking";
-import { Items } from "../Pages/Tracking/Items";
+import { ScanQrProducts } from "../Pages/Tracking/ScanQrProducts";
+import { TrackingByProducts } from "../Pages/Tracking/TrackingByProducts";
 import { TrackingByInvoice } from "../Pages/Tracking/TrackingByInvoice";
+import { Containers } from "../Pages/Contenedores/Containers";
+import { Pallets } from "../Pages/Pallets/Pallets";
 
 export const AgencyRoutes = () => {
 	return (
@@ -28,9 +28,11 @@ export const AgencyRoutes = () => {
 				<Route path="customers" element={<Customers />} />
 				<Route path="categories" element={<Categories />} />
 				<Route path="recievers" element={<Recievers />} />
-				<Route path="tracking" element={<Tracking />} />
-				<Route path="items" element={<Items />} />
+				<Route path="containers" element={<Containers />} />
+				<Route path="pallets" element={<Pallets />} />
+				<Route path="tracking_products" element={<TrackingByProducts />} />
 				<Route path="tracking_invoice" element={<TrackingByInvoice />} />
+				<Route path="scan_products" element={<ScanQrProducts />} />
 
 				<Route path="factura" element={<Factura />} />
 				<Route path="/*" element={<Navigate to="/" />} />

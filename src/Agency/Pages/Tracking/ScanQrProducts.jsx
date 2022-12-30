@@ -1,13 +1,12 @@
-import { React, useDeferredValue, useEffect, useState } from "react";
+import { React, useState } from "react";
 import { QrReader } from "react-qr-reader";
-import { setRecieverInOrder } from "../../Store/Slices/Orders/OrdersSlice";
 import ScanSound from "../../../assets/ScanSound.mp3";
 import useSound from "use-sound";
 
 const scanData =
 	"39996,CTE25062236460,CICLOMOTOR ELECTRICO ECCO BIKE E09 Lithium 35AMP (Online),260.00 Lb,1,ABEL GARCIA ,RIDEL HERRERA RODRIGUEZ,0 73010700207,58903924/58903924,Matanzas";
 
-export const Tracking = () => {
+export const ScanQrProducts = () => {
 	const [data, setData] = useState("No result");
 	const [items, setItems] = useState([]);
 	const [play] = useSound(ScanSound);

@@ -3,7 +3,7 @@ import { React } from "react";
 import { useQuery } from "react-query";
 import { supabase } from "../../../Supabase/SupabaseClient";
 import { SearchForm } from "./Components/Forms/SearchForm";
-import { HBLDetails } from "./Components/HBLDetails/HBLDetails";
+import { ProductTrackingHistory } from "./Components/ProductTrackingHistory/productTrackingHistory";
 import { fetchInvoicesById } from "./Helpers/Invoices/fetchInvoiceById";
 
 // Create styles
@@ -14,7 +14,7 @@ const fetchItemsHistory = async (HBL) => {
 			.select(
 				`
                  *,
-                trackingHistory (
+                     trackingHistory (
                 *
                 )`,
 			)
@@ -71,7 +71,7 @@ export const TrackingByInvoice = () => {
 
 	return (
 		<div className="px-10">
-			<SearchForm  setSearch={setSearch} isSearching={isLoading} />
+			<SearchForm setSearch={setSearch} isSearching={isLoading} />
 			{Invoice ? (
 				<div className=" mt-10  ">
 					<div className="flex gap-4 border rounded-lg p-4 ">
@@ -108,7 +108,7 @@ export const TrackingByInvoice = () => {
 					</div>
 					<div>
 						{Invoice?.Products.map((product) => (
-							<HBLDetails key={product.HBL} product={product} />
+							<ProductTrackingHistory key={product.HBL} product={product} />
 						))}
 					</div>
 				</div>

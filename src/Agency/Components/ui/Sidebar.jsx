@@ -1,5 +1,6 @@
 import { React } from "react";
 import { useSelector } from "react-redux";
+import { InventoryDropDownMenu } from "./InventoryDropDownMenu";
 import { OrdersDropDownMenu } from "./OrdersDropDownMenu";
 import { SettingsDropDownMenu } from "./SettingsDropDownMenu copy";
 import { TrackingDropDownMenu } from "./TrackingDropDownMenu";
@@ -17,12 +18,13 @@ export const Sidebar = () => {
 					></img>
 					<div className="flex flex-col  ">
 						<span className="text-sm">John Dow</span>
-						<span className="text-sm text-slate-600  ">{user.email}</span>
+						<span className="text-sm text-slate-600  ">{user?.email}</span>
 					</div>
 				</div>
 				<ul className="space-y-2 mt-4 ">
 					<OrdersDropDownMenu />
 					<SettingsDropDownMenu />
+					<InventoryDropDownMenu />
 					<TrackingDropDownMenu />
 				</ul>
 			</div>
