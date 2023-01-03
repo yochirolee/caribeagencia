@@ -52,8 +52,8 @@ export const Containers = () => {
 	if (isLoading) return <p>Loading</p>;
 
 	return (
-		<div className="container flex ">
-			<div className="bg-gray-50  p-4 lg:max-w-[350px]">
+		<div className="grid lg:grid-cols-8 xl:grid-cols-10 gap-10 ">
+			<div className="col-span-2  flex flex-col  border-r p-4 lg:h-screen overflow-y-auto bg-gray-50">
 				<ContainerSelect
 					containers={Containers?.data}
 					setSelectedContainer={setSelectedContainer}
@@ -90,7 +90,7 @@ export const Containers = () => {
 				</div>
 			</div>
 
-			<div className="w-full px-10">
+			<div >
 				<ContainerUngroup 
 					productsRecieved={productsRecieved}
 					handleUnGroup={handleUnGroup}

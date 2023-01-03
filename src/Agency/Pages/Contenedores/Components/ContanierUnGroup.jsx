@@ -14,31 +14,9 @@ export const ContainerUngroup = ({ productsRecieved, productsFails, handleUnGrou
 		reset();
 	};
 
-	console.log(productsRecieved, productsFails);
 	return (
 		<>
-			<div className="mt-5 border rounded-lg p-4">
-				<form
-					onSubmit={handleSubmit(onSubmit)}
-					className="flex flex-col lg:flex-row gap-2 items-center"
-				>
-					<label className="text-xs">Ingrese HBL</label>
-					<input {...register("HBL")} type="text" className="rounded-lg "></input>
-
-					<div className="flex  gap-2">
-						<button
-							type="submit"
-							className="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-						>
-							Adicionar
-						</button>
-						<button className="border rounded-lg">
-							<i className="fa fa-camera text-blue-500 text-lg p-1.5 px-2"></i>
-						</button>
-					</div>
-				</form>
-			</div>
-			<div className="border rounded-lg my-4">
+			<div className=" my-4">
 				<div>
 					<div className="my-4 p-4 flex gap-4">
 						<button
@@ -69,6 +47,28 @@ export const ContainerUngroup = ({ productsRecieved, productsFails, handleUnGrou
 					))}
 				</div>
 			</div>
+			<div className="mt-5  rounded-lg p-4">
+				<form
+					onSubmit={handleSubmit(onSubmit)}
+					className="flex flex-col lg:flex-row gap-2 items-center"
+				>
+					<label className="text-xs">Ingrese HBL</label>
+					<input {...register("HBL")} type="text" className="rounded-lg "></input>
+
+					<div className="flex  gap-2">
+						<button
+							type="submit"
+							className="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+						>
+							Adicionar
+						</button>
+						<button className="border rounded-lg">
+							<i className="fa fa-camera text-blue-500 text-lg p-1.5 px-2"></i>
+						</button>
+					</div>
+				</form>
+			</div>
+		
 		</>
 	);
 };
