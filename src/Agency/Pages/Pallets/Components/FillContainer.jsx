@@ -12,7 +12,8 @@ export const FillContainer = ({ selectedPallet, ProductsInPallet }) => {
 
 	const onSubmit = async (data) => {
 		console.log(data.HBL);
-		if (findProductInPallet(data.HBL)) setProductsInContainer([...productsInContainer, data.HBL]);
+        if(findProductInPallet(data.HBL))
+		setProductsInContainer([...productsInContainer, data.HBL]);
 		reset();
 	};
 
@@ -22,7 +23,7 @@ export const FillContainer = ({ selectedPallet, ProductsInPallet }) => {
 	return (
 		<div>
 			<div className="flex flex-col md:flex-row gap-4 justify-between items-center ">
-				<div className="w-1/3">
+				<div className="w-full lg:w-1/3">
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<label
 							for="input-group-1"

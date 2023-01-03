@@ -28,7 +28,7 @@ export const Pallets = () => {
 
 	if (isLoading) return <Spinner />;
 	return (
-		<div className="grid lg:grid-cols-8 xl:grid-cols-12 gap-10">
+		<div className="flex">
 			<aside
 				className="col-span-3  flex flex-col  border-r p-4 lg:h-screen  bg-gray-50"
 				aria-label="Sidebar"
@@ -40,7 +40,7 @@ export const Pallets = () => {
 				/>
 				<ProductsInPalletList ProductsInPallet={ProductsInPallet} isLoading={isLoadingProducts} />
 			</aside>
-			<div className=" w-full col-span-9 px-4 container">
+			<div className="  px-4 container">
 				<FillContainer selectedPallet={selectedPallet} ProductsInPallet={ProductsInPallet} />
 			</div>
 		</div>
