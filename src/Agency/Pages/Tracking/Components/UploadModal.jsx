@@ -73,7 +73,6 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 			return product;
 		});
 
-		console.log(dataToInsert, "DATA TO INSERT");
 		const {
 			data: history,
 			error: errorHistory,
@@ -84,7 +83,6 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 			.select();
 		if (data) setShowModal(false);
 
-		console.log(history, errorHistory, statusText2, "SECOND UPDATE");
 		setIsLoading(false);
 		setItemsToUpdate([]);
 		inputFileRef.current.value = "";

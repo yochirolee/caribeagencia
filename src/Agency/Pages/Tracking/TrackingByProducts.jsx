@@ -18,7 +18,7 @@ export const TrackingByProducts = () => {
 		data: productList,
 		error,
 	} = useQuery(["getProducts", findProduct], () => fetchTrackingProductHistory(findProduct), {
-		enabled: Boolean(findProduct) 
+		enabled: Boolean(findProduct),
 	});
 
 	const handleSelectedProduct = (product) => {
@@ -33,8 +33,8 @@ export const TrackingByProducts = () => {
 	const [showModalDetails, setShowModalDetails] = useState(false);
 
 	return (
-		<div className=" flex flex-col">
-			<div className="flex flex-col  gap-4 h-screen lg:gap-10 mx-2 lg:mx-10 ">
+		<div className=" flex flex-col relative">
+			<div className="flex flex-col    gap-4 h-screen lg:gap-10 mx-2 lg:mx-10 ">
 				<Locations setLocation={setLocation} setShowModal={setShowModal} />
 				<Search isLoading={isLoading} setFindProduct={setFindProduct} />
 				{isLoadingProducts ? (

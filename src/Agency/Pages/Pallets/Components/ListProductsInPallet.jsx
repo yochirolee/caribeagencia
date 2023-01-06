@@ -1,12 +1,21 @@
 import { Spinner } from "flowbite-react";
 import { useState } from "react";
 import { React } from "react";
-import { useQuery } from "react-query";
-import { fetchPalletById } from "../../../Helpers/Pallets/fetchPalletById";
+import { useFetchProductsByPalletId } from "../../../hooks/useFetchProductsByPalletId";
 import { ProductModalDetails } from "../../Tracking/Components/ProductModalDetails";
-export const ProductsInPalletList = ({ ProductsInPallet, isLoading }) => {
+
+
+export const ListProductsInPallet = ({ selectedPallet }) => {
+
 	const [selectedProduct, setSelectedProduct] = useState({});
 	const [showModalDetails, setShowModalDetails] = useState(false);
+	const {
+		isLoading,
+		isError: isErrorProduct,
+		data: ProductsInPallet,
+		error: errorProduct,
+	} = useFetchProductsByPalletId(selectedPallet.PalletId);
+
 
 	const handleSelectedProduct = (product) => {
 		setShowModalDetails(true);
@@ -23,7 +32,7 @@ export const ProductsInPalletList = ({ ProductsInPallet, isLoading }) => {
 	return (
 		<>
 			
-			<div className="overflow-y-auto mt-4 ">
+			<div className="overflow-y-auto mt-4   ">
 				{ProductsInPallet?.Products?.map((product, index) => (
 					<div
 						key={index}

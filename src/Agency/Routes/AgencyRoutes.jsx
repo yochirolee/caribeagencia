@@ -15,6 +15,8 @@ import { TrackingByProducts } from "../Pages/Tracking/TrackingByProducts";
 import { TrackingByInvoice } from "../Pages/Tracking/TrackingByInvoice";
 import { Containers } from "../Pages/Contenedores/Containers";
 import { Pallets } from "../Pages/Pallets/Pallets";
+import { CreateContainer } from "../Pages/Contenedores/CreateContainer";
+import { UnGroupContainer } from "../Pages/Contenedores/UnGroupContainer";
 
 export const AgencyRoutes = () => {
 	return (
@@ -29,6 +31,8 @@ export const AgencyRoutes = () => {
 				<Route path="categories" element={<Categories />} />
 				<Route path="recievers" element={<Recievers />} />
 				<Route path="containers" element={<Containers />} />
+				<Route path="fill_container" element={<CreateContainer />} />
+				<Route path="ungroup_container" element={<UnGroupContainer />} />
 				<Route path="pallets" element={<Pallets />} />
 				<Route path="tracking_products" element={<TrackingByProducts />} />
 				<Route path="tracking_invoice" element={<TrackingByInvoice />} />

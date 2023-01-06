@@ -12,23 +12,22 @@ export const FillContainer = ({ selectedPallet, ProductsInPallet }) => {
 
 	const onSubmit = async (data) => {
 		console.log(data.HBL);
-        if(findProductInPallet(data.HBL))
-		setProductsInContainer([...productsInContainer, data.HBL]);
+		const productInPallet = findProductInPallet(data.HBL);
+		if (productInPallet) setProductsInContainer([...productsInContainer, productInPallet]);
 		reset();
 	};
 
 	const findProductInPallet = (HBL) => {
-		return ProductsInPallet.Products.find((product) => product.HBL === HBL);
+		const product = ProductsInPallet.Products.find((product) => product.HBL === HBL);
+		console.log(product, "PRODCUT IN PALLET");
+		return product;
 	};
 	return (
 		<div>
-			<div className="flex flex-col md:flex-row gap-4 justify-between items-center ">
-				<div className="w-full lg:w-1/3">
+			<div className="flex flex-col-reverse lg:flex-row  gap-4 justify-between items-center ">
+				<div className="w-full  lg:w-1/3">
 					<form onSubmit={handleSubmit(onSubmit)}>
-						<label
-							for="input-group-1"
-							className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-						>
+						<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
 							Adicionar Productos al Contenedor
 						</label>
 						<div className="relative mb-6">
@@ -75,10 +74,17 @@ export const FillContainer = ({ selectedPallet, ProductsInPallet }) => {
 				<div className=" flex flex-col p-2 text-xs ">
 					{productsInContainer.map((productInContainer) => (
 						<div className="flex justify-between my-2 map-2">
-							<span className="text-gray-500">HBL: {productInContainer}</span>
-							<span className="text-gray-600">Descripcion: Neumaticos de Auto</span>
-							<span>HBL</span>
-							<span>HBL</span>
+							<span className="text-gray-500">HBL: {productInContainer?.HBL}</span>
+							<span className="text-gray-600">
+								Descripcion: {productInContainer?.ProductDescription}
+							</span>
+							<span className="text-gray-600">
+								Factura: {productInContainer?.InvoiceId}
+							</span>
+							<span className="text-gray-600">
+								Peso: {productInContainer?.ProductWeight} Lbs
+							</span>
+							
 						</div>
 					))}
 				</div>

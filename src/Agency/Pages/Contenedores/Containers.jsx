@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { React, useState } from "react";
 import { useQuery } from "react-query";
-import { fetchContainerById } from "../../Helpers/Containers/fetchContainerById";
 import { fetchContainers } from "../../Helpers/Containers/fetchContainers";
 import ContainerSelect from "./Components/ContainerSelect";
 import { ContainerUngroup } from "./Components/ContanierUnGroup";
@@ -20,23 +19,9 @@ export const Containers = () => {
 
 	const [selectedContainer, setSelectedContainer] = useState([]);
 
-	const {
-		isLoading: isLoadingProducts,
-		isError: isErrorProducts,
-		data: productsInContainer,
-		error: errorProducts,
-	} = useQuery(
-		["ProductsInContainer", selectedContainer.ContainerId],
-		() => fetchContainerById(selectedContainer.ContainerId),
-		{ enabled: !!selectedContainer },
-	);
-
-
 	useEffect(() => {
 		setProductsRecieved([]);
 	}, [selectedContainer.ContainerId]);
-
-	
 
 	const handleUnGroup = ({ HBL }) => {
 		console.log("HANDLE UNGOU", HBL);
@@ -90,8 +75,8 @@ export const Containers = () => {
 				</div>
 			</div>
 
-			<div >
-				<ContainerUngroup 
+			<div>
+				<ContainerUngroup
 					productsRecieved={productsRecieved}
 					handleUnGroup={handleUnGroup}
 					productsFails={productsInContainer?.products?.length}

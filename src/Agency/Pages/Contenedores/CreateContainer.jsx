@@ -1,15 +1,12 @@
 import { React, useState } from "react";
-import { FillContainer } from "./Components/FillContainer";
-import { PalletDetails } from "./Components/PalletDetails";
-import PalletSelect from "./Components/PalletSelect";
-import { ListProductsInPallet } from "./Components/ListProductsInPallet";
-
-export const Pallets = () => {
+import { FillContainer } from "../Pallets/Components/FillContainer";
+import { ListProductsInPallet } from "../Pallets/Components/ListProductsInPallet";
+import { PalletDetails } from "../Pallets/Components/PalletDetails";
+import PalletSelect from "../Pallets/Components/PalletSelect";
+export const CreateContainer = () => {
 	const [selectedPallet, setSelectedPallet] = useState({});
-
-	
 	return (
-		<div className="flex">
+		<div className="flex   ">
 			<aside
 				className="lg:w-1/3  flex flex-col  border-r p-4 lg:h-screen  bg-gray-50"
 				aria-label="Sidebar"
@@ -18,7 +15,7 @@ export const Pallets = () => {
 				<PalletDetails selectedPallet={selectedPallet} />
 				<ListProductsInPallet selectedPallet={selectedPallet} />
 			</aside>
-			<div className="  px-4 container">
+			<div className="  px-4 container ">
 				<FillContainer selectedPallet={selectedPallet} />
 			</div>
 		</div>

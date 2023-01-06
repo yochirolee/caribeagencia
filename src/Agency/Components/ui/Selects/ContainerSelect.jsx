@@ -1,28 +1,29 @@
 import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { useFetchAllPallets } from "../../../hooks/useFetchAllPallets";
+import { useFetchAllContainers } from "../../../hooks/useFetchAllContainers";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
 }
 
-export default function PalletSelect({ selectedPallet, setSelectedPallet }) {
-	const { isLoading: isLoading, isError, data: pallets, error } = useFetchAllPallets();
+export default function ContainerSelect({ selectedContainer, setSelectedContainer }) {
+	const { data: containers } = useFetchAllContainers();
 
-	
 	return (
-		<Listbox value={selectedPallet} onChange={setSelectedPallet}>
+		<Listbox value={selectedContainer} onChange={setSelectedContainer}>
 			{({ open }) => (
 				<>
 					<Listbox.Label className="block text-sm font-medium mt-4 text-gray-700">
-						Seleccione el Pallet
+						Seleccione Contenedor
 					</Listbox.Label>
 					<div className="relative mt-1">
 						<Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
 							<span className="flex items-center">
-								<span className="ml-3 block truncate text-xs">
-									{selectedPallet?.PalletId ? selectedPallet?.PalletId : "Seleccione Pallet"}
+								<span className="ml-3 text-xs block truncate">
+									{selectedContainer?.ContainerId
+										? selectedContainer?.ContainerNumber
+										: "Seleccione Contenedor"}
 								</span>
 							</span>
 							<span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -38,16 +39,16 @@ export default function PalletSelect({ selectedPallet, setSelectedPallet }) {
 							leaveTo="opacity-0"
 						>
 							<Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-								{pallets?.map((pallet) => (
+								{containers?.map((container) => (
 									<Listbox.Option
-										key={pallet.PalletId}
+										key={container?.ContainerId}
 										className={({ active }) =>
 											classNames(
 												active ? "text-white bg-indigo-600" : "text-gray-900",
 												"relative cursor-default select-none py-2 pl-3 pr-9",
 											)
 										}
-										value={pallet}
+										value={container}
 									>
 										{({ selected, active }) => (
 											<>
@@ -58,9 +59,7 @@ export default function PalletSelect({ selectedPallet, setSelectedPallet }) {
 															"ml-3 block truncate",
 														)}
 													>
-														<div className="flex gap-4">
-															{pallet.PalletId} <div>Productos: {pallet.ProductsInPallet}</div>
-														</div>
+														{container?.ContainerNumber}
 													</span>
 												</div>
 

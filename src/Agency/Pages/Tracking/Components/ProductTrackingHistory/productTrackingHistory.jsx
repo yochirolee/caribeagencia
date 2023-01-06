@@ -18,14 +18,14 @@ export const ProductTrackingHistory = ({ product }) => {
 
 	return (
 		<>
-			<div className="flex flex-col  justify-between text-center overflow-x-auto my-2 p-4">
+			<div className="flex flex-col  justify-between text-center  my-2 p-4">
 				<div className="flex  items-center text-left gap-4 py-4 text-xs">
 					<p className="font-semibold border p-4 bg-blue-600 text-white rounded-lg">
 						{productsDetails ? productsDetails[0]?.Location : ""}
 					</p>
 					<p className="text-xs font-semibold ">{product?.HBL}</p>
 				</div>
-				<p className="mb-4 text-left">{product?.Description}</p>
+				<p className="m-4 text-left">{product?.Description}</p>
 				<div className="inline-flex">
 					<HistoryTimeLine history={productsDetails} />
 				</div>

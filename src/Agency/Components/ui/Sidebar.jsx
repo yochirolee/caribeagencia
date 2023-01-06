@@ -1,17 +1,17 @@
 import { React } from "react";
 import { useSelector } from "react-redux";
-import { InventoryDropDownMenu } from "./InventoryDropDownMenu";
-import { OrdersDropDownMenu } from "./OrdersDropDownMenu";
-import { SettingsDropDownMenu } from "./SettingsDropDownMenu copy";
-import { TrackingDropDownMenu } from "./TrackingDropDownMenu";
+import { InventoryDropDownMenu } from "./Dropdowns/InventoryDropDownMenu";
+import { OrdersDropDownMenu } from "./Dropdowns/OrdersDropDownMenu";
+import { SettingsDropDownMenu } from "./Dropdowns/SettingsDropDownMenu copy";
+import { TrackingDropDownMenu } from "./Dropdowns/TrackingDropDownMenu";
 export const Sidebar = () => {
 	const { toggleSideBar } = useSelector((state) => state.uiSlice);
 	const { user } = useSelector((state) => state.Auth);
 
 	return (
 		<aside aria-label="Sidebar" className={` lg:block ${toggleSideBar ? "block" : "hidden"}`}>
-			<div className="overflow-y-auto px-8  w-72   h-screen bg-gray-50 rounded dark:bg-gray-800">
-				<div className="border-b pb-4 flex flex-nowrap gap-4  mt-20 mb-8 mx-4">
+			<div className="h-screen lg:pointer-events-auto lg:block w-72 lg:overflow-y-auto lg:border-r lg:border-zinc-900/10 lg:px-6 lg:pt-4 lg:pb-8 lg:dark:border-white/10 xl:w-80">
+				<div className="border-b pb-4 flex flex-nowrap gap-4  mt-14 mb-8 mx-4">
 					<img
 						className=" object-cover rounded-full h-10 w-10"
 						src="https://www.tailwind-kit.com/images/person/1.jpg"
