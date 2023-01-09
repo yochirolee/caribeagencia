@@ -1,6 +1,5 @@
 import { Spinner } from "flowbite-react";
 import { React } from "react";
-import { useFetchProductsInContainerByContainerId } from "../../../hooks/useFetchProductsInContainerByContainerId";
 
 export const ListProductsInSelectedContainer = ({ isLoading,productsInContainer }) => {
 	
@@ -17,11 +16,11 @@ export const ListProductsInSelectedContainer = ({ isLoading,productsInContainer 
 					key={product?.HBL}
 					className="flex bg-white items-center text-xs py-4 rounded-lg shadow-sm m-2 "
 				>
-					<div className="flex flex-col gap-1 items-center px-2 text-center">
-						<span>Factura</span>
-						<p className="text-green-600  rounded-md bg-green-300/20 font-semibold p-2">
+					<div className="flex flex-col  items-center px-2 text-center">
+						<p className="  rounded-md text-zinc-600  font-semibold ">
 							{product?.InvoiceId}
 						</p>
+						<span>Factura</span>
 					</div>
 					<div class="hidden mx-2 md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15"></div>
 					<div className="flex flex-col mx-2 ">

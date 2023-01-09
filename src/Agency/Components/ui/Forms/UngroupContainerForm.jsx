@@ -1,20 +1,20 @@
+import { Spinner } from "flowbite-react";
+import { useRef } from "react";
 import { React } from "react";
-import { useForm } from "react-hook-form";
-export const UnGroupContainerForm = ({ handleUngroupContainer }) => {
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm();
 
-	const onSubmit = async (data) => {
-		handleUngroupContainer(data.HBL);
-		reset();
+export const UnGroupContainerForm = ({ handleUngroupContainer, isLoadingProducts }) => {
+	
+	let unGroupHBLRef = useRef();
+
+	const handleUngroupHBL = async (e) => {
+		e.preventDefault();
+		console.log(unGroupHBLRef.current.value);
+		await handleUngroupContainer(unGroupHBLRef.current.value);
+		unGroupHBLRef.current.value = "";
 	};
 	return (
 		<>
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleUngroupHBL}>
 				<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
 					Desagrupe de Contenedor
 				</label>
@@ -24,11 +24,12 @@ export const UnGroupContainerForm = ({ handleUngroupContainer }) => {
 					</div>
 					<input
 						type="text"
-						{...register("HBL", { required: true })}
+						ref={unGroupHBLRef}
 						id="input-group-1"
 						className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 						placeholder="Producto a Desagrupar"
 					/>
+					{isLoadingProducts ? <Spinner /> : ""}
 				</div>
 			</form>
 		</>
