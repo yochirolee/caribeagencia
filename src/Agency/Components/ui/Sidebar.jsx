@@ -22,8 +22,7 @@ export const Sidebar = () => {
 					</div>
 				</div>
 				<ul className="space-y-2 mt-4 ">
-					<OrdersDropDownMenu />
-					<SettingsDropDownMenu />
+				
 					<InventoryDropDownMenu />
 					<TrackingDropDownMenu />
 				</ul>

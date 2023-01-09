@@ -89,7 +89,7 @@ export const UnGroupContainer = () => {
 	};
 
 	return (
-		<div className="flex   ">
+		<div className="flex relative   ">
 			<aside
 				className="lg:w-1/3  flex flex-col  border-r p-4 h-screen  bg-gray-50"
 				aria-label="Sidebar"

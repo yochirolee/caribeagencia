@@ -16,15 +16,9 @@ export const ListProducts = ({
 						{selectedContainer?.ProductsQuantity}
 					</span>
 				</div>
-				<div
-					className="p-2  text-sm text-red-700 bg-red-100 rounded-lg dark:bg-gray-800 dark:text-red-400"
-					role="alert"
-				>
-					<span class="font-medium">Danger alert!</span> Change a few things up and try submitting
-					again.
-				</div>
+				
 			</div>
-			<div className="h-2/4 overflow-y-scroll">
+			<div className="h-screen overflow-y-auto">
 				{unGroupProductList?.map((product, index) => (
 					<div
 						key={index}

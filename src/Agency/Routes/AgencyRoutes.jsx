@@ -18,11 +18,8 @@ import { Pallets } from "../Pages/Pallets/Pallets";
 import { CreateContainer } from "../Pages/Contenedores/CreateContainer";
 import { UnGroupContainer } from "../Pages/Contenedores/UnGroupContainer";
 
-export const AgencyRoutes = () => {
-	return (
-		<Layout>
-			<Routes>
-				<Route path="/" element={<Dashboard />} />
+/*
+<Route path="/" element={<Dashboard />} />
 				<Route path="new_reciever" element={<AddReciever />} />
 				<Route path="create_order" element={<CreateOrder />} />
 				<Route path="list_orders" element={<ListOrders />} />
@@ -39,6 +36,17 @@ export const AgencyRoutes = () => {
 				<Route path="scan_products" element={<ScanQrProducts />} />
 
 				<Route path="factura" element={<Factura />} />
+				<Route path="/*" element={<Navigate to="/" />} />
+ */
+
+export const AgencyRoutes = () => {
+	return (
+		<Layout>
+			<Routes>
+				<Route path="/" element={<Dashboard />} />
+				<Route path="tracking_products" element={<TrackingByProducts />} />
+				<Route path="ungroup_container" element={<UnGroupContainer />} />
+
 				<Route path="/*" element={<Navigate to="/" />} />
 			</Routes>
 		</Layout>

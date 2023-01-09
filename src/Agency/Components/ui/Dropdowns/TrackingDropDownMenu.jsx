@@ -19,15 +19,7 @@ export const TrackingDropDownMenu = () => {
 						}`}
 					></i>
 				</div>
-				<Link
-					to="/scan_products"
-					className={`${
-						toggle ? "flex" : "hidden"
-					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
-				>
-					<i className="fas fa-users-viewfinder text-gray-500"></i>
-					<span className="flex-1 ml-3 whitespace-nowrap">Escanear Items</span>
-				</Link>
+
 				<Link
 					to="/tracking_products"
 					className={`${
@@ -36,16 +28,6 @@ export const TrackingDropDownMenu = () => {
 				>
 					<i className="fas  fa-map-location-dot  text-gray-500"> </i>
 					<span className="flex-1 ml-3 whitespace-nowrap">Tracking de Productos</span>
-				</Link>
-
-				<Link
-					to="/tracking_invoice"
-					className={`${
-						toggle ? "flex" : "hidden"
-					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
-				>
-					<i className="fas  fa-file-invoice  text-gray-500"> </i>
-					<span className="flex-1 ml-3 whitespace-nowrap">Tracking Por Facturas</span>
 				</Link>
 			</div>
 		</li>
