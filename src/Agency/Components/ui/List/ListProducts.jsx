@@ -8,21 +8,32 @@ export const ListProducts = ({
 }) => {
 	return (
 		<>
-			<div className="flex gap-6 items-center  ">
-				<div className="text-sm">
+			<div className="flex border-b py-2 items-center gap-6   ">
+				<div className=" p-2 text-xs  ">
 					Desagrupados:
-					<span className="border mx-2 p-1 rounded-lg bg-zinc-50">
+					<span className="mx-2 p-1 bg-green-600  rounded-lg text-white">
 						{unGroupProductList?.length ? unGroupProductList?.length : "0"} de{" "}
 						{selectedContainer?.ProductsQuantity}
 					</span>
 				</div>
-				
+				<div className="  p-2 text-xs  ">
+					Sobrantes:
+					<span className=" mx-2 p-1 bg-green-600  rounded-lg text-white">0</span>
+				</div>
+				<div
+					className="p-2 justify-end text-sm text-red-700 bg-red-100 rounded-lg dark:bg-gray-800 dark:text-red-400"
+					role="alert"
+				>
+					<span class="font-medium mr-4">CTE23042245722-5</span> Esta en Contenedor 4433
+				</div>
 			</div>
+
 			<div className="h-screen overflow-y-auto">
 				{unGroupProductList?.map((product, index) => (
 					<div
+					    onClick={() => handleOnSelectedProduct(product)}
 						key={index}
-						className="flex bg-white  items-center text-xs py-4 rounded-lg shadow-sm m-2 "
+						className="flex  bg-white  items-center text-xs py-4 rounded-lg shadow-sm m-2 hover:bg-gray-50 cursor-pointer "
 					>
 						<button
 							onClick={() => handleOnSelectedProduct(product)}
@@ -38,18 +49,25 @@ export const ListProducts = ({
 						</div>
 						<div class="hidden  mx-2 md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15"></div>
 
-						<div
-							className="p-2 mx-10 mb-2 text-xs  text-green-700 bg-green-100 rounded-lg dark:bg-gray-800 dark:text-green-400"
-							role="alert"
-						>
-							<span class="font-medium ">Desagrupado Correctamente</span>
-						</div>
 						<div className="flex flex-col mx-4 w-32 text-center">
-							<span className="text-xs">Fecha</span>
+							<span className="text-xs">Fecha:</span>
 							<p className="text-[11px] text-zinc-600 border p-1 rounded-lg font-semibold">
 								{product.CreatedAt ? format(parseISO(product?.CreatedAt), "MMM d h:mm a") : ""}
 							</p>
 						</div>
+						<div className="flex flex-col mx-4 w-32 text-center">
+							<span className="text-xs">Desagrupado por:</span>
+							<p className="text-[11px] text-zinc-600 border p-1 rounded-lg font-semibold">
+								{product?.UserId}
+							</p>
+						</div>
+						<div
+							className={`p-4 mx-10   mb-2 text-xs ${product.IsSpare ? "text-orange-700 bg-orange-100":"text-green-700 bg-green-100" }  rounded-lg dark:bg-gray-800 dark:text-green-400`}
+							role="alert"
+						>
+							<span class="font-medium ">{product.IsSpare ? ("No Manifestado (Sobrante)"):("Desagrupado Correctamente")}</span>
+						</div>
+						<i className="fa fa-angle-right text-zinc-500"></i>
 					</div>
 				))}
 			</div>

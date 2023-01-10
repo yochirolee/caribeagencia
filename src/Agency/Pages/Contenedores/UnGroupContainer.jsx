@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { React } from "react";
@@ -7,11 +8,12 @@ import { UnGroupContainerForm } from "../../Components/ui/Forms/UngroupContainer
 import { ListProducts } from "../../Components/ui/List/ListProducts";
 import { ListProductsInSelectedContainer } from "../../Components/ui/List/ListProductsInSelectedContainer";
 import ContainerSelect from "../../Components/ui/Selects/ContainerSelect";
+import { useFetchProductByHBL } from "../../hooks/useFetchProductByHBL";
 import { useFetchProductsInContainerByContainerId } from "../../hooks/useFetchProductsInContainerByContainerId";
 import { ProductModalDetails } from "../Tracking/Components/ProductModalDetails";
 
 const findProductInContainer = (ProductsInContainer, HBL) => {
-	const existProduct = ProductsInContainer.find((findProduct) => findProduct.HBL == HBL);
+	const existProduct = ProductsInContainer?.find((findProduct) => findProduct?.HBL == HBL);
 	return existProduct;
 };
 
@@ -28,6 +30,12 @@ const getProducts = async (selectedContainer) => {
 		.order("CreatedAt", { ascending: false });
 
 	return products;
+};
+
+const ProductExist = async (HBL) => {
+	const data = await axios.get("https://caribe-cargo-api.vercel.app/api/items/" + HBL);
+	console.log(data);
+	return data.data;
 };
 
 export const UnGroupContainer = () => {
@@ -48,16 +56,9 @@ export const UnGroupContainer = () => {
 	} = useFetchProductsInContainerByContainerId(selectedContainer);
 
 	const handleOnSave = async (product) => {
-		const productToInsert = {
-			HBL: product.HBL,
-			Location: "Desagrupe",
-			HBLLocation: product.HBL + "-" + 9,
-			ContainerId: selectedContainer.ContainerId,
-		};
-
 		await supabase
 			.from("trackingHistory_duplicate")
-			.upsert(productToInsert, { onConflict: "HBLLocation" })
+			.upsert(product, { onConflict: "HBLLocation" })
 			.select();
 	};
 
@@ -71,13 +72,35 @@ export const UnGroupContainer = () => {
 	});
 
 	//Implement isError
-	const handleUngroupContainer = (HBL) => {
+	const handleUngroupContainer = async (HBL) => {
 		if (isProductUnGrouped(unGroupProductList, HBL)) return;
 		const product = findProductInContainer(productsInContainer, HBL);
-		if (product) {
-			mutation.mutate(product);
+		console.log(product, "PRDOCUT");
+		let productToInsert = {};
+
+		if (!product) {
+			const isExist = await ProductExist(HBL);
+			console.log(isExist.data.length);
+			if (isExist.data.length == 0) return;
+			productToInsert = {
+				HBL: HBL,
+				Location: "Desagrupe",
+				HBLLocation: HBL + "-" + 9,
+				ContainerId: selectedContainer.ContainerId,
+				UserId: "Yochiro",
+				IsSpare: true,
+			};
+		} else {
+			productToInsert = {
+				HBL: product.HBL,
+				Location: "Desagrupe",
+				HBLLocation: product.HBL + "-" + 9,
+				ContainerId: selectedContainer.ContainerId,
+				UserId: "Yochiro",
+				IsSpare: false,
+			};
 		}
-		return;
+		mutation.mutate(productToInsert);
 	};
 
 	const [showModal, setShowModal] = useState(false);
@@ -111,6 +134,7 @@ export const UnGroupContainer = () => {
 				<ListProductsInSelectedContainer
 					isLoading={isLoading}
 					productsInContainer={productsInContainer}
+					unGroupProductList={unGroupProductList}
 				/>
 			</aside>
 			<div className=" p-8 container ">
@@ -124,7 +148,11 @@ export const UnGroupContainer = () => {
 					selectedContainer={selectedContainer}
 				/>
 			</div>
-			<ProductModalDetails selectedProduct={selectedProduct} showModalDetails={showModal} setShowModalDetails={setShowModal} />
+			<ProductModalDetails
+				selectedProduct={selectedProduct}
+				showModalDetails={showModal}
+				setShowModalDetails={setShowModal}
+			/>
 		</div>
 	);
 };

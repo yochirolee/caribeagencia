@@ -3,13 +3,12 @@ import { useRef } from "react";
 import { React } from "react";
 
 export const UnGroupContainerForm = ({ handleUngroupContainer, isLoadingProducts }) => {
-	
 	let unGroupHBLRef = useRef();
 
 	const handleUngroupHBL = async (e) => {
 		e.preventDefault();
-		console.log(unGroupHBLRef.current.value);
-		await handleUngroupContainer(unGroupHBLRef.current.value);
+		if(unGroupHBLRef.current.value.trim().length>10 && unGroupHBLRef.current.value.trim().length<20 )
+		await handleUngroupContainer(unGroupHBLRef.current.value.trim());
 		unGroupHBLRef.current.value = "";
 	};
 	return (
@@ -29,7 +28,13 @@ export const UnGroupContainerForm = ({ handleUngroupContainer, isLoadingProducts
 						className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 						placeholder="Producto a Desagrupar"
 					/>
-					{isLoadingProducts ? <Spinner /> : ""}
+					{isLoadingProducts ? (
+						<div className="text-center">
+							<Spinner />
+						</div>
+					) : (
+						""
+					)}
 				</div>
 			</form>
 		</>
