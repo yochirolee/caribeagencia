@@ -17,6 +17,7 @@ import { Containers } from "../Pages/Contenedores/Containers";
 import { Pallets } from "../Pages/Pallets/Pallets";
 import { CreateContainer } from "../Pages/Contenedores/CreateContainer";
 import { UnGroupContainer } from "../Pages/Contenedores/UnGroupContainer";
+import { Users } from "../Pages/Users/Users";
 
 /*
 <Route path="/" element={<Dashboard />} />
@@ -46,6 +47,7 @@ export const AgencyRoutes = () => {
 				<Route path="/" element={<Dashboard />} />
 				<Route path="tracking_products" element={<TrackingByProducts />} />
 				<Route path="ungroup_container" element={<UnGroupContainer />} />
+				<Route path="users" element={<Users />} />
 
 				<Route path="/*" element={<Navigate to="/" />} />
 			</Routes>

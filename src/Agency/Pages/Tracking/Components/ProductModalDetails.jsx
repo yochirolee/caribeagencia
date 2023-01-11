@@ -15,11 +15,12 @@ export const ProductModalDetails = ({
 		error: error,
 	} = useFetchProductByHBL(selectedProduct?.HBL);
 
+	console.log(selectedProduct,selectedProductDetails)
 	if (isError) console.log(error, "ERROR FETCHING DETAILS");
 
 	return (
 		
-			<div className="absolute w-full z-30    grid items-center   bg-gray-200/80 justify-center mx-auto">
+			<div className="absolute w-full z-30 grid items-center   bg-gray-200/80 justify-center mx-auto">
 				<div
 					id="defaultModal"
 					tabIndex="-1"
@@ -30,9 +31,9 @@ export const ProductModalDetails = ({
 							: "hidden"
 					} `}
 				>
-					<div className="relative w-full h-full max-w-2xl md:h-auto">
+					<div className="relative w-full h-screen max-w-2xl md:h-auto">
 						<div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-							<div className="flex  items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+							<div className="flex  items-center justify-between py-2 px-4 border-b rounded-t dark:border-gray-600">
 								<h3 className="text-base font-semibold text-gray-900 dark:text-white">
 									Detalles del Producto
 								</h3>
@@ -53,16 +54,17 @@ export const ProductModalDetails = ({
 							) : (
 								<div className="px-6">
 									<div className="">
-										<div className=" p-4  flex flex-col text-sm gap-2 overflow-x-auto ">
+										
+										<div className="  flex flex-col text-sm gap-2 overflow-x-auto ">
 											<ProductTrackingHistory product={selectedProductDetails} />
 										</div>
 										{selectedProductDetails ? (
 											<div>
-												<div>
-													<div className="flex items-center gap-6 my-4">
-														<div className="flex flex-row items-center gap-2">
+												<div className="">
+													<div className="flex items-center text-sm gap-6 ">
+														<div className="flex flex-row items-center  gap-2">
 															<span className="font-semibold"> Factura:</span>
-															<p className="rounded p-2  text-blue-600 underline border bg-blue-200">
+															<p className="rounded p-1  text-blue-600  border bg-blue-200">
 																<a
 																	target="_blank"
 																	href={`https://systemcaribetravel.com/ordenes/factura_print.php?id=${selectedProductDetails?.InvoiceId}`}
@@ -73,7 +75,7 @@ export const ProductModalDetails = ({
 														</div>
 														<div className="flex flex-row items-center gap-2">
 															<span className="font-semibold"> Etiquetas:</span>
-															<p className="rounded p-2  text-yellow-600 underline border bg-yellow-200">
+															<p className="rounded p-1  text-yellow-600  border bg-yellow-200">
 																<a
 																	target="_blank"
 																	href={`https://systemcaribetravel.com/ordenes/etiqueta_print_transcargo.php?id=${selectedProductDetails?.InvoiceId}`}
@@ -83,7 +85,7 @@ export const ProductModalDetails = ({
 															</p>
 														</div>
 													</div>
-													<div className="flex flex-col text-xs p-2 gap-2">
+													<div className="flex flex-col mt-4 text-xs p-2 gap-2">
 														<p>
 															<span className="font-semibold">Descripcion:</span>{" "}
 															{selectedProductDetails?.Description}
@@ -106,7 +108,7 @@ export const ProductModalDetails = ({
 														</p>
 													</div>
 												</div>
-												<div className="grid grid-cols-2 border-t pt-3 gap-10 justify-between text-xs">
+												<div className="grid grid-cols-2 border-t py-3 gap-10 justify-between text-xs">
 													<div className="flex flex-col gap-2">
 														<span className="font-semibold">Cliente:</span>
 														<div className="flex gap-2 ">

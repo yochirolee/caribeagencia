@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { React } from "react";
 import { useQueryClient, useMutation, useQuery } from "react-query";
+import { useSelector } from "react-redux";
 import { supabase } from "../../../Supabase/SupabaseClient";
 import { UnGroupContainerForm } from "../../Components/ui/Forms/UngroupContainerForm";
 import { ListProducts } from "../../Components/ui/List/ListProducts";
@@ -40,6 +41,8 @@ const ProductExist = async (HBL) => {
 
 export const UnGroupContainer = () => {
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
+	const { user } = useSelector((state) => state.Auth);
+
 	const queryClient = useQueryClient();
 
 	const { data: unGroupProductList, isLoading: isLoadingProducts } = useQuery(
@@ -87,7 +90,7 @@ export const UnGroupContainer = () => {
 				Location: "Desagrupe",
 				HBLLocation: HBL + "-" + 9,
 				ContainerId: selectedContainer.ContainerId,
-				UserId: "Yochiro",
+				UserId: user?.email,
 				IsSpare: true,
 			};
 		} else {
@@ -96,7 +99,7 @@ export const UnGroupContainer = () => {
 				Location: "Desagrupe",
 				HBLLocation: product.HBL + "-" + 9,
 				ContainerId: selectedContainer.ContainerId,
-				UserId: "Yochiro",
+				UserId: user?.email,
 				IsSpare: false,
 			};
 		}
@@ -114,7 +117,7 @@ export const UnGroupContainer = () => {
 	return (
 		<div className="flex relative   ">
 			<aside
-				className="lg:w-1/3  flex flex-col  border-r p-4 h-screen  bg-gray-50"
+				className="lg:w-1/3 h-3/5  flex flex-col  border-r p-4   bg-gray-50"
 				aria-label="Sidebar"
 			>
 				<ContainerSelect
@@ -137,7 +140,7 @@ export const UnGroupContainer = () => {
 					unGroupProductList={unGroupProductList}
 				/>
 			</aside>
-			<div className=" p-8 container ">
+			<div className=" p-8  container ">
 				<UnGroupContainerForm
 					handleUngroupContainer={handleUngroupContainer}
 					isLoadingProducts={isLoadingProducts}

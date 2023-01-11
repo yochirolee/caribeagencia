@@ -7,7 +7,7 @@ import { ProductTrackingHistory } from "./Components/ProductTrackingHistory/prod
 import { fetchInvoicesById } from "./Helpers/Invoices/fetchInvoiceById";
 
 // Create styles
-const fetchItemsHistory = async (HBL) => {
+/* const fetchItemsHistory = async (HBL) => {
 	try {
 		let { data: tracking, error } = await supabase
 			.from("tracking")
@@ -25,7 +25,7 @@ const fetchItemsHistory = async (HBL) => {
 	} catch (error) {
 		console.log(error);
 	}
-};
+}; */
 
 export const TrackingByInvoice = () => {
 	//	const InvoiceId = 5373;
