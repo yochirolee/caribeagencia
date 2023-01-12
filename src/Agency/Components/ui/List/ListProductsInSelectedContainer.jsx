@@ -21,7 +21,7 @@ export const ListProductsInSelectedContainer = ({
 			</div>
 		);
 	return (
-		<div className="h-screen overflow-y-auto">
+		<div className="md:h-screen h-20 overflow-y-auto">
 			{productsInContainer?.map((product) => (
 				<div
 					key={product?.HBL}

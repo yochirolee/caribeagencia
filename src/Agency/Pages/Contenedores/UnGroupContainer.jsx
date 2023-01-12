@@ -108,7 +108,7 @@ export const UnGroupContainer = () => {
 	};
 
 	return (
-		<div className="flex relative  overflow-x-auto ">
+		<div className="flex flex-col md:flex-row relative  overflow-x-auto ">
 			<aside
 				className="lg:w-1/3 h-3/5  flex flex-col  border-r p-4   bg-gray-50"
 				aria-label="Sidebar"
