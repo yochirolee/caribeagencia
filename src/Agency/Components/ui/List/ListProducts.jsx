@@ -13,17 +13,18 @@ export const ListProducts = ({
 		<>
 			<div className="flex border-b py-2 items-center gap-6   ">
 				<div className=" p-2 text-xs  ">
-					Desagrupados:
-					<span className="mx-2 px-2 py-1  text-blue-700 bg-blue-100  rounded-lg ">
-						{unGroupProductList?.length ? unGroupProductList?.length  : "0"}{" "}
-						
+					En Contenedor:
+					<span className="mx-2 px-2 py-1  text-violet-700 bg-violet-100  rounded-lg ">
+						{selectedContainer?.ProductsQuantity
+							? selectedContainer?.ProductsQuantity -
+							  (unGroupProductList?.length - filterResult?.length)
+							: "0"}{" "}
 					</span>
 				</div>
 				<div className=" p-2 text-xs  ">
-					En Contenedor:
-					<span className="mx-2 px-2 py-1  text-violet-700 bg-violet-100  rounded-lg ">
-						{selectedContainer?.ProductsQuantity ? selectedContainer?.ProductsQuantity -(unGroupProductList?.length - filterResult?.length )  : "0"}{" "}
-						
+					Desagrupados:
+					<span className="mx-2 px-2 py-1  text-blue-700 bg-blue-100  rounded-lg ">
+						{unGroupProductList?.length ? unGroupProductList?.length : "0"}{" "}
 					</span>
 				</div>
 				<div className=" p-2 text-xs  ">
@@ -41,7 +42,7 @@ export const ListProducts = ({
 				</div>
 			</div>
 
-			<div className="h-3/5 overflow-y-auto">
+			<div className="h-3/5 overflow-y-auto ">
 				{unGroupProductList?.map((product, index) => (
 					<div
 						onClick={() => handleOnSelectedProduct(product)}

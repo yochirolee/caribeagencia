@@ -2,17 +2,18 @@ import { Spinner } from "flowbite-react";
 import { React, useMemo } from "react";
 
 const getDif = (arr1, arr2) => {
-	console.log(arr1,"array1",arr2)
-	let difference = arr1?.filter((x) => !arr2?.includes(y=>y.HBL==x.HBL));
+	console.log(arr1, "array1", arr2);
+	let difference = arr1?.filter((x) => !arr2?.includes((y) => y.HBL == x.HBL));
 	return difference;
 };
 export const ListProductsInSelectedContainer = ({
 	isLoading,
 	productsInContainer,
 	unGroupProductList,
+	handleOnSelectedProduct,
 }) => {
 	const diffProductsInContainer = useMemo(() => getDif(productsInContainer, unGroupProductList));
-	console.log(diffProductsInContainer,"DIFFERENC")
+	console.log(diffProductsInContainer, "DIFFERENC");
 	if (isLoading)
 		return (
 			<div className="text-center">
@@ -24,7 +25,8 @@ export const ListProductsInSelectedContainer = ({
 			{productsInContainer?.map((product) => (
 				<div
 					key={product?.HBL}
-					className="flex bg-white items-center text-xs py-4 rounded-lg shadow-sm m-2 "
+					className="flex bg-white items-center text-xs py-4 rounded-lg shadow-sm m-2 cursor-pointer hover:bg-gray-100"
+					onClick={() => handleOnSelectedProduct(product)}
 				>
 					<div className="flex flex-col  items-center px-2 text-center">
 						<p className="  rounded-md text-zinc-600  font-semibold ">{product?.InvoiceId}</p>

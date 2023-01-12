@@ -115,7 +115,7 @@ export const UnGroupContainer = () => {
 	};
 
 	return (
-		<div className="flex relative   ">
+		<div className="flex relative  overflow-x-auto ">
 			<aside
 				className="lg:w-1/3 h-3/5  flex flex-col  border-r p-4   bg-gray-50"
 				aria-label="Sidebar"
@@ -138,6 +138,7 @@ export const UnGroupContainer = () => {
 					isLoading={isLoading}
 					productsInContainer={productsInContainer}
 					unGroupProductList={unGroupProductList}
+					handleOnSelectedProduct={handleOnSelectedProduct}
 				/>
 			</aside>
 			<div className=" p-8  container ">
