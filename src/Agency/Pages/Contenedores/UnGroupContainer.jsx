@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import { useEffect } from "react";
 import { React } from "react";
 import { useQueryClient, useMutation, useQuery } from "react-query";
 import { useSelector } from "react-redux";
@@ -9,7 +8,6 @@ import { UnGroupContainerForm } from "../../Components/ui/Forms/UngroupContainer
 import { ListProducts } from "../../Components/ui/List/ListProducts";
 import { ListProductsInSelectedContainer } from "../../Components/ui/List/ListProductsInSelectedContainer";
 import ContainerSelect from "../../Components/ui/Selects/ContainerSelect";
-import { useFetchProductByHBL } from "../../hooks/useFetchProductByHBL";
 import { useFetchProductsInContainerByContainerId } from "../../hooks/useFetchProductsInContainerByContainerId";
 import { ProductModalDetails } from "../Tracking/Components/ProductModalDetails";
 
@@ -35,7 +33,6 @@ const getProducts = async (selectedContainer) => {
 
 const ProductExist = async (HBL) => {
 	const data = await axios.get("https://caribe-cargo-api.vercel.app/api/items/" + HBL);
-	console.log(data);
 	return data.data;
 };
 
@@ -66,11 +63,8 @@ export const UnGroupContainer = () => {
 	};
 
 	const mutation = useMutation((product) => handleOnSave(product), {
-		onSuccess: (data, error, variables, context) => {
+		onSuccess: () => {
 			queryClient.invalidateQueries("getUnGroupProducts");
-			console.log(data, error, variables, context);
-			// Will execute only once, for the last mutation (Todo 3),
-			// regardless which mutation resolves first
 		},
 	});
 
@@ -78,7 +72,6 @@ export const UnGroupContainer = () => {
 	const handleUngroupContainer = async (HBL) => {
 		if (isProductUnGrouped(unGroupProductList, HBL)) return;
 		const product = findProductInContainer(productsInContainer, HBL);
-		console.log(product, "PRDOCUT");
 		let productToInsert = {};
 
 		if (!product) {
@@ -125,10 +118,19 @@ export const UnGroupContainer = () => {
 					setSelectedContainer={setSelectedContainer}
 				/>
 				{!!selectedContainer ? (
-					<div className="flex text-xs justify-between p-2 bg-white m-2">
-						<div>{selectedContainer?.ProductsQuantity}</div>
-						<div>{selectedContainer?.Weight} Lbs</div>
-						<div>{selectedContainer?.Master} </div>
+					<div className="inline-flex  text-xs rounded-lg shadow-md items-center gap-4 mx-auto p-2  m-2">
+						<div className="p-2 flex flex-col text-center border  rounded-lg">
+							<span>Productos</span>
+							<p>{selectedContainer?.ProductsQuantity}</p>
+						</div>
+						<div className="p-2 flex flex-col text-center border  rounded-lg">
+							<span>Peso</span>
+							<p>{selectedContainer?.Weight} Lbs </p>
+						</div>
+						<div className="p-2 flex flex-col text-center border  rounded-lg">
+							<span>Master</span>
+							<p>{selectedContainer?.Master} </p>
+						</div>
 					</div>
 				) : (
 					<></>
@@ -142,15 +144,26 @@ export const UnGroupContainer = () => {
 				/>
 			</aside>
 			<div className=" p-8  container ">
-				<UnGroupContainerForm
-					handleUngroupContainer={handleUngroupContainer}
-					isLoadingProducts={isLoadingProducts}
-				/>
-				<ListProducts
-					unGroupProductList={unGroupProductList}
-					handleOnSelectedProduct={handleOnSelectedProduct}
-					selectedContainer={selectedContainer}
-				/>
+				{selectedContainer ? (
+					<>
+						<UnGroupContainerForm
+							handleUngroupContainer={handleUngroupContainer}
+							isLoadingProducts={isLoadingProducts}
+						/>
+						<ListProducts
+							unGroupProductList={unGroupProductList}
+							handleOnSelectedProduct={handleOnSelectedProduct}
+							selectedContainer={selectedContainer}
+						/>
+					</>
+				) : (
+					<div
+						className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-gray-800 dark:text-green-400"
+						role="alert"
+					>
+						<span className="font-medium"><i className="fa fa-arrow-left mx-2"></i> Seleccione Contenedor</span> a Desagrupar
+					</div>
+				)}
 			</div>
 			<ProductModalDetails
 				selectedProduct={selectedProduct}
