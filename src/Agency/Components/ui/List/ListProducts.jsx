@@ -7,7 +7,6 @@ export const ListProducts = ({
 	selectedContainer,
 }) => {
 	const filterResult = unGroupProductList?.filter((product) => product?.IsSpare == true);
-	console.log(filterResult);
 
 	return (
 		<>
@@ -42,7 +41,7 @@ export const ListProducts = ({
 				</div>
 			</div>
 
-			<div className="h-3/5 overflow-y-auto ">
+			<div className=" h-3/5 overflow-y-auto  ">
 				{unGroupProductList?.map((product, index) => (
 					<div
 						onClick={() => handleOnSelectedProduct(product)}

@@ -76,7 +76,6 @@ export const UnGroupContainer = () => {
 
 		if (!product) {
 			const isExist = await ProductExist(HBL);
-			console.log(isExist.data.length);
 			if (isExist.data.length == 0) return;
 			productToInsert = {
 				HBL: HBL,
@@ -118,7 +117,7 @@ export const UnGroupContainer = () => {
 					setSelectedContainer={setSelectedContainer}
 				/>
 				{!!selectedContainer ? (
-					<div className="inline-flex  text-xs rounded-lg shadow-md items-center gap-4 mx-auto p-2  m-2">
+					<div className="flex   w-full bg-white  text-xs rounded-lg shadow-md items-center gap-4 mx-auto p-2  m-2">
 						<div className="p-2 flex flex-col text-center border  rounded-lg">
 							<span>Productos</span>
 							<p>{selectedContainer?.ProductsQuantity}</p>
@@ -127,7 +126,7 @@ export const UnGroupContainer = () => {
 							<span>Peso</span>
 							<p>{selectedContainer?.Weight} Lbs </p>
 						</div>
-						<div className="p-2 flex flex-col text-center border  rounded-lg">
+						<div className="p-2  flex flex-col text-center border  rounded-lg">
 							<span>Master</span>
 							<p>{selectedContainer?.Master} </p>
 						</div>
@@ -143,7 +142,7 @@ export const UnGroupContainer = () => {
 					handleOnSelectedProduct={handleOnSelectedProduct}
 				/>
 			</aside>
-			<div className=" p-8  container ">
+			<div className=" p-8   container ">
 				{selectedContainer ? (
 					<>
 						<UnGroupContainerForm
