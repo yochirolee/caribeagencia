@@ -1,9 +1,11 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 
- const fetchProductByHBL = async (HBL) => {
+const fetchProductByHBL = async (HBL) => {
+	if (!HBL) return;
 	const { data } = await axios.get("https://caribe-cargo-api.vercel.app/api/products/" + HBL);
-	return data.data;
+	console.log(data,"DATA DETAILS")
+	return data;
 };
 
 export const useFetchProductByHBL = (HBL) =>

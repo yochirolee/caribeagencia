@@ -7,8 +7,11 @@ export const UnGroupContainerForm = ({ handleUngroupContainer, isLoadingProducts
 
 	const handleUngroupHBL = async (e) => {
 		e.preventDefault();
-		if(unGroupHBLRef.current.value.trim().length>10 && unGroupHBLRef.current.value.trim().length<20 )
-		await handleUngroupContainer(unGroupHBLRef.current.value.trim());
+		if (
+			unGroupHBLRef.current.value.trim().length > 10 &&
+			unGroupHBLRef.current.value.trim().length < 20
+		)
+			await handleUngroupContainer(unGroupHBLRef.current.value.toUpperCase().trim());
 		unGroupHBLRef.current.value = "";
 	};
 	return (

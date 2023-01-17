@@ -12,7 +12,7 @@ export const Sidebar = () => {
 	return (
 		<aside aria-label="Sidebar" className={` lg:block ${toggleSideBar ? "block" : "hidden"}`}>
 			<div className="h-screen lg:pointer-events-auto lg:block w-72 lg:overflow-y-auto lg:border-r lg:border-zinc-900/10 lg:px-6 lg:pt-4 lg:pb-8 lg:dark:border-white/10 xl:w-80">
-				<div className="border-b pb-4 flex flex-nowrap gap-4  mt-10 mb-8 mx-4">
+				<div className="border-b pb-4 flex flex-nowrap gap-4  mt-20 lg:mt-6 mb-8 mx-4">
 					<img
 						className=" object-cover rounded-full h-9 w-9 mt-1"
 						src="user.png"

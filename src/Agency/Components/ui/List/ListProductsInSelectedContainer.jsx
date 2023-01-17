@@ -1,5 +1,5 @@
 import { Spinner } from "flowbite-react";
-import { React, useMemo } from "react";
+import { React } from "react";
 
 const getDif = (arr1, arr2) => {
 	let difference = arr1?.filter(({ HBL: HBL1 }) => !arr2?.some(({ HBL: HBL }) => HBL === HBL1));
@@ -12,7 +12,6 @@ export const ListProductsInSelectedContainer = ({
 	handleOnSelectedProduct,
 }) => {
 	const diffProductsInContainer = getDif(productsInContainer, unGroupProductList);
-	console.log(diffProductsInContainer, "DIFFERENC");
 	if (isLoading)
 		return (
 			<div className="text-center">
