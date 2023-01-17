@@ -4,7 +4,6 @@ import axios from "axios";
 const fetchProductByHBL = async (HBL) => {
 	if (!HBL) return;
 	const { data } = await axios.get("https://caribe-cargo-api.vercel.app/api/products/" + HBL);
-	console.log(data,"DATA DETAILS")
 	return data;
 };
 

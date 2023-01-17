@@ -11,9 +11,8 @@ export const ProductModalDetails = ({ selectedProduct, showModalDetails, setShow
 		error: error,
 	} = useFetchProductByHBL(selectedProduct?.HBL);
 
-	 if(isError)
-	 <div>{error.message}</div>
-	 
+	if (isError) <div>{error.message}</div>;
+
 	return (
 		<div className="absolute w-full z-30 grid items-center   bg-gray-200/80 justify-center mx-auto">
 			<div
@@ -61,9 +60,9 @@ export const ProductModalDetails = ({ selectedProduct, showModalDetails, setShow
 														<p className="rounded p-1  text-blue-600  border bg-blue-200">
 															<a
 																target="_blank"
-																href={`https://systemcaribetravel.com/ordenes/factura_print.php?id=${selectedProduct?.InvoiceId}`}
+																href={`https://systemcaribetravel.com/ordenes/factura_print.php?id=${selectedProductDetails?.InvoiceId}`}
 															>
-																{selectedProduct?.InvoiceId}
+																{selectedProductDetails?.InvoiceId}
 															</a>
 														</p>
 													</div>
@@ -72,9 +71,9 @@ export const ProductModalDetails = ({ selectedProduct, showModalDetails, setShow
 														<p className="rounded p-1  text-yellow-600  border bg-yellow-200">
 															<a
 																target="_blank"
-																href={`https://systemcaribetravel.com/ordenes/etiqueta_print_transcargo.php?id=${selectedProduct?.InvoiceId}`}
+																href={`https://systemcaribetravel.com/ordenes/etiqueta_print_transcargo.php?id=${selectedProductDetails?.InvoiceId}`}
 															>
-																{selectedProduct?.InvoiceId}
+																{selectedProductDetails?.InvoiceId}
 															</a>
 														</p>
 													</div>
@@ -82,11 +81,11 @@ export const ProductModalDetails = ({ selectedProduct, showModalDetails, setShow
 												<div className="flex flex-col mt-4 text-xs p-2 gap-2">
 													<p>
 														<span className="font-semibold">Descripcion:</span>{" "}
-														{selectedProduct?.Description}
+														{selectedProductDetails?.Description}
 													</p>
 													<p>
 														<span className="font-semibold">Contenedor:</span>{" "}
-														{selectedProduct?.ContainerNumber}
+														{selectedProductDetails?.ContainerNumber}
 													</p>
 													<p>
 														<span className="font-semibold">Provincia:</span>{" "}
