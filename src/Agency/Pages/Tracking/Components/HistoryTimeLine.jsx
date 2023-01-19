@@ -2,6 +2,7 @@ import { React } from "react";
 import { format, parseISO } from "date-fns";
 
 export const HistoryTimeLine = ({ history }) => {
+	console.log(history,"HISTORY")
 	return (
 		<>
 			

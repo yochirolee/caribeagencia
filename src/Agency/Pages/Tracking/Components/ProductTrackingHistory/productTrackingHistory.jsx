@@ -12,6 +12,8 @@ export const ProductTrackingHistory = ({ product }) => {
 		error,
 	} = useQuery(["product", product?.HBL], () => fetchProductTrackingHistory(product));
 
+
+	console.log(productsDetails,"PRODCUTS DETAILS")
 	if (isLoading) return <Spinner />;
 
 	if (isError) return <div>{error.message}</div>;

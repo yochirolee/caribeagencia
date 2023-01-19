@@ -10,6 +10,8 @@ import { ListProductsInSelectedContainer } from "../../Components/ui/List/ListPr
 import ContainerSelect from "../../Components/ui/Selects/ContainerSelect";
 import { useFetchProductsInContainerByContainerId } from "../../hooks/useFetchProductsInContainerByContainerId";
 import { ProductModalDetails } from "../Tracking/Components/ProductModalDetails";
+import { useSetProductLocation } from "../../hooks/useSetProductLocation";
+import { useFetchProductsByLocation } from "../../hooks/useFetchProductsByLocationId";
 
 const findProductInContainer = (ProductsInContainer, HBL) => {
 	const existProduct = ProductsInContainer?.find((findProduct) => findProduct?.HBL == HBL);
@@ -21,16 +23,6 @@ const isProductUnGrouped = (ListUnGroupedProducts, HBL) => {
 	return ListUnGroupedProducts.find((product) => product.HBL == HBL) ? true : false;
 };
 
-const getProducts = async (selectedContainer) => {
-	let { data: products, error } = await supabase
-		.from("trackingHistory_duplicate")
-		.select("*")
-		.eq("ContainerId", selectedContainer.ContainerId)
-		.order("CreatedAt", { ascending: false });
-
-	return products;
-};
-
 const ProductExist = async (HBL) => {
 	const data = await axios.get("https://caribe-cargo-api.vercel.app/api/items/" + HBL);
 	return data.data;
@@ -40,33 +32,15 @@ export const UnGroupContainer = () => {
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
 	const { user } = useSelector((state) => state.Auth);
 
-	const queryClient = useQueryClient();
+	const mutationProduct = useSetProductLocation();
 
-	const { data: unGroupProductList, isLoading: isLoadingProducts } = useQuery(
-		["getUnGroupProducts", selectedContainer],
-		() => getProducts(selectedContainer),
-		{ enabled: !!selectedContainer },
+	const { data: unGroupProductList, isLoading: isLoadingProducts } = useFetchProductsByLocation(
+		1,
+		selectedContainer?.ContainerId,
 	);
 
-	const {
-		isLoading: isLoading,
-		isError: isError,
-		data: productsInContainer,
-		error: errorProducts,
-	} = useFetchProductsInContainerByContainerId(selectedContainer);
-
-	const handleOnSave = async (product) => {
-		await supabase
-			.from("trackingHistory_duplicate")
-			.upsert(product, { onConflict: "HBLLocation" })
-			.select();
-	};
-
-	const mutation = useMutation((product) => handleOnSave(product), {
-		onSuccess: () => {
-			queryClient.invalidateQueries("getUnGroupProducts");
-		},
-	});
+	const { isLoading: isLoading, data: productsInContainer } =
+		useFetchProductsInContainerByContainerId(selectedContainer);
 
 	//Implement isError
 	const handleUngroupContainer = async (HBL) => {
@@ -79,23 +53,18 @@ export const UnGroupContainer = () => {
 			if (isExist.data.length == 0) return;
 			productToInsert = {
 				HBL: HBL,
-				Location: "Desagrupe",
-				HBLLocation: HBL + "-" + 9,
-				ContainerId: selectedContainer.ContainerId,
 				UserId: user?.email,
+				ContainerId: selectedContainer.ContainerId,
 				IsSpare: true,
 			};
 		} else {
 			productToInsert = {
 				HBL: product.HBL,
-				Location: "Desagrupe",
-				HBLLocation: product.HBL + "-" + 9,
-				ContainerId: selectedContainer.ContainerId,
 				UserId: user?.email,
-				IsSpare: false,
+				ContainerId: selectedContainer.ContainerId,
 			};
 		}
-		mutation.mutate(productToInsert);
+		mutationProduct.mutate(productToInsert);
 	};
 
 	const [showModal, setShowModal] = useState(false);
@@ -107,11 +76,8 @@ export const UnGroupContainer = () => {
 	};
 
 	return (
-		<div className="flex flex-col md:flex-row relative  overflow-x-auto ">
-			<aside
-				className="lg:w-1/3 h-3/5  flex flex-col  border-r p-4   bg-gray-50"
-				aria-label="Sidebar"
-			>
+		<div className="flex flex-col  lg:h-[calc(100vh-60px)] md:flex-row relative   overflow-y-auto ">
+			<aside className="lg:w-2/6  flex flex-col  border-r p-4  text-sm overflow-y-auto bg-gray-50">
 				<ContainerSelect
 					selectedContainer={selectedContainer}
 					setSelectedContainer={setSelectedContainer}
@@ -150,7 +116,7 @@ export const UnGroupContainer = () => {
 							isLoadingProducts={isLoadingProducts}
 						/>
 						<ListProducts
-							unGroupProductList={unGroupProductList}
+							productList={unGroupProductList}
 							handleOnSelectedProduct={handleOnSelectedProduct}
 							selectedContainer={selectedContainer}
 						/>
@@ -160,7 +126,10 @@ export const UnGroupContainer = () => {
 						className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-gray-800 dark:text-green-400"
 						role="alert"
 					>
-						<span className="font-medium"><i className="fa fa-arrow-left mx-2"></i> Seleccione Contenedor</span> a Desagrupar
+						<span className="font-medium">
+							<i className="fa fa-arrow-left mx-2"></i> Seleccione Contenedor
+						</span>{" "}
+						a Desagrupar
 					</div>
 				)}
 			</div>

@@ -2,34 +2,34 @@ import { React } from "react";
 import { format, parseISO } from "date-fns";
 
 export const ListProducts = ({
-	unGroupProductList,
+	productList,
 	handleOnSelectedProduct,
 	selectedContainer,
 }) => {
-	const filterResult = unGroupProductList?.filter((product) => product?.IsSpare == true);
+	const filterResult = productList?.filter((product) => product?.IsSpare == true);
 
 	return (
 		<>
-			<div className="flex  border-b py-2 items-center md:gap-6   ">
+			<div className="flex border-b py-2 items-center md:gap-6   ">
 				<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
 					En Contenedor:
 					<span className="mx-2 px-2 py-1  text-violet-700 bg-violet-100  rounded-lg ">
 						{selectedContainer?.ProductsQuantity
 							? selectedContainer?.ProductsQuantity -
-							  (unGroupProductList?.length - filterResult?.length)
+							  (productList?.length - filterResult?.length)
 							: "0"}{" "}
 					</span>
 				</div>
 				<div className=" p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
 					Desagrupados:
 					<span className="mx-2 px-2 py-1  text-blue-700 bg-blue-100  rounded-lg ">
-						{unGroupProductList?.length ? unGroupProductList?.length : "0"}{" "}
+						{productList?.length ? productList?.length : "0"}{" "}
 					</span>
 				</div>
 				<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center">
 					Correctos:
 					<span className="mx-2 px-2 py-1 text-green-700 bg-green-100 rounded-lg ">
-						{unGroupProductList?.length ? unGroupProductList?.length - filterResult?.length : "0"}{" "}
+						{productList?.length ? productList?.length - filterResult?.length : "0"}{" "}
 						de {selectedContainer?.ProductsQuantity}
 					</span>
 				</div>
@@ -41,8 +41,8 @@ export const ListProducts = ({
 				</div>
 			</div>
 
-			<div className=" h-3/5 overflow-y-auto  ">
-				{unGroupProductList?.map((product, index) => (
+			<div className=" h-4/5 overflow-y-auto  ">
+				{productList?.map((product, index) => (
 					<div
 						onClick={() => handleOnSelectedProduct(product)}
 						key={index}

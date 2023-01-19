@@ -50,12 +50,28 @@ export const fetchProductTrackingHistory = async (product) => {
 	if (!product) return;
 	let productHistory = createProductHistory(product);
 
-	let { data: tracking, error } = await supabase
-		.from("trackingHistory")
-		.select("*")
+	let { data: trackingHistory, error } = await supabase
+		.from("trackingLocationHistory")
+		.select(
+			`
+		CreatedAt,
+		locations (  
+		  LocationName
+		  
+		)
+	  `,
+		)
 		.order("CreatedAt", { ascending: false })
 		.eq("HBL", product.HBL);
 
+	console.log(trackingHistory, "tracking History ASSSSSSSSSSSssssss", error);
+	let tracking = trackingHistory?.map((location) => ({
+		HBL: location?.HBL,
+		Location: location?.locations?.LocationName,
+		CreatedAt: location?.CreatedAt,
+	}));
+
+	console.log(tracking, "TARCKING");
 	if (error) throw new Error(error.message);
 	if (tracking) productHistory = [...tracking, ...productHistory];
 	return productHistory;
