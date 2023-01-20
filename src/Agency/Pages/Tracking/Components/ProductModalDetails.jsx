@@ -14,41 +14,47 @@ export const ProductModalDetails = ({ selectedProduct, showModalDetails, setShow
 	if (isError) <div>{error.message}</div>;
 
 	return (
-		<div className="absolute w-full z-30 grid items-center   bg-gray-200/80 justify-center mx-auto">
-			<div
-				id="defaultModal"
-				tabIndex="-1"
-				aria-hidden="true"
-				className={`${
-					showModalDetails
-						? " top-0 left-0 right-0  w-full mx-auto p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full "
-						: "hidden"
-				} `}
-			>
-				<div className="relative w-full h-screen max-w-2xl md:h-auto">
-					<div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-						<div className="flex  items-center justify-between py-2 px-4 border-b rounded-t dark:border-gray-600">
-							<h3 className="text-base font-semibold text-gray-900 dark:text-white">
-								Detalles del Producto
-							</h3>
-							<button
-								type="button"
-								onClick={() => setShowModalDetails(false)}
-								className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-								data-modal-toggle="defaultModal"
-							>
-								<i className="fa fa-close text-lg"></i>
-								<span className="sr-only">Close modal</span>
-							</button>
-						</div>
-						{isLoading ? (
-							<div className="flex justify-center m-4">
-								<Spinner />
+		<div
+			className={`absolute w-full  z-30 grid place-items-center  bg-gray-200/80 justify-center ${
+				showModalDetails ? "h-full" : ""
+			} `}
+		>
+			{isLoading ? (
+				<div className="flex flex-col items-center p-2 justify-center m-4">
+					<Spinner />
+					<p className="animate-pulse text-sm mt-2">Cargando por Favor Espere</p>
+				</div>
+			) : (
+				<div
+					id="defaultModal"
+					tabIndex="-1"
+					aria-hidden="true"
+					className={`${
+						showModalDetails
+							? " top-0 left-0 right-0  w-full mx-auto p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full "
+							: "hidden"
+					} `}
+				>
+					<div className="relative w-full h-screen max-w-2xl md:h-auto">
+						<div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+							<div className="flex  items-center justify-between py-2 px-4 border-b rounded-t dark:border-gray-600">
+								<h3 className="text-base font-semibold text-gray-900 dark:text-white">
+									Detalles del Producto
+								</h3>
+								<button
+									type="button"
+									onClick={() => setShowModalDetails(false)}
+									className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+									data-modal-toggle="defaultModal"
+								>
+									<i className="fa fa-close text-lg"></i>
+									<span className="sr-only">Close modal</span>
+								</button>
 							</div>
-						) : (
+
 							<div className="px-6">
 								<div className="">
-									<div className="  flex flex-col text-sm gap-2 overflow-x-auto ">
+									<div className="  flex flex-col text-sm gap-2 mb-4 overflow-x-auto ">
 										<ProductTrackingHistory product={selectedProductDetails} />
 									</div>
 									{selectedProduct ? (
@@ -136,21 +142,21 @@ export const ProductModalDetails = ({ selectedProduct, showModalDetails, setShow
 									)}
 								</div>
 							</div>
-						)}
 
-						<div className="flex  items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-							<button
-								onClick={() => setShowModalDetails(false)}
-								data-modal-toggle="defaultModal"
-								type="button"
-								className="text-white mx-auto bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-							>
-								Cerrar
-							</button>
+							<div className="flex  items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+								<button
+									onClick={() => setShowModalDetails(false)}
+									data-modal-toggle="defaultModal"
+									type="button"
+									className="text-white mx-auto bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+								>
+									Cerrar
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 };

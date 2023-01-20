@@ -64,14 +64,12 @@ export const fetchProductTrackingHistory = async (product) => {
 		.order("CreatedAt", { ascending: false })
 		.eq("HBL", product.HBL);
 
-	console.log(trackingHistory, "tracking History ASSSSSSSSSSSssssss", error);
 	let tracking = trackingHistory?.map((location) => ({
 		HBL: location?.HBL,
 		Location: location?.locations?.LocationName,
 		CreatedAt: location?.CreatedAt,
 	}));
 
-	console.log(tracking, "TARCKING");
 	if (error) throw new Error(error.message);
 	if (tracking) productHistory = [...tracking, ...productHistory];
 	return productHistory;

@@ -20,7 +20,6 @@ export const PendingDelivery = () => {
 	const mutationProduct = useSetProductLocation(null);
 
 	const handleHBL = (HBL) => {
-		console.log(HBL, "HBL ");
 		const product = products.find((product) => product.HBL === HBL);
 		if (product) {
 			mutationProduct.mutate(product);
