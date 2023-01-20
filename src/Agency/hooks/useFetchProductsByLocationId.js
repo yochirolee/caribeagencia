@@ -4,17 +4,19 @@ import { supabase } from "../../Supabase/SupabaseClient";
 export const getProductsByLocation = async (LocationId = undefined, ContainerId = undefined) => {
 	try {
 		if (!LocationId) return;
-		if ( ContainerId) {
+		if (ContainerId) {
 			let { data: products, error } = await supabase
 				.from("trackingLocation")
 				.select("*")
-				.match({  ContainerId });
+				.match({ ContainerId })
+				.order("CreatedAt", { ascending: false });
 			return products;
 		} else {
 			let { data: products, error } = await supabase
 				.from("trackingLocation")
 				.select("*")
-				.eq("LocationId", LocationId);
+				.eq("LocationId", LocationId)
+				.order("CreatedAt", { ascending: false });
 			return products;
 		}
 	} catch (error) {

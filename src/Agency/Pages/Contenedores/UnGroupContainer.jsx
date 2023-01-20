@@ -77,7 +77,7 @@ export const UnGroupContainer = () => {
 
 	return (
 		<div className="flex flex-col  lg:h-[calc(100vh-60px)] md:flex-row relative   overflow-y-auto ">
-			<aside className="lg:w-2/6  flex flex-col  border-r p-4  text-sm overflow-y-auto bg-gray-50">
+			<aside className="min-w-[300px] lg:w-2/6  overflow-x-hidden flex flex-col  border-r p-4  text-sm overflow-y-auto bg-gray-50">
 				<ContainerSelect
 					selectedContainer={selectedContainer}
 					setSelectedContainer={setSelectedContainer}
@@ -108,7 +108,7 @@ export const UnGroupContainer = () => {
 					handleOnSelectedProduct={handleOnSelectedProduct}
 				/>
 			</aside>
-			<div className=" p-8   container ">
+			<div className=" p-8 w-full  container ">
 				{selectedContainer ? (
 					<>
 						<UnGroupContainerForm
