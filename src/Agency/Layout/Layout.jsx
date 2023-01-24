@@ -1,4 +1,5 @@
 import { React } from "react";
+import { AlertPopup } from "../Components/Alert/AlertPopup";
 import { Navbar } from "../Components/ui/Navbar";
 import { Sidebar } from "../Components/ui/Sidebar";
 
@@ -8,7 +9,10 @@ export const Layout = ({ children }) => {
 			<Sidebar />
 			<div className=" w-full  h-screen overflow-y-auto ">
 				<Navbar />
-				<div className=" h-screen-[56px] mt-14  ">{children}</div>
+				<div className=" h-screen-[56px] mt-14 relative  ">
+					<AlertPopup />
+					{children}
+				</div>
 			</div>
 		</div>
 	);

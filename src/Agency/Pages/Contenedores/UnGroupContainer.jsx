@@ -1,10 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
-import { React } from "react";
-import { useQueryClient, useMutation, useQuery } from "react-query";
-import { useSelector } from "react-redux";
-import { supabase } from "../../../Supabase/SupabaseClient";
-import { UnGroupContainerForm } from "../../Components/ui/Forms/UngroupContainerForm";
+import { React, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ListProducts } from "../../Components/ui/List/ListProducts";
 import { ListProductsInSelectedContainer } from "../../Components/ui/List/ListProductsInSelectedContainer";
 import ContainerSelect from "../../Components/ui/Selects/ContainerSelect";
@@ -12,16 +8,8 @@ import { useFetchProductsInContainerByContainerId } from "../../hooks/useFetchPr
 import { ProductModalDetails } from "../Tracking/Components/ProductModalDetails";
 import { useSetProductLocation } from "../../hooks/useSetProductLocation";
 import { useFetchProductsByLocation } from "../../hooks/useFetchProductsByLocationId";
-
-const findProductInContainer = (ProductsInContainer, HBL) => {
-	const existProduct = ProductsInContainer?.find((findProduct) => findProduct?.HBL == HBL);
-	return existProduct;
-};
-
-const isProductUnGrouped = (ListUnGroupedProducts, HBL) => {
-	if (!!ListProductsInSelectedContainer | !!HBL) return;
-	return ListUnGroupedProducts.find((product) => product.HBL == HBL) ? true : false;
-};
+import { InputHBL } from "../../Components/ui/Forms/InputHBL";
+import { setAlert } from "../../Store/Slices/Alert/AlertSlice";
 
 const ProductExist = async (HBL) => {
 	const data = await axios.get("https://caribe-cargo-api.vercel.app/api/items/" + HBL);
@@ -29,6 +17,7 @@ const ProductExist = async (HBL) => {
 };
 
 export const UnGroupContainer = () => {
+	const dispatch = useDispatch();
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
 	const { user } = useSelector((state) => state.Auth);
 
@@ -44,13 +33,26 @@ export const UnGroupContainer = () => {
 
 	//Implement isError
 	const handleUngroupContainer = async (HBL) => {
-		if (isProductUnGrouped(unGroupProductList, HBL)) return;
-		const product = findProductInContainer(productsInContainer, HBL);
+		if (unGroupProductList.find((product) => product.HBL == HBL)) {
+			dispatch(setAlert({ text: HBL + " ya fue Desagrupado", type: "Warning" }));
+			setTimeout(() => {
+				dispatch(setAlert({ text: "", type: "" }));
+			}, 3000);
+			return;
+		}
 		let productToInsert = {};
+
+		const product = productsInContainer?.find((findProduct) => findProduct?.HBL == HBL);
 
 		if (!product) {
 			const isExist = await ProductExist(HBL);
-			if (isExist.data.length == 0) return;
+			if (isExist.data.length == 0) {
+				dispatch(setAlert({ text: HBL + " No Existe", type: "Error" }));
+				setTimeout(() => {
+					dispatch(setAlert({ text: "", type: "" }));
+				}, 3000);
+				return;
+			}
 			productToInsert = {
 				HBL: HBL,
 				UserId: user?.email,
@@ -106,15 +108,14 @@ export const UnGroupContainer = () => {
 					productsInContainer={productsInContainer}
 					unGroupProductList={unGroupProductList}
 					handleOnSelectedProduct={handleOnSelectedProduct}
+					handleUngroupContainer={handleUngroupContainer}
 				/>
 			</aside>
 			<div className=" p-8 w-full  container ">
 				{selectedContainer ? (
 					<>
-						<UnGroupContainerForm
-							handleUngroupContainer={handleUngroupContainer}
-							isLoadingProducts={isLoadingProducts}
-						/>
+						<InputHBL handleHBL={handleUngroupContainer} isLoadingProducts={isLoadingProducts} placeHolder='Producto a Desagrupar' />
+
 						<ListProducts
 							productList={unGroupProductList}
 							handleOnSelectedProduct={handleOnSelectedProduct}
@@ -128,7 +129,7 @@ export const UnGroupContainer = () => {
 					>
 						<span className="font-medium">
 							<i className="fa fa-arrow-left mx-2"></i> Seleccione Contenedor
-						</span>{" "}
+						</span>
 						a Desagrupar
 					</div>
 				)}

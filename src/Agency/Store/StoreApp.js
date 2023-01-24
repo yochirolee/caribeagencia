@@ -6,6 +6,7 @@ import { ProductsSlice } from "./Slices/Products/ProductsSlice";
 import { RecieversSlice } from "./Slices/Recievers/RecieversSlices";
 import { uiSlice } from "./Slices/Ui/uiSlice";
 import { AuthSlice } from "./Auth/AuthSlice";
+import { AlertSlice } from "./Slices/Alert/AlertSlice";
 
 export const store = configureStore({
 	reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
 		CategoriesSlice: CategoriesSlice.reducer,
 		uiSlice: uiSlice.reducer,
 		Auth: AuthSlice.reducer,
+		AlertSlice: AlertSlice.reducer,
 	},
 });

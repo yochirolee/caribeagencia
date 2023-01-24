@@ -1,11 +1,7 @@
 import { React } from "react";
 import { format, parseISO } from "date-fns";
 
-export const ListProducts = ({
-	productList,
-	handleOnSelectedProduct,
-	selectedContainer,
-}) => {
+export const ListProducts = ({ productList, handleOnSelectedProduct, selectedContainer }) => {
 	const filterResult = productList?.filter((product) => product?.IsSpare == true);
 
 	return (
@@ -15,8 +11,7 @@ export const ListProducts = ({
 					En Contenedor:
 					<span className="mx-2 px-2 py-1  text-violet-700 bg-violet-100  rounded-lg ">
 						{selectedContainer?.ProductsQuantity
-							? selectedContainer?.ProductsQuantity -
-							  (productList?.length - filterResult?.length)
+							? selectedContainer?.ProductsQuantity - (productList?.length - filterResult?.length)
 							: "0"}{" "}
 					</span>
 				</div>
@@ -29,8 +24,8 @@ export const ListProducts = ({
 				<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center">
 					Correctos:
 					<span className="mx-2 px-2 py-1 text-green-700 bg-green-100 rounded-lg ">
-						{productList?.length ? productList?.length - filterResult?.length : "0"}{" "}
-						de {selectedContainer?.ProductsQuantity}
+						{productList?.length ? productList?.length - filterResult?.length : "0"} de{" "}
+						{selectedContainer?.ProductsQuantity}
 					</span>
 				</div>
 				<div className=" p-2 text-xs flex flex-col md:flex-row items-center text-center  ">

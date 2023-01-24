@@ -20,24 +20,35 @@ export const NationalizeProducts = () => {
 	const mutationProduct = useSetProductLocation(null);
 
 	const handleHBL = (HBL) => {
-		console.log(HBL, "HBL ");
 		const product = products.find((product) => product.HBL === HBL);
 		if (product) {
 			mutationProduct.mutate(product);
 		}
 	};
 
-	if (isLoading) return <Spinner />;
+	if (isLoading)
+		return (
+			<div className="text-center">
+				<Spinner />
+			</div>
+		);
 	return (
 		<div className="flex flex-col  lg:h-[calc(100vh-60px)] md:flex-row relative   overflow-y-auto ">
 			<aside
 				className="lg:w-2/6  flex flex-col  border-r p-4  text-sm overflow-y-auto bg-gray-50"
 				aria-label="Sidebar"
 			>
-				<h3 className="p-2 border-b font-semibold text-sm">Productos Desagrupados</h3>
+				<div className="flex justify-between  items-center p-2 border-b font-semibold text-sm">
+					<h3>Productos Desagrupados:</h3>
+					<span className="mx-2 px-2 py-1 text-green-700 bg-green-100 rounded-lg ">
+						{products.length}
+					</span>
+				</div>
+
 				{products?.map((product, index) => (
 					<div
 						key={index}
+						onClick={()=>handleOnSelectedProduct(product)}
 						className="flex p-2 text-xs border my-1 rounded-lg shadow-sm items-center cursor-pointer hover:bg-gray-100"
 					>
 						<div className="flex flex-col  items-center px-1 text-center">
@@ -65,10 +76,16 @@ export const NationalizeProducts = () => {
 					<h3 className="p-2 border-b font-semibold text-sm">Productos Nacionalizados</h3>
 					<div className="text-xs flex gap-2 border p-1 rounded-lg">
 						<h3>Nacionalizados:</h3>
-						<span>{nationalizeProducts?.length}</span>
+						<span className="mx-2 px-2 py-1 text-green-700 bg-green-100 rounded-lg ">
+							{nationalizeProducts?.length}
+						</span>
 					</div>
 				</div>
-				<ListProducts productList={nationalizeProducts} selectedContainer={products} handleOnSelectedProduct={handleOnSelectedProduct} />
+				<ListProducts
+					productList={nationalizeProducts}
+					selectedContainer={products}
+					handleOnSelectedProduct={handleOnSelectedProduct}
+				/>
 			</div>
 			<ProductModalDetails
 				selectedProduct={selectedProduct}

@@ -7,8 +7,13 @@ export const InputHBL = ({ handleHBL, isLoadingProducts, placeHolder }) => {
 
 	const handleHBLAction = (e) => {
 		e.preventDefault();
-		if (HBL.current.value.trim().length > 10 && HBL.current.value.trim().length < 20)
+		if (HBL.current.value.trim().length > 3 && HBL.current.value.trim().length < 20) {
 			handleHBL(HBL.current.value.toUpperCase().trim());
+		} else {
+			const splitter = HBL.current.value.split(",");
+			HBL.current.value = splitter[1];
+			handleHBL(HBL.current.value.toUpperCase().trim());
+		}
 		HBL.current.value = "";
 	};
 	return (

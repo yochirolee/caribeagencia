@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { React } from "react";
 import { useForm } from "react-hook-form";
-import { supabase } from "../../../../Supabase/SupabaseClient";
 
 export const Search = ({ isLoading, setFindProduct }) => {
 	const {
@@ -11,10 +9,10 @@ export const Search = ({ isLoading, setFindProduct }) => {
 		formState: { errors },
 	} = useForm();
 
+	
 	const onSubmit = async (data) => {
-		
-
-		setFindProduct(data);
+	
+		setFindProduct(data.HBL);
 	};
 
 	return (

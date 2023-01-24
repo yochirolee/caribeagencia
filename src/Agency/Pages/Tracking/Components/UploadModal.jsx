@@ -32,7 +32,7 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 					const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
 
 					let listItems = rows.map((row) => {
-						if (!!row) return { HBL: row.HBL, Location: Location.Location };
+						if (!!row) return { HBL: row.HBL, LocationId: Location.LocationId };
 					});
 					console.log(listItems, "LIST ITEMS");
 					if (listItems.length > 0) {
@@ -48,7 +48,7 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 	const onSubmit = async (data, e) => {
 		e.preventDefault();
 		if (data.TrackingId.length > 8) {
-			let newTracking = { HBL: data.TrackingId, Location: Location.Location };
+			let newTracking = { HBL: data.TrackingId, LocationId: Location.LocationId };
 
 			setItemsToUpdate([...itemsToUpdate, newTracking]);
 			console.log(itemsToUpdate);
@@ -60,7 +60,7 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 	const handleOnSave = async () => {
 		setIsLoading(true);
 		const response = await supabase
-			.from("tracking")
+			.from("trackingLocation")
 			.upsert(itemsToUpdate, { onConflict: "HBL" })
 			.select("*");
 		const { data, status, statusText } = response;
@@ -68,8 +68,8 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 		console.log(data, status, statusText, "tracking SElecting");
 
 		const dataToInsert = itemsToUpdate.map((product) => {
-			product.HBLLocation = product.HBL + "-" + Location.LocationId;
-			product.Location = Location.Location;
+			product.HBLLocationHistory = product.HBL + "-" + Location.LocationId;
+			product.LocationId = Location.LocationId;
 			return product;
 		});
 
@@ -78,9 +78,10 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 			error: errorHistory,
 			statusText: statusText2,
 		} = await supabase
-			.from("trackingHistory")
-			.upsert(dataToInsert, { onConflict: "HBLLocation" })
+			.from("trackingLocationHistory")
+			.upsert(dataToInsert, { onConflict: "HBLLocationHistory" })
 			.select();
+		console.log(history, errorHistory, "HISTORY");
 		if (data) setShowModal(false);
 
 		setIsLoading(false);
@@ -112,7 +113,7 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 					<div className="relative flex flex-col gap-2 bg-white text-center rounded-lg shadow dark:bg-gray-700">
 						<div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
 							<h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-								Cambiar a {Location.Location}
+								Cambiar a {Location.LocationName}
 							</h3>
 							<button
 								onClick={() => handleCloseModal()}
@@ -195,7 +196,7 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 												</th>
 												<td className="py-4 px-6 ">
 													<span className="border px-2 py-0.5 rounded-lg text-xs text-white bg-green-500">
-														{item.Location}
+														{item.LocationName}
 													</span>
 												</td>
 

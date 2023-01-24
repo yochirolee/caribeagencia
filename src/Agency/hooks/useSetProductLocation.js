@@ -5,7 +5,6 @@ const changeProductLocation = async (product) => {
 	if (!product) return;
 	try {
 		product.LocationId = product.LocationId ? product.LocationId + 1 : 1;
-		delete product.CreatedAt;
 		const { data: productTracking, error: errorTracking } = await supabase
 			.from("trackingLocation")
 			.upsert(product, { onConflict: "HBL" })

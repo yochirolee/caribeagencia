@@ -18,13 +18,14 @@ export const ListProductsInSelectedContainer = ({
 				<Spinner />
 			</div>
 		);
+
 	return (
 		<div className="md:h-screen h-20 overflow-y-auto">
 			{diffProductsInContainer?.map((product) => (
 				<div
+					onClick={() => handleOnSelectedProduct(product)}
 					key={product?.HBL}
 					className="flex bg-white items-center  text-xs py-4 rounded-lg shadow-sm m-2 cursor-pointer hover:bg-gray-100  hover:ring-1"
-					onClick={() => handleOnSelectedProduct(product)}
 				>
 					<div className="flex flex-col  items-center px-2 text-center">
 						<p className="  rounded-md  text-blue-500/90  font-semibold ">{product?.InvoiceId}</p>

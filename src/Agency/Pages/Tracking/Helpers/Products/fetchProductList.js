@@ -8,10 +8,13 @@ export const fetchProductList = async () => {
 
 export const fetchTrackingProductHistory = async ({ search }) => {
 	if (search.length > 8) {
-		let { data: tracking, error } = await supabase.from("tracking").select("*").eq("HBL", search);
+		let { data: tracking, error } = await supabase
+			.from("trackingLocation")
+			.select("*")
+			.eq("HBL", search);
 		return tracking;
 	} else {
- 		let { data: tracking, error } = await supabase.from("tracking").select("*");
+		let { data: tracking, error } = await supabase.from("trackingLocation").select("*");
 		return tracking;
 	}
 };

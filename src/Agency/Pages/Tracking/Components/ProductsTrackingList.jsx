@@ -35,7 +35,7 @@ export const ProductsTrackingList = ({ productList, handleSelectedProduct }) => 
 									</td>
 									<td className=" ">
 										<span className="rounded my-6 p-2 border bg-green-500 border-green-500 text-white ">
-											{product?.Location}
+											{product?.LocationId}
 										</span>
 									</td>
 								</tr>
