@@ -55,7 +55,6 @@ export const AgencyRoutes = () => {
 				<Route path="in_delivery" element={<InDelivery />} />
 				<Route path="done_delivery" element={<DeliveryDone />} />
 				<Route path="users" element={<Users />} />
-
 				<Route path="/*" element={<Navigate to="/" />} />
 			</Routes>
 		</Layout>
