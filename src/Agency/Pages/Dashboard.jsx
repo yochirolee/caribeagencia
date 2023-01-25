@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { React, useState } from "react";
-import { supabase } from "../../../../ctenvios/Supabase/SupabaseClient";
 import { SearchResult } from "../Components/Search/searchResult";
 import { InputHBL } from "../Components/ui/Forms/InputHBL";
 import { useFetchByInvoiceOrHBL } from "../hooks/useFetchByInvoiceOrHBL";
