@@ -51,7 +51,7 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 			let newTracking = { HBL: data.TrackingId, LocationId: Location.LocationId };
 
 			setItemsToUpdate([...itemsToUpdate, newTracking]);
-			console.log(itemsToUpdate);
+			console.log(itemsToUpdate,"ITEMS TO UPDATE");
 
 			reset();
 		}

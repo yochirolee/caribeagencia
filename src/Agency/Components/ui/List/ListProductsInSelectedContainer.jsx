@@ -2,6 +2,7 @@ import { Spinner } from "flowbite-react";
 import { React } from "react";
 
 const getDif = (arr1, arr2) => {
+	console.log(arr2);
 	let difference = arr1?.filter(({ HBL: HBL1 }) => !arr2?.some(({ HBL: HBL }) => HBL === HBL1));
 	return difference;
 };
@@ -23,11 +24,13 @@ export const ListProductsInSelectedContainer = ({
 		<div className="md:h-screen h-20 overflow-y-auto">
 			{diffProductsInContainer?.map((product) => (
 				<div
-					onClick={() => handleOnSelectedProduct(product)}
 					key={product?.HBL}
 					className="flex bg-white items-center  text-xs py-4 rounded-lg shadow-sm m-2 cursor-pointer hover:bg-gray-100  hover:ring-1"
 				>
-					<div className="flex flex-col  items-center px-2 text-center">
+					<div
+						onClick={() => handleOnSelectedProduct(product)}
+						className="flex flex-col  items-center px-2 text-center"
+					>
 						<p className="  rounded-md  text-blue-500/90  font-semibold ">{product?.InvoiceId}</p>
 						<span>Factura</span>
 					</div>

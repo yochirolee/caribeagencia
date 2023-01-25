@@ -12,7 +12,6 @@ export const ProductTrackingHistory = ({ product }) => {
 		error,
 	} = useQuery(["product", product?.HBL], () => fetchProductTrackingHistory(product));
 
-
 	if (isLoading) return <Spinner />;
 
 	if (isError) return <div>{error.message}</div>;
@@ -24,9 +23,9 @@ export const ProductTrackingHistory = ({ product }) => {
 					<p className="font-semibold text-center border p-4 bg-blue-600 text-white rounded-lg">
 						<p>{product?.Agency}</p>
 					</p>
-					<div>
+					<div className="flex flex-col">
 						<p className="text-xs font-semibold ">{product?.HBL}</p> {product?.Description}{" "}
-						{product?.Weight}
+						<p>{product?.Weight} Lbs</p>
 					</div>
 				</div>
 

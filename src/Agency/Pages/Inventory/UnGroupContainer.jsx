@@ -10,6 +10,7 @@ import { useSetProductLocation } from "../../hooks/useSetProductLocation";
 import { useFetchProductsByLocation } from "../../hooks/useFetchProductsByLocationId";
 import { InputHBL } from "../../Components/ui/Forms/InputHBL";
 import { setAlert } from "../../Store/Slices/Alert/AlertSlice";
+import { UnGroupContainerStats } from "../../Components/ui/Stats/UnGroupContainerStats";
 
 const ProductExist = async (HBL) => {
 	const data = await axios.get("https://caribe-cargo-api.vercel.app/api/items/" + HBL);
@@ -58,12 +59,16 @@ export const UnGroupContainer = () => {
 				UserId: user?.email,
 				ContainerId: selectedContainer.ContainerId,
 				IsSpare: true,
+				Description: product.Description,
+				InvoiceId: product.InvoiceId,
 			};
 		} else {
 			productToInsert = {
 				HBL: product.HBL,
 				UserId: user?.email,
 				ContainerId: selectedContainer.ContainerId,
+				Description: product.Description,
+				InvoiceId: product.InvoiceId,
 			};
 		}
 		mutationProduct.mutate(productToInsert);
@@ -102,7 +107,6 @@ export const UnGroupContainer = () => {
 				) : (
 					<></>
 				)}
-
 				<ListProductsInSelectedContainer
 					isLoading={isLoading}
 					productsInContainer={productsInContainer}
@@ -114,7 +118,15 @@ export const UnGroupContainer = () => {
 			<div className=" p-8 w-full  container ">
 				{selectedContainer ? (
 					<>
-						<InputHBL handleHBL={handleUngroupContainer} isLoadingProducts={isLoadingProducts} placeHolder='Producto a Desagrupar' />
+						<InputHBL
+							handleHBL={handleUngroupContainer}
+							isLoadingProducts={isLoadingProducts}
+							placeHolder="Producto a Desagrupar"
+						/>
+						<UnGroupContainerStats
+							productList={unGroupProductList}
+							selectedContainer={selectedContainer}
+						/>
 
 						<ListProducts
 							productList={unGroupProductList}

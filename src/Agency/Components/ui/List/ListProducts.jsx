@@ -1,59 +1,30 @@
 import { React } from "react";
 import { format, parseISO } from "date-fns";
 
-export const ListProducts = ({ productList, handleOnSelectedProduct, selectedContainer }) => {
-	const filterResult = productList?.filter((product) => product?.IsSpare == true);
-
+export const ListProducts = ({ productList, handleOnSelectedProduct }) => {
 	return (
 		<>
-			<div className="flex border-b py-2 items-center md:gap-6   ">
-				<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
-					En Contenedor:
-					<span className="mx-2 px-2 py-1  text-violet-700 bg-violet-100  rounded-lg ">
-						{selectedContainer?.ProductsQuantity
-							? selectedContainer?.ProductsQuantity - (productList?.length - filterResult?.length)
-							: "0"}{" "}
-					</span>
-				</div>
-				<div className=" p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
-					Desagrupados:
-					<span className="mx-2 px-2 py-1  text-blue-700 bg-blue-100  rounded-lg ">
-						{productList?.length ? productList?.length : "0"}{" "}
-					</span>
-				</div>
-				<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center">
-					Correctos:
-					<span className="mx-2 px-2 py-1 text-green-700 bg-green-100 rounded-lg ">
-						{productList?.length ? productList?.length - filterResult?.length : "0"} de{" "}
-						{selectedContainer?.ProductsQuantity}
-					</span>
-				</div>
-				<div className=" p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
-					No Manifestados:
-					<span className=" mx-2 py-1 px-2 text-red-700 bg-red-100 rounded-lg">
-						{filterResult?.length}
-					</span>
-				</div>
-			</div>
-
 			<div className=" h-4/5 overflow-y-auto  ">
 				{productList?.map((product, index) => (
 					<div
-						onClick={() => handleOnSelectedProduct(product)}
 						key={index}
-						className="flex  bg-white  items-center text-xs py-4 rounded-lg shadow-sm m-2 hover:bg-gray-50 cursor-pointer "
+						className="flex  bg-white  items-center text-xs py-4 rounded-lg shadow-sm m-2 hover:bg-gray-50  "
 					>
 						<button
+							onClick={() => handleOnSelectedProduct(product)}
 							type="button"
-							className="flex h-8 w-8 items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+							className="flex cursor-pointer flex-col gap-2  p-2   items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
 						>
 							<i className="fa fa-file text-sm text-blue-300 hover:text-blue-500"></i>
+							<span>{product.InvoiceId}</span>
 						</button>
 						<div className="flex flex-col gap-1 items-center px-2 text-center">
 							<div className="flex flex-col mx-2 w-32">
 								<p className="font-bold text-zinc-700 ">{product?.HBL}</p>
+								<p className=" text-zinc-700 ">{product?.Description}</p>
 							</div>
 						</div>
+
 						<div class="hidden  mx-2 md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15"></div>
 
 						<div className="flex flex-col mx-4 w-32 text-center">

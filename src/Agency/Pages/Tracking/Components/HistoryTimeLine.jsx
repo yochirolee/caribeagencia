@@ -8,7 +8,7 @@ export const HistoryTimeLine = ({ history }) => {
 				{history?.map((step, index) => (
 					<li key={index} className="relative h-20 text-xs p-2 mb-6">
 						<div className="flex items-center w-28">
-							<div className="z-10 flex items-center justify-center w-4 h-4 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
+							<div className="z-10 flex items-center justify-center w-4 h-4 bg-blue-200 rounded-full  dark:bg-blue-900  dark:ring-gray-900 shrink-0">
 								<span className="flex w-2 h-2 bg-blue-600 rounded-full"></span>
 							</div>
 							<div className="flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>

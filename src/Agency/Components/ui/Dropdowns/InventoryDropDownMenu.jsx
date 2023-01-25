@@ -39,17 +39,9 @@ export const InventoryDropDownMenu = () => {
 					<i className="fas fa-flag text-gray-500"></i>
 					<span className="flex-1 ml-3 whitespace-nowrap">Nacionalizar Productos</span>
 				</Link>
+				
 				<Link
-					to="/pending_delivery"
-					className={`${
-						toggle ? "flex" : "hidden"
-					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
-				>
-					<i className="fas fa-truck-ramp-box text-gray-500"></i>
-					<span className="flex-1 ml-3 whitespace-nowrap">Pendientes de Traslado</span>
-				</Link>
-				<Link
-					to="/delivery"
+					to="/in_delivery"
 					className={`${
 						toggle ? "flex" : "hidden"
 					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
@@ -58,7 +50,7 @@ export const InventoryDropDownMenu = () => {
 					<span className="flex-1 ml-3 whitespace-nowrap">En Traslado</span>
 				</Link>
 				<Link
-					to="/deliverydone"
+					to="/done_delivery"
 					className={`${
 						toggle ? "flex" : "hidden"
 					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}

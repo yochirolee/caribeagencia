@@ -16,11 +16,13 @@ import { TrackingByInvoice } from "../Pages/Tracking/TrackingByInvoice";
 import { Containers } from "../Pages/Contenedores/Containers";
 import { Pallets } from "../Pages/Pallets/Pallets";
 import { CreateContainer } from "../Pages/Contenedores/CreateContainer";
-import { UnGroupContainer } from "../Pages/Contenedores/UnGroupContainer";
+import { UnGroupContainer } from "../Pages/Inventory/UnGroupContainer";
 import { Users } from "../Pages/Users/Users";
-import { NationalizeProducts } from "../Pages/Nationalize/NationalizeProducts";
-import { PendingDelivery } from "../Pages/PendingDelivery/PendingDelivery";
+import { NationalizeProducts } from "../Pages/Inventory/NationalizeProducts";
+import { PendingDelivery } from "../Pages/Inventory/PendingDelivery";
 import { AlertPopup } from "../Components/Alert/AlertPopup";
+import { InDelivery } from "../Pages/Inventory/InDelivery";
+import { DeliveryDone } from "../Pages/Inventory/DeliveryDone";
 
 /*
 <Route path="/" element={<Dashboard />} />
@@ -52,6 +54,8 @@ export const AgencyRoutes = () => {
 				<Route path="ungroup_container" element={<UnGroupContainer />} />
 				<Route path="nacionalize" element={<NationalizeProducts />} />
 				<Route path="pending_delivery" element={<PendingDelivery />} />
+				<Route path="in_delivery" element={<InDelivery />} />
+				<Route path="done_delivery" element={<DeliveryDone />} />
 				<Route path="users" element={<Users />} />
 
 				<Route path="/*" element={<Navigate to="/" />} />

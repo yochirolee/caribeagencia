@@ -11,6 +11,9 @@ const changeProductLocation = async (product) => {
 			.single();
 
 		product.HBLLocationHistory = product.HBL + "-" + productTracking.LocationId;
+		delete product.CreatedAt;
+		delete product.Description;
+		delete product.InvoiceId;
 
 		const { data, error } = await supabase
 			.from("trackingLocationHistory")
