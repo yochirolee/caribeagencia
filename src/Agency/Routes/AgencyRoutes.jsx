@@ -19,7 +19,6 @@ import { CreateContainer } from "../Pages/Contenedores/CreateContainer";
 import { UnGroupContainer } from "../Pages/Inventory/UnGroupContainer";
 import { Users } from "../Pages/Users/Users";
 import { NationalizeProducts } from "../Pages/Inventory/NationalizeProducts";
-import { PendingDelivery } from "../Pages/Inventory/PendingDelivery";
 import { AlertPopup } from "../Components/Alert/AlertPopup";
 import { InDelivery } from "../Pages/Inventory/InDelivery";
 import { DeliveryDone } from "../Pages/Inventory/DeliveryDone";
