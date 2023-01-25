@@ -52,7 +52,6 @@ export const AgencyRoutes = () => {
 				<Route path="tracking_products" element={<TrackingByProducts />} />
 				<Route path="ungroup_container" element={<UnGroupContainer />} />
 				<Route path="nacionalize" element={<NationalizeProducts />} />
-				<Route path="pending_delivery" element={<PendingDelivery />} />
 				<Route path="in_delivery" element={<InDelivery />} />
 				<Route path="done_delivery" element={<DeliveryDone />} />
 				<Route path="users" element={<Users />} />
