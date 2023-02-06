@@ -1,35 +1,33 @@
 import { React } from "react";
-export const UnGroupContainerStats = ({ productList, selectedContainer }) => {
+export const UnGroupContainerStats = ({ productList, selectedContainer,productsInContainer }) => {
 	if (!productList) return;
-	const filterResult = productList?.filter((product) => product?.IsSpare == true);
+	const undeclared = productList?.filter((product) => product?.StatusId == 3);
 
 	return (
 		<div className="flex border-b py-2 items-center md:gap-6   ">
 			<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
-				En Contenedor:
+				Total Desagrupado:
 				<span className="mx-2 px-2 py-1  text-violet-700 bg-violet-100  rounded-lg ">
-					{selectedContainer?.ProductsQuantity
-						? selectedContainer?.ProductsQuantity - (productList?.length - filterResult?.length)
-						: "0"}{" "}
+					{productList?.length + undeclared.length}
 				</span>
 			</div>
 			<div className=" p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
-				Desagrupados:
-				<span className="mx-2 px-2 py-1  text-blue-700 bg-blue-100  rounded-lg ">
-					{productList?.length ? productList?.length : "0"}{" "}
-				</span>
-			</div>
-			<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center">
 				Correctos:
-				<span className="mx-2 px-2 py-1 text-green-700 bg-green-100 rounded-lg ">
-					{productList?.length ? productList?.length - filterResult?.length : "0"} de{" "}
-					{selectedContainer?.ProductsQuantity}
+				<span className="mx-2 px-2 py-1  text-green-700 bg-green-100  rounded-lg ">
+					{productList?.length}
 				</span>
 			</div>
 			<div className=" p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
 				No Manifestados:
-				<span className=" mx-2 py-1 px-2 text-red-700 bg-red-100 rounded-lg">
-					{filterResult?.length}
+				<span className=" mx-2 py-1 px-2 text-orange-700 bg-orange-100 rounded-lg">
+					{undeclared?.length}
+				</span>
+			</div>
+
+			<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center">
+				Faltantes:
+				<span className="mx-2 px-2 py-1 text-red-700 bg-red-100 rounded-lg ">
+					{productsInContainer ? productsInContainer.length :0 }
 				</span>
 			</div>
 		</div>

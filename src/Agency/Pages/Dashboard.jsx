@@ -8,22 +8,13 @@ export const Dashboard = () => {
 
 	const { data, isError, isLoading } = useFetchByInvoiceOrHBL(search);
 
-	/* const getData = async () => {
-		const { data: count, error } = await supabase.rpc("getLocations");
-		console.log(count,error);
-	};
-
-	useEffect(() => {
-		getData();
-	}, []); */
-
 	const handleSearch = (e) => {
 		setSearch(e);
 	};
 	return (
-		<div className="px-10">
-			<div className="p-10 flex  gap-10">
-				<div className="border flex gap-4 p-4 items-center rounded-lg text-sm">
+		<div className="px-10 shrink-0 flex flex-col ">
+			<div className="p-1 flex shrink-0 gap-10">
+				<div className="border  gap-2 p-4 items-center rounded-lg text-sm">
 					<span className="p-2 bg-yellow-300 rounded-lg text-yellow-800">120</span>
 					<h3>Desagrupados</h3>
 				</div>

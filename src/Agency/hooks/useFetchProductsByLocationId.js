@@ -1,34 +1,38 @@
 import { useQuery } from "react-query";
 import { supabase } from "../../Supabase/SupabaseClient";
 
-export const getProductsByLocation = async (LocationId = undefined, ContainerId = undefined) => {
+export const getProductsByLocation = async (
+	LocationId = undefined,
+	ContainerId = undefined,
+	unGroupStatus = undefined,
+) => {
+	console.log(ContainerId, LocationId, unGroupStatus, "CONTAIERN ID AND LOCATION");
+	if (LocationId == 1 && !ContainerId) return;
 	try {
-		if (!LocationId) return;
 		if (ContainerId) {
 			let { data: products, error } = await supabase
-				.from("trackingLocation")
+				.from("productsTracking")
 				.select("*")
-				.match({ ContainerId })
-				.order("CreatedAt", { ascending: false });
+				.match({ LocationId: LocationId, ContainerId: ContainerId })
+				.order("CreatedAt", { ascending: true });
+			if (error) throw new Error(error.message);
+
 			return products;
 		} else {
 			let { data: products, error } = await supabase
-				.from("trackingLocation")
+				.from("productsTracking")
 				.select("*")
 				.eq("LocationId", LocationId)
-				.order("CreatedAt", { ascending: false });
+				.order("CreatedAt", { ascending: true });
+			if (error) throw new Error(error.message);
 			return products;
 		}
 	} catch (error) {
-		throw new Error(error.message);
+		console.error(error.message);
 	}
 };
 
 export const useFetchProductsByLocation = (LocationId, ContainerId) =>
-	useQuery(
-		["fetchProductsByLocation", LocationId, ContainerId],
-		() => getProductsByLocation(LocationId, ContainerId),
-		{
-			enabled: Boolean(LocationId, ContainerId),
-		},
+	useQuery(["fetchProductsByLocation", LocationId, ContainerId], () =>
+		getProductsByLocation(LocationId, ContainerId),
 	);

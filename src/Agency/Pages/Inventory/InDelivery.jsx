@@ -1,11 +1,14 @@
 import { format, parseISO } from "date-fns";
 import { Spinner } from "flowbite-react";
 import { React, useState } from "react";
+import { useDispatch } from "react-redux";
 import { InputHBL } from "../../Components/ui/Forms/InputHBL";
 import { ListProducts } from "../../Components/ui/List/ListProducts";
 import { useFetchProductsByLocation } from "../../hooks/useFetchProductsByLocationId";
+import { useSetProductListLocation } from "../../hooks/useSetProductListLocation";
 import { useSetProductLocation } from "../../hooks/useSetProductLocation";
 import { ProductModalDetails } from "../Tracking/Components/ProductModalDetails";
+import { setAlert } from "../../Store/Slices/Alert/AlertSlice";
 
 export const InDelivery = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -14,24 +17,27 @@ export const InDelivery = () => {
 		setSelectedProduct(HBL);
 		setShowModal(true);
 	};
-
-	const { data: products, isLoading } = useFetchProductsByLocation(2);
-	const { data: deliveryProducts, isLoadingDelivery } = useFetchProductsByLocation(3);
-	const mutationProduct = useSetProductLocation(null);
+	const dispatch = useDispatch();
+	const { data: products, isLoading } = useFetchProductsByLocation(3);
+	const { data: deliveryProducts, isLoadingDelivery } = useFetchProductsByLocation(5);
+	const mutationProductList = useSetProductListLocation();
 
 	const handleHBL = (HBL) => {
 		const product = products.find((product) => product.HBL === HBL);
+
 		if (product) {
-			mutationProduct.mutate(product);
+			let productsToInsert = [];
+
+			productsToInsert = [...productsToInsert, product];
+			mutationProductList.mutateAsync({ products: productsToInsert, locationId: 5 });
+			productsToInsert = [];
 		}
 	};
 	if (isLoading) return <Spinner />;
 	return (
 		<div className="flex flex-col  lg:h-[calc(100vh-60px)] md:flex-row relative   overflow-y-auto ">
-			<aside
-				className="lg:w-2/6  flex flex-col  border-r p-4  text-sm overflow-y-auto bg-gray-50"
-				aria-label="Sidebar"
-			>
+			<aside className="min-w-[300px] lg:w-2/6  overflow-x-hidden flex flex-col  border-r p-4  text-sm overflow-y-auto bg-gray-50">
+		
 				<h3 className="p-2 border-b font-semibold text-sm">Productos Nacionalizados</h3>
 				<div className="mt-4 flex flex-col overflow-y-auto">
 					{products?.map((product, index) => (

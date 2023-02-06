@@ -20,9 +20,9 @@ export const ProductTrackingHistory = ({ product }) => {
 		<>
 			<div className="flex flex-col  justify-between text-center  mt-4 ">
 				<div className="flex  items-center text-left gap-4 py-4 text-xs">
-					<p className="font-semibold text-center border p-4 bg-blue-600 text-white rounded-lg">
+					<div className="font-semibold text-center border p-4 bg-blue-600 text-white rounded-lg">
 						<p>{product?.Agency}</p>
-					</p>
+					</div>
 					<div className="flex flex-col">
 						<p className="text-xs font-semibold ">{product?.HBL}</p> {product?.Description}{" "}
 						<p>{product?.Weight} Lbs</p>

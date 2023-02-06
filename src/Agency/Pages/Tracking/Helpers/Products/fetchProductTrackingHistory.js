@@ -51,7 +51,7 @@ export const fetchProductTrackingHistory = async (product) => {
 	let productHistory = createProductHistory(product);
 
 	let { data: trackingHistory, error } = await supabase
-		.from("trackingLocationHistory")
+		.from("productsTrackingHistory")
 		.select(
 			`
 		CreatedAt,

@@ -1,18 +1,12 @@
+import { React, useMemo } from "react";
 import { Spinner } from "flowbite-react";
-import { React } from "react";
 
-const getDif = (arr1, arr2) => {
-	console.log(arr2);
-	let difference = arr1?.filter(({ HBL: HBL1 }) => !arr2?.some(({ HBL: HBL }) => HBL === HBL1));
-	return difference;
-};
 export const ListProductsInSelectedContainer = ({
 	isLoading,
 	productsInContainer,
-	unGroupProductList,
 	handleOnSelectedProduct,
+	handleUngroupContainer,
 }) => {
-	const diffProductsInContainer = getDif(productsInContainer, unGroupProductList);
 	if (isLoading)
 		return (
 			<div className="text-center">
@@ -22,10 +16,10 @@ export const ListProductsInSelectedContainer = ({
 
 	return (
 		<div className="md:h-screen h-20 overflow-y-auto">
-			{diffProductsInContainer?.map((product) => (
+			{productsInContainer?.map((product) => (
 				<div
 					key={product?.HBL}
-					className="flex bg-white items-center  text-xs py-4 rounded-lg shadow-sm m-2 cursor-pointer hover:bg-gray-100  hover:ring-1"
+					className="flex justify-between bg-white items-center  text-xs py-4 rounded-lg shadow-sm m-2  hover:bg-gray-100  hover:ring-1"
 				>
 					<div
 						onClick={() => handleOnSelectedProduct(product)}
@@ -40,6 +34,10 @@ export const ListProductsInSelectedContainer = ({
 
 						<p className="text-[11px]">{product?.Description}</p>
 					</div>
+					<i
+						className="fa fa-plus mx-2 pr-4"
+						onClick={() => handleUngroupContainer(product?.HBL)}
+					></i>
 				</div>
 			))}
 		</div>

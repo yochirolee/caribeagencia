@@ -1,96 +1,34 @@
 import { React, useState } from "react";
-import { read, utils } from "xlsx";
-import { supabase } from "../../../../Supabase/SupabaseClient";
-import { useForm } from "react-hook-form";
-import { useRef } from "react";
-import { QrReader } from "react-qr-reader";
+import { useFetchProductsList } from "../../../hooks/useFetchTrackingByHBL";
+import { useImportHblsFromExcel } from "../../../hooks/useExcel/useImportHblsFromExcel";
+import { useSetProductListLocation } from "../../../hooks/useSetProductListLocation";
+import { ListProducts } from "../../../Components/ui/List/ListProducts";
+import { InputFiles } from "../../../Components/ui/Inputs/InputFiles";
+import { useSelector } from "react-redux";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setIsLoading }) => {
-	const [itemsToUpdate, setItemsToUpdate] = useState([]);
-	const [isScanning, setIsScanning] = useState(false);
-	const inputFileRef = useRef();
-
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm();
+export const UploadModal = ({ showModal, setShowModal, Location, setIsLoading }) => {
+	const [files, setFiles] = useState("");
+	const importedHBLSFromExcel = useImportHblsFromExcel(files);
+	const { data: productList, isLoading, isError } = useFetchProductsList(importedHBLSFromExcel);
+	const mutationProductList = useSetProductListLocation();
+	const { user } = useSelector((state) => state.Auth);
+	const [startDate, setStartDate] = useState(new Date());
 
 	const handleImport = async (event) => {
-		const files = event.target.files;
-
-		if (files.length) {
-			const file = files[0];
-			const reader = new FileReader();
-			reader.onload = (event) => {
-				const wb = read(event.target.result);
-				const sheets = wb.SheetNames;
-				console.log(sheets, wb);
-
-				if (sheets.length) {
-					const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-
-					let listItems = rows.map((row) => {
-						if (!!row) return { HBL: row.HBL, LocationId: Location.LocationId };
-					});
-					console.log(listItems, "LIST ITEMS");
-					if (listItems.length > 0) {
-						setItemsToUpdate(listItems);
-						console.log(listItems);
-					}
-				}
-			};
-			reader.readAsArrayBuffer(file);
-		}
+		setFiles(event.target.files);
 	};
-
-	const onSubmit = async (data, e) => {
-		e.preventDefault();
-		if (data.TrackingId.length > 8) {
-			let newTracking = { HBL: data.TrackingId, LocationId: Location.LocationId };
-
-			setItemsToUpdate([...itemsToUpdate, newTracking]);
-			console.log(itemsToUpdate,"ITEMS TO UPDATE");
-
-			reset();
-		}
-	};
-
-	const handleOnSave = async () => {
-		setIsLoading(true);
-		const response = await supabase
-			.from("trackingLocation")
-			.upsert(itemsToUpdate, { onConflict: "HBL" })
-			.select("*");
-		const { data, status, statusText } = response;
-		console.log(response, "RESPONSE");
-		console.log(data, status, statusText, "tracking SElecting");
-
-		const dataToInsert = itemsToUpdate.map((product) => {
-			product.HBLLocationHistory = product.HBL + "-" + Location.LocationId;
-			product.LocationId = Location.LocationId;
-			return product;
+	const handleOnSave = () => {
+		mutationProductList.mutateAsync({
+			products: productList,
+			locationId: Location.LocationId,
+			UserId: user,
+			CreatedAt: startDate,
 		});
-
-		const {
-			data: history,
-			error: errorHistory,
-			statusText: statusText2,
-		} = await supabase
-			.from("trackingLocationHistory")
-			.upsert(dataToInsert, { onConflict: "HBLLocationHistory" })
-			.select();
-		console.log(history, errorHistory, "HISTORY");
-		if (data) setShowModal(false);
-
-		setIsLoading(false);
-		setItemsToUpdate([]);
-		inputFileRef.current.value = "";
 	};
 
 	const handleCloseModal = () => {
-		setItemsToUpdate([]);
 		setShowModal(false);
 	};
 
@@ -124,117 +62,41 @@ export const UploadModal = ({ showModal, setShowModal, Location, isLoading, setI
 								<i className="fas fa-close text-md"></i>
 							</button>
 						</div>
-						{isScanning ? (
-							"<QrReader />"
-						) : (
-							<div className="p-2 lg:p-10 ">
-								<div className="border p-2 text-sm rounded-lg">
-									<div className="py-2">
-										<div className=" ">
-											<input
-												ref={inputFileRef}
-												type="file"
-												name="file"
-												className="custom-file-input"
-												id="inputGroupFile"
-												required
-												onChange={(event) => handleImport(event)}
-												accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-											/>
-										</div>
+						<div className="relative w-full   max-w-3xl  md:h-auto">
+							<div className="relative  flex flex-col gap-2 bg-white text-center rounded-lg shadow dark:bg-gray-700">
+								<div className="flex flex-col justify-between gap-2 items-center px-4">
+									<InputFiles handleImport={handleImport} />
+									<div className="py-2 ">
+										<ReactDatePicker
+											className="rounded-lg w-full text-sm border-gray-400"
+											selected={startDate}
+											onChange={(date) => setStartDate(date)}
+										/>
 									</div>
-								</div>
-								<p>o</p>
-								<div className="mt-5 border rounded-lg p-4">
-									<form
-										onSubmit={handleSubmit(onSubmit)}
-										className="flex flex-col lg:flex-row gap-2 items-center"
-									>
-										<label className="text-xs">Ingrese HBL</label>
-										<input {...register("TrackingId")} type="text" className="rounded-lg "></input>
-
-										<div className="flex  gap-2">
-											<button
-												type="submit"
-												className="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-											>
-												Adicionar
-											</button>
-											<button className="border rounded-lg">
-												<i className="fa fa-camera text-blue-500 text-lg p-1.5 px-2"></i>
-											</button>
+									{isLoading ? (
+										<div>Cargando</div>
+									) : (
+										<div>
+											<div className="h-1/2 lg:h-[calc(100vh-250px)]">
+												<ListProducts
+													productList={productList}
+													isLoading={isLoading}
+													isError={isError}
+												/>
+												<div className="inline-flex gap-4 mx-auto text-xs p-4">
+													<button
+														onClick={() => handleOnSave()}
+														className="border p-2 rounded-lg bg-blue-600 text-white"
+													>
+														Adicionar
+													</button>
+												</div>
+											</div>
 										</div>
-									</form>
+									)}
 								</div>
 							</div>
-						)}
-						<div
-							className={`${
-								itemsToUpdate?.length > 0 ? " mt-10 h-40  overflow-y-scroll text-xs" : "hidden"
-							} `}
-						>
-							<table className="w-full">
-								<thead>
-									<tr>
-										<th>HBL</th>
-										<th>Status</th>
-										<th>Actions</th>
-									</tr>
-								</thead>
-								<tbody>
-									{itemsToUpdate?.length ? (
-										itemsToUpdate.map((item, index) => (
-											<tr
-												key={index}
-												className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-											>
-												<th
-													scope="row"
-													className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-												>
-													{item.HBL}
-												</th>
-												<td className="py-4 px-6 ">
-													<span className="border px-2 py-0.5 rounded-lg text-xs text-white bg-green-500">
-														{item.LocationName}
-													</span>
-												</td>
-
-												<td className="py-4 px-6">
-													<a href="#" className="font-medium text-red-400 dark:text-red-500 ">
-														<i className="fas fa-trash"></i>
-													</a>
-												</td>
-											</tr>
-										))
-									) : (
-										<tr>
-											<td className="text-center text-sm">No Found.</td>
-										</tr>
-									)}
-								</tbody>
-							</table>
-						</div>
-						<span className=" w-1/2 mx-auto border p-2 bg-gray-100 rounded-lg text-sm">
-							Total de Items: {itemsToUpdate?.length}
-						</span>
-						<div className="flex justify-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-							<button
-								onClick={() => handleOnSave()}
-								data-modal-toggle="staticModal"
-								type="button"
-								className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-							>
-								{isLoading ? "Actualizando" : "Guardar"}
-							</button>
-							<button
-								onClick={() => handleCloseModal()}
-								data-modal-toggle="staticModal"
-								type="button"
-								className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-							>
-								Cancelar
-							</button>
+							<div></div>
 						</div>
 					</div>
 				</div>

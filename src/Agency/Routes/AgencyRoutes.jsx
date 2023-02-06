@@ -22,6 +22,7 @@ import { NationalizeProducts } from "../Pages/Inventory/NationalizeProducts";
 import { AlertPopup } from "../Components/Alert/AlertPopup";
 import { InDelivery } from "../Pages/Inventory/InDelivery";
 import { DeliveryDone } from "../Pages/Inventory/DeliveryDone";
+import { ContainerInPort } from "../Pages/Inventory/ContainerInPort";
 
 /*
 <Route path="/" element={<Dashboard />} />
@@ -50,6 +51,7 @@ export const AgencyRoutes = () => {
 			<Routes>
 				<Route path="/" element={<Dashboard />} />
 				<Route path="tracking_products" element={<TrackingByProducts />} />
+				<Route path="container_port" element={<ContainerInPort />} />
 				<Route path="ungroup_container" element={<UnGroupContainer />} />
 				<Route path="nacionalize" element={<NationalizeProducts />} />
 				<Route path="in_delivery" element={<InDelivery />} />

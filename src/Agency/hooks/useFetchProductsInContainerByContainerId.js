@@ -5,7 +5,8 @@ export const fetchContainerById = async (ContainerId) => {
 		"https://caribe-cargo-api.vercel.app/api/containers/" + ContainerId,
 	);
 
-	return data?.products;
+	return data
+	;
 };
 
 export const useFetchProductsInContainerByContainerId = (selectedContainer) => {

@@ -18,7 +18,6 @@ const changeProductLocation = async (product) => {
 		const { data, error } = await supabase
 			.from("trackingLocationHistory")
 			.upsert(product, { onConflict: "HBLLocationHistory" })
-			.select();
 	} catch (error) {
 		throw new Error(error);
 	}
