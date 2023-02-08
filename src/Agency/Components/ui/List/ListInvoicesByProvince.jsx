@@ -51,9 +51,9 @@ export const ListInvoicesByProvince = ({ invoices }) => {
 			</div>
 			{invoices?.map((invoice, index) => (
 				<>
-					<div className="grid grid-flow-col grid-cols-3 grid-col  border-b gap-4 text-xs" key={index}>
+					<div className="grid grid-flow-col p-2 grid-cols-3 grid-col  border-b gap-4 text-xs" key={index}>
 						
-						<p>No.Facturas: {invoice?.InvoiceCount}</p>
+						<p>No.Facturas: <span className="py-0.5 px-2 bg-gray-600 text-white  rounded-lg">{invoice?.InvoiceCount}</span></p>
 						<p> {invoice?.Provincia}</p>
 						<p> {invoice?.Municipio}</p>
 						<p>
