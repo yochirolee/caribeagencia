@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { supabase } from "../../Supabase/SupabaseClient";
-import { Layout } from "../Layout/Layout";
-import { NewRecieverForm } from "../Components/Recievers/NewRecieverForm";
-import { ActionsReciever } from "../Components/Recievers/ActionsReciever";
+import { supabase } from "../../../Supabase/SupabaseClient";
+import { Layout } from "../../Layout/Layout";
+import { NewRecieverForm } from "../../Components/Recievers/NewRecieverForm";
+import { ActionsReciever } from "../../Components/Recievers/ActionsReciever";
 export const AddReciever = () => {
 	const [recievers, setRecievers] = useState([]);
 

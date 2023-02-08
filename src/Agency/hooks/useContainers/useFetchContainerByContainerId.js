@@ -1,18 +1,16 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-export const fetchContainerById = async (ContainerId) => {
+export const getContainerById = async (ContainerId) => {
 	const { data } = await axios.get(
 		"https://caribe-cargo-api.vercel.app/api/containers/" + ContainerId,
 	);
-
-	return data
-	;
+	return data;
 };
 
-export const useFetchProductsInContainerByContainerId = (selectedContainer) => {
+export const useFetchContainerByContainerId = (selectedContainer) => {
 	return useQuery(
 		["ProductsInContainer", selectedContainer?.ContainerId],
-		() => fetchContainerById(selectedContainer?.ContainerId),
+		() => getContainerById(selectedContainer?.ContainerId),
 		{ enabled: !!selectedContainer?.ContainerId },
 	);
 };

@@ -4,8 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
 import { supabase } from "../../../Supabase/SupabaseClient";
 import ContainerSelect from "../../Components/ui/Selects/ContainerSelect";
+import { useFetchContainerByContainerId } from "../../hooks/useContainers/useFetchContainerByContainerId";
 import { useFetchContainersInPort } from "../../hooks/useContainers/useFetchContainersInPort";
-import { useFetchProductsInContainerByContainerId } from "../../hooks/useFetchProductsInContainerByContainerId";
 import { useSetProductListLocation } from "../../hooks/useSetProductListLocation";
 
 const createContainerData = (containerData) => {
@@ -33,8 +33,7 @@ export const ContainerInPort = () => {
 	const { user } = useSelector((state) => state.Auth);
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
 	const { data: ContainersInPort } = useFetchContainersInPort();
-	const { isLoading, data: container } =
-		useFetchProductsInContainerByContainerId(selectedContainer);
+	const { isLoading, data: container } = useFetchContainerByContainerId(selectedContainer);
 	const mutationProductList = useSetProductListLocation();
 
 	const handleContainerToPort = async () => {
@@ -45,11 +44,10 @@ export const ContainerInPort = () => {
 			locationId: 1,
 			user: user,
 			StatusId: 1,
-			CreatedAt: startDate
+			CreatedAt: startDate,
 		});
 	};
 
-	
 	return (
 		<div className="flex flex-col  lg:h-[calc(100vh-60px)] md:flex-row relative   overflow-y-auto ">
 			<aside className="min-w-[300px] lg:w-2/6  overflow-x-hidden flex flex-col  border-r p-4  text-sm overflow-y-auto bg-gray-50">

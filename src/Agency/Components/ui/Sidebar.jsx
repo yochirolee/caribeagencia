@@ -6,6 +6,8 @@ import { OrdersDropDownMenu } from "./Dropdowns/OrdersDropDownMenu";
 import { SettingsDropDownMenu } from "./Dropdowns/SettingsDropDownMenu copy";
 import { TrackingDropDownMenu } from "./Dropdowns/TrackingDropDownMenu";
 import { UsersDropDownMenu } from "./Dropdowns/UsersDropDownMenu";
+import { ReportsDropDownMenu } from "./Dropdowns/ReportsDropDownMenu";
+
 export const Sidebar = () => {
 	const { toggleSideBar } = useSelector((state) => state.uiSlice);
 	const { user } = useSelector((state) => state.Auth);
@@ -35,6 +37,7 @@ export const Sidebar = () => {
 					<InventoryDropDownMenu />
 					<TrackingDropDownMenu />
 					<UsersDropDownMenu />
+					<ReportsDropDownMenu />
 				</ul>
 			</div>
 		</aside>

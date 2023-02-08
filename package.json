@@ -13,6 +13,7 @@
 		"@heroicons/react": "^2.0.12",
 		"@reduxjs/toolkit": "^1.8.5",
 		"@supabase/supabase-js": "^1.35.7",
+		"@tanstack/react-table": "^8.7.9",
 		"axios": "^1.2.0",
 		"date-fns": "^2.29.3",
 		"flowbite": "^1.5.3",

@@ -14,7 +14,7 @@ export const ListProducts = ({ productList, handleOnSelectedProduct, isLoading, 
 	return (
 		<>
 			<div className="h-1/2 lg:h-4/5 p-4 bg-gray-50 overflow-y-auto  ">
-				{productList &&
+				{productList ? (
 					productList?.map((product, index) => (
 						<div
 							key={index}
@@ -73,7 +73,12 @@ export const ListProducts = ({ productList, handleOnSelectedProduct, isLoading, 
 
 							<i className="fa fa-angle-right text-zinc-500"></i>
 						</div>
-					))}
+					))
+				) : (
+					<div className="flex px-4 bg-white  items-center h-10 animate-ping text-xs py-4 rounded-lg shadow-sm m-2 hover:bg-gray-50  ">
+						<div className="flex flex-col mx-4 w-44 text-center"></div>
+					</div>
+				)}
 			</div>
 		</>
 	);

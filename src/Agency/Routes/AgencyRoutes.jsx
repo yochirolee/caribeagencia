@@ -2,10 +2,10 @@ import { React } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Factura } from "../Components/Pdf/Factura";
 import { Layout } from "../Layout/Layout";
-import { AddReciever } from "../Pages/AddReciever";
+import { AddReciever } from "../Pages/Recievers/AddReciever";
 import { Categories } from "../Pages/Categories/Categories";
 import { Customers } from "../Pages/Customers/Customers";
-import { Dashboard } from "../Pages/Dashboard";
+import { Dashboard } from "../Pages/Dashboard/Dashboard";
 import { CreateOrder } from "../Pages/Orders/CreateOrder";
 import { ListOrders } from "../Pages/Orders/ListOrders";
 import { CreateProduct } from "../Pages/Products/CreateProduct";
@@ -23,6 +23,7 @@ import { AlertPopup } from "../Components/Alert/AlertPopup";
 import { InDelivery } from "../Pages/Inventory/InDelivery";
 import { DeliveryDone } from "../Pages/Inventory/DeliveryDone";
 import { ContainerInPort } from "../Pages/Inventory/ContainerInPort";
+import { ReportContainerTransport } from "../Pages/Reports/ReportContainerTransport";
 
 /*
 <Route path="/" element={<Dashboard />} />
@@ -57,6 +58,7 @@ export const AgencyRoutes = () => {
 				<Route path="in_delivery" element={<InDelivery />} />
 				<Route path="done_delivery" element={<DeliveryDone />} />
 				<Route path="users" element={<Users />} />
+				<Route path="reportContainerTransport" element={<ReportContainerTransport />} />
 				<Route path="/*" element={<Navigate to="/" />} />
 			</Routes>
 		</Layout>

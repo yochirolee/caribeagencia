@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from "react-query";
 import { supabase } from "../../../Supabase/SupabaseClient";
 
+
+
 const upsertProductsTrakingHistory = async (productsTrakingList) => {
 	let productsTrackingListHistory = await productsTrakingList.map((product) => {
 		return {
