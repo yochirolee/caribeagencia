@@ -15,6 +15,8 @@ import { useFetchProductByHBL } from "../../hooks/useFetchProductByHBL";
 import { useFetchProductsInContainer } from "../../hooks/useContainers/useFetchProductsInContainer";
 import { createUnGroupedProduct } from "../../Helpers/createUnGroupProduct";
 import { useUnGroupProducts } from "../../hooks/useContainers/useUngroupProducts";
+import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
+import { TableUngroupedProducts } from "../../Components/Tables/TableUngroupedProducts";
 
 export const UnGroupContainer = () => {
 	const dispatch = useDispatch();
@@ -113,39 +115,33 @@ export const UnGroupContainer = () => {
 					/>
 				)}
 			</aside>
-			<div className=" container p-4 border bg-gray-100 overflow-y-auto ">
+			<div className=" container px-4 pt-8 border bg-gray-100 overflow-y-auto ">
 				{selectedContainer ? (
 					<>
-						<div className="flex gap-2 items-center justify-between my-4">
+						<div className="flex justify-between items-center  px-4">
 							<InputHBL
 								handleHBL={handleUngroupContainer}
 								isLoadingProducts={isLoadingProducts}
 								placeHolder="Producto a Desagrupar"
 							/>
-							<div className="border-l px-10">
-								<button
-									onClick={() => setUploadFromExcelModal(true)}
-									type="button"
-									className="flex h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
-									aria-label="Toggle dark mode"
-								>
-									<i className="fa fa-file-excel text-md text-zinc-500 "></i>
-									<span className="text-xs">Cargar desde Excel</span>
-								</button>
-							</div>
+							<UnGroupContainerStats
+								productList={unGroupProductList}
+								productsInContainer={productsInContainer}
+								selectedContainer={selectedContainer}
+							/>
 						</div>
 
-						<UnGroupContainerStats
-							productList={unGroupProductList}
-							productsInContainer={productsInContainer}
-							selectedContainer={selectedContainer}
-						/>
-
-						<ListProducts
-							isLoading={isLoading}
-							productList={unGroupProductList}
-							handleOnSelectedProduct={handleOnSelectedProduct}
-						/>
+						{isLoading ? (
+							SearchResultSkeleton
+						) : (
+							<div className="flex flex-col justify-end border-b gap-4 text-xs  px-4 ">
+								<TableUngroupedProducts
+									isLoading={isLoading}
+									productList={unGroupProductList}
+									handleOnSelectedProduct={handleOnSelectedProduct}
+								/>
+							</div>
+						)}
 					</>
 				) : (
 					<div

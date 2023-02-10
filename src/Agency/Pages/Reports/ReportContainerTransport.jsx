@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { React } from "react";
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
-import { ListInvoicesByProvince } from "../../Components/ui/List/ListInvoicesByProvince";
+import { TableStopsByProvince } from "../../Components/Tables/TableStopsByProvince";
+import { ListStopsByProvince } from "../../Components/ui/List/ListStopsByProvince";
 import ContainerSelect from "../../Components/ui/Selects/ContainerSelect";
-import { useFetchContainerByContainerId } from "../../hooks/useContainers/useFetchContainerByContainerId";
-
+import { useFetchContainerStopsByRecievers } from "../../hooks/useReports/useFetchContainerStops";
 
 export const ReportContainerTransport = () => {
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
 	const {
-		data: container,
+		data: containerStops,
 		isError: isErrorFetchingContainer,
 		isLoading: isLoadingContainer,
-	} = useFetchContainerByContainerId(selectedContainer);
+	} = useFetchContainerStopsByRecievers(selectedContainer);
 	return (
 		<div className=" p-4 m-4">
 			<h1>Reporte de Transportacion por Contenedores</h1>
@@ -23,11 +23,9 @@ export const ReportContainerTransport = () => {
 			{!selectedContainer ? (
 				""
 			) : isLoadingContainer ? (
-				<div className="mt-4">
-					<SearchResultSkeleton />
-				</div>
+				<SearchResultSkeleton />
 			) : (
-				<ListInvoicesByProvince invoices={container?.productsInContainerGroupByCity} />
+				<TableStopsByProvince containerStops={containerStops} />
 			)}
 		</div>
 	);

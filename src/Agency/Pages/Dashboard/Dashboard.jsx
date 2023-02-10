@@ -5,7 +5,6 @@ import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSke
 import { DashboardStats } from "../../Components/Stats/DashboardStats";
 import { ProductsTable } from "../../Components/Tables/ProductsTable";
 import { InputHBL } from "../../Components/ui/Forms/InputHBL";
-import { ListInvoicesByProvince } from "../../Components/ui/List/ListInvoicesByProvince";
 import ContainerSelect from "../../Components/ui/Selects/ContainerSelect";
 import { useFetchContainerByContainerId } from "../../hooks/useContainers/useFetchContainerByContainerId";
 import { useFetchByInvoiceOrHBL } from "../../hooks/useFetchByInvoiceOrHBL";

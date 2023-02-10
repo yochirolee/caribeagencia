@@ -4,7 +4,7 @@ export const UnGroupContainerStats = ({ productList, selectedContainer,productsI
 	const undeclared = productList?.filter((product) => product?.StatusId == 3);
 
 	return (
-		<div className="flex border-b py-2 items-center md:gap-6   ">
+		<div className="flex border-b py-2 items-center md:gap-6 justify-end   ">
 			<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
 				Total Desagrupado:
 				<span className="mx-2 px-2 py-1  text-violet-700 bg-violet-100  rounded-lg ">
