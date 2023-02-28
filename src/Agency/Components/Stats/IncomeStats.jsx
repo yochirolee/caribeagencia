@@ -63,31 +63,33 @@ export const IncomeStats = ({ selectedContainer }) => {
 		[containerData?.length],
 	);
 
-	if (isLoadingContainer) return <div className='h-8 w-xl bg-gray-50 rounde-lg animate-pulse'></div>;
+	if (isLoadingContainer)
+		return <div className="h-8 w-xl bg-gray-50 rounde-lg animate-pulse"></div>;
 	return (
-		<div className="flex flex-col gap-4 text-xs  ">
+		<div className="flex  gap-4 text-xs  ">
 			<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-				<div className="flex items-center justify-end gap-4 mx-6 ">
-					<div className="font-semibold flex justify-end items-center gap-2">
+				<div className="flex flex-col  gap-4 mx-6 ">
+					<h1 className="text-sm">Total de Ganancias del Contenedor</h1>
+					<div className="font-semibold flex  items-center gap-2">
 						Total Facturado:
 						<span className="px-2 py-0.5 bg-blue-200 rounded-lg text-blue-800">
 							{parseFloat(totalPaidByAgencies - totalDiscount).toFixed(2)}
 						</span>
 					</div>
-					<div className="font-semibold flex justify-end items-center gap-2">
+					<div className="font-semibold flex  items-center gap-2">
 						Total por Descuento:
 						<span className="px-2 py-0.5 bg-green-200 rounded-lg text-green-800">
 							{" "}
 							{totalDiscount ? totalDiscount : 0}
 						</span>
 					</div>
-					<div className="font-semibold flex justify-end items-center gap-2">
+					<div className="font-semibold flex  items-center gap-2">
 						Peso Total:
 						<span className="px-2 py-0.5 bg-green-200 rounded-lg text-green-800">
 							{totalWeight ? totalWeight : 0}
 						</span>
 					</div>
-					<div className="font-semibold justify-end flex items-center gap-2">
+					<div className="font-semibold  flex items-center gap-2">
 						Total Pagado por Agencias:
 						<span className="px-2 py-0.5 bg-yellow-200 rounded-lg text-yellow-800">
 							{totalPaidByAgencies ? totalPaidByAgencies : 0}

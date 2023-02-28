@@ -15,18 +15,11 @@ const getUniqueAgencies = (productList) => {
 	return uniqueAgencies;
 };
 
-export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedContainer }) => {
+export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedContainer,setOpenContainerStops }) => {
+	console.log(selectedContainer);
 	if (!productList) return null;
 	const { user } = useSelector((state) => state.Auth);
-
-	console.log(user)
-
 	const tableRef = useRef();
-	const { onDownload } = useDownloadExcel({
-		currentTableRef: tableRef.current,
-		filename: "Reporte de Productos",
-		sheet: selectedContainer?.ContainerName,
-	});
 
 	const agencies = useMemo(() => getUniqueAgencies(productList), [productList]);
 
@@ -39,6 +32,14 @@ export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedCo
 				: productList,
 		[productList, selectedAgency],
 	);
+
+	const { onDownload } = useDownloadExcel({
+		currentTableRef: tableRef.current,
+		filename: selectedAgency
+			? selectedAgency + "-" + selectedContainer.ContainerNumber
+			: selectedContainer.ContainerNumber,
+		sheet: selectedAgency ? selectedAgency : selectedContainer.ContainerNumber,
+	});
 
 	return (
 		<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -85,24 +86,36 @@ export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedCo
 								selectedAgency={selectedAgency}
 								setSelectedAgency={setSelectedAgency}
 							/>
-							<button
-								onClick={onDownload}
-								type="button"
-								className="flex  border h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
-								aria-label="Toggle dark mode"
-							>
-								<i className="fa fa-file-excel text-md text-green-500 "></i>
-								<span className="text-xs">Exportar a Excel</span>
-							</button>
-						</div>
-						{user.email == "yleecruz@gmail.com" || user.email== "barroso@ctenvios.com" ? (
-							<div className="flex flex-col gap-2">
-								<StopStats selectedContainer={selectedContainer} />
-								<IncomeStats selectedContainer={selectedContainer} />
+							<div className="flex gap-4">
+								<button
+									onClick={onDownload}
+									type="button"
+									className="flex  border h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+									aria-label="Toggle dark mode"
+								>
+									<i className="fa fa-file-excel text-md text-green-500 "></i>
+									<span className="text-xs">Exportar a Excel</span>
+								</button>
+								<button
+								onClick={()=>setOpenContainerStops(true)}
+									type="button"
+									className="flex  border h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+									aria-label="Toggle dark mode"
+								>
+									<i className="fa fa-truck-field text-md text-green-500 "></i>
+									<span className="text-xs">Reporte de Paradas</span>
+								</button>
+								<button
+									type="button"
+									className="flex  border h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+									aria-label="Toggle dark mode"
+								>
+									<i className="fa fa-file-invoice-dollar text-md text-green-500 "></i>
+									<span className="text-xs">Reporte de Ganancia</span>
+								</button>
 							</div>
-						) : (
-							<div> </div>
-						)}
+						</div>
+						
 					</div>
 				</div>
 				<div className="overflow-y-auto ">

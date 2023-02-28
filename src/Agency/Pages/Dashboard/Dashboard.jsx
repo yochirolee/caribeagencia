@@ -1,5 +1,7 @@
 import { React, useState } from "react";
 import { useSelector } from "react-redux";
+import ContainerStopsModal from "../../Components/Modal/ContainerStopsModal";
+import ContainerStopModal from "../../Components/Modal/ContainerStopsModal";
 import { SearchResult } from "../../Components/Search/searchResult";
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
 import { DashboardStats } from "../../Components/Stats/DashboardStats";
@@ -14,7 +16,7 @@ export const Dashboard = () => {
 	const [search, setSearch] = useState("");
 	const { data, isLoading } = useFetchByInvoiceOrHBL(search);
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
-	
+
 	const {
 		data: containerData,
 		isLoading: isLoadingContainerData,
@@ -22,6 +24,7 @@ export const Dashboard = () => {
 	} = useFetchAllProductsByContainerId(selectedContainer?.ContainerId);
 
 	const [showModal, setShowModal] = useState(false);
+	const [openContainerStops, setOpenContainerStops] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState({});
 	const handleOnSelectedProduct = (HBL) => {
 		setSelectedProduct(HBL);
@@ -63,6 +66,7 @@ export const Dashboard = () => {
 								productList={containerData}
 								selectedContainer={selectedContainer}
 								handleOnSelectedProduct={handleOnSelectedProduct}
+								setOpenContainerStops={setOpenContainerStops}
 							/>
 						)}
 					</div>
@@ -72,6 +76,11 @@ export const Dashboard = () => {
 				selectedProduct={selectedProduct}
 				showModalDetails={showModal}
 				setShowModalDetails={setShowModal}
+			/>
+			<ContainerStopsModal
+				selectedContainer={selectedContainer}
+				open={openContainerStops}
+				setOpen={setOpenContainerStops}
 			/>
 		</div>
 	);
