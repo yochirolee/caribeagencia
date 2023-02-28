@@ -1,7 +1,7 @@
 import { React } from "react";
 export const DashboardStats = () => {
 	return (
-		<div className="p-1 flex flex-shrink-0 flex-col lg:flex-row gap-10">
+		<div className="p-1 flex flex-wrap flex-col lg:flex-row gap-2 lg:gap-10">
 			<div className="border flex gap-4 p-4 items-center rounded-lg text-sm">
 				<span className="p-2 bg-yellow-300 rounded-lg text-yellow-800">120</span>
 				<h3>Desagrupados</h3>

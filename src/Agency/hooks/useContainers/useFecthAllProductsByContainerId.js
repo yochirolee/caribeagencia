@@ -1,15 +1,14 @@
 import { useQuery } from "react-query";
 import { supabase } from "../../../Supabase/SupabaseClient";
 
-export const getProductsInContainer = async (ContainerId) => {
+export const getProductsByContainerId = async (ContainerId) => {
 	if (!ContainerId) return;
 	console.log(ContainerId, "ContainerId");
 	try {
 		const { data: productsInContainer, error } = await supabase
 			.from("productsTracking")
-			.select("*")
-			.match({ StatusId: 1, ContainerId: ContainerId });
-		console.log(productsInContainer, "PRODUCTS IN CONTAINER");
+			.select(`*,locations ( *)`)
+			.eq("ContainerId", ContainerId);
 		if (error) throw new Error(error.message);
 		return productsInContainer;
 	} catch (error) {
@@ -17,8 +16,8 @@ export const getProductsInContainer = async (ContainerId) => {
 	}
 };
 
-export const useFetchProductsInContainer = (ContainerId) =>
+export const useFetchAllProductsByContainerId = (ContainerId) =>
 	useQuery({
 		queryKey: ["fetchProductsInContainer", ContainerId],
-		queryFn: () => getProductsInContainer(ContainerId),
+		queryFn: () => getProductsByContainerId(ContainerId),
 	});

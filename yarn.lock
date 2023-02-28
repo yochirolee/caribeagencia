@@ -660,6 +660,18 @@ adler-32@~1.3.0:
   resolved "https://registry.yarnpkg.com/adler-32/-/adler-32-1.3.1.tgz#1dbf0b36dda0012189a32b3679061932df1821e2"
   integrity sha512-ynZ4w/nUUv5rrsR8UUGoe1VC9hZj6V5hU9Qw1HlMDJGEJw5S7TfTErWTjMys6M7vr0YWcPqs3qAr4ss0nDfP+A==
 
+ag-grid-community@^29.1.0:
+  version "29.1.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-community/-/ag-grid-community-29.1.0.tgz#acf74ecb9018d9ee3b2a7e468ffba595e6621606"
+  integrity sha512-QJZi1qP7fpK/sxXbEFZWR3/Jf3HVRK0Xm3Tw55tn0ehNdkuSxRBOmOvjE3lPWqgRlT2rcL1xmjdqM4mpB1fobQ==
+
+ag-grid-react@^29.1.0:
+  version "29.1.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-29.1.0.tgz#06d75de91f753a865650ba3b01e2f6bc016a4590"
+  integrity sha512-csAT+PEodEjJ1GhBrx0kVAgkfm8eafsxA8ugSEM+iiSGwc13mPS2Qrye3yz/Wp0vf7ho1CDJgnZraWfSBER42Q==
+  dependencies:
+    prop-types "^15.8.1"
+
 ajv@^8.11.0:
   version "8.11.0"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.11.0.tgz#977e91dd96ca669f54a11e23e378e33b884a565f"
@@ -2206,7 +2218,7 @@ preact@^10.10.6:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.11.2.tgz#e43f2a2f2985dedb426bb4c765b7bb037734f8a8"
   integrity sha512-skAwGDFmgxhq1DCBHke/9e12ewkhc7WYwjuhHB8HHS8zkdtITXLRmUMTeol2ldxvLwYtwbFeifZ9uDDWuyL4Iw==
 
-prop-types@^15.7.2:
+prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -2261,6 +2273,11 @@ react-dom@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-export-table-to-excel@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-export-table-to-excel/-/react-export-table-to-excel-1.0.6.tgz#753a9b4e1863c6abd1ffcbb48e8fd17fc7776d2a"
+  integrity sha512-2NKyor1rFFEqYDXQq5tPoVNwwdv5kT8DWc65wAmDa9Hi0441qHj0tOxegWhpW0vlCM2TypIsw+ghzIr900U4RA==
 
 react-fast-compare@^3.0.1:
   version "3.2.0"

@@ -24,6 +24,7 @@ import { InDelivery } from "../Pages/Inventory/InDelivery";
 import { DeliveryDone } from "../Pages/Inventory/DeliveryDone";
 import { ContainerInPort } from "../Pages/Inventory/ContainerInPort";
 import { ReportContainerTransport } from "../Pages/Reports/ReportContainerTransport";
+import { ReportContainerIncome } from "../Pages/Reports/ReportContainerIncome";
 
 /*
 <Route path="/" element={<Dashboard />} />
@@ -59,6 +60,7 @@ export const AgencyRoutes = () => {
 				<Route path="done_delivery" element={<DeliveryDone />} />
 				<Route path="users" element={<Users />} />
 				<Route path="reportContainerTransport" element={<ReportContainerTransport />} />
+				<Route path="reportContainerIncome" element={<ReportContainerIncome />} />
 				<Route path="/*" element={<Navigate to="/" />} />
 			</Routes>
 		</Layout>

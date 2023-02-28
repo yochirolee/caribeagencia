@@ -27,7 +27,16 @@ export const ReportsDropDownMenu = () => {
 					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
 				>
 					<i className="fa fa-truck text-gray-500"></i>
-					<span className="flex-1 ml-3 whitespace-nowrap">Transportacion por Contenedor</span>
+					<span className="flex-1 ml-3 whitespace-nowrap">Paradas por Contenedor</span>
+				</Link>
+				<Link
+					to="/reportContainerIncome"
+					className={`${
+						toggle ? "flex" : "hidden"
+					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
+				>
+					<i className="fa fa-dollar text-gray-500 px-1"></i>
+					<span className="flex-1 ml-3 whitespace-nowrap">Facturado por Contenedor</span>
 				</Link>
 			</div>
 		</li>
