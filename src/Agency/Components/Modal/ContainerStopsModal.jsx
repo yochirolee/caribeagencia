@@ -4,6 +4,7 @@ import { StopStats } from "../Stats/StopStats";
 import { IncomeStats } from "../Stats/IncomeStats";
 
 export default function ContainerStopsModal({ open, setOpen, selectedContainer }) {
+	if (!selectedContainer) return null;
 	const cancelButtonRef = useRef(null);
 	console.log(selectedContainer);
 	return (
