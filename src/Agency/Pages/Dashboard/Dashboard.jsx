@@ -33,12 +33,12 @@ export const Dashboard = () => {
 
 	return (
 		<div className="flex flex-col min-h-screen  relative   ">
-			<div className="container p-10">
+			<div className="container  p-2 lg:p-10">
 				<DashboardStats />
 
-				<div className="p-2 mt-4 ">
-					<InputHBL handleHBL={handleSearch} placeHolder="Buscar por Factura o HBL" />
-					<div>
+				<div className="p-2  mt-4  ">
+					<div className="">
+						<InputHBL handleHBL={handleSearch} placeHolder="Buscar por Factura o HBL" />
 						{isLoading ? (
 							<SearchResultSkeleton />
 						) : (
@@ -47,12 +47,13 @@ export const Dashboard = () => {
 							</>
 						)}
 					</div>
-					<div className=" my-6  grid grid-flow-row  gap-6">
-						<div className="flex flex-row  items-center justify-between">
+					<div className=" lg:my-6  grid grid-flow-row items-center gap-6">
+						<div className="">
 							<ContainerSelect
 								selectedContainer={selectedContainer}
 								setSelectedContainer={setSelectedContainer}
 							/>
+							{selectedContainer?.ContainerId}
 						</div>
 						{isLoadingContainerData ? (
 							<SearchResultSkeleton />

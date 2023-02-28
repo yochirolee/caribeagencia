@@ -2,6 +2,8 @@ import { format, parseISO } from "date-fns";
 import { React, useState, useMemo, useRef } from "react";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import { TablePagination } from "../Pagination/TablePagination";
+import { IncomeStats } from "../Stats/IncomeStats";
+import { StopStats } from "../Stats/StopStats";
 import TableDropDown from "../ui/Dropdowns/TableDropDown";
 import AgencySelect from "../ui/Selects/AgencySelect";
 
@@ -70,21 +72,25 @@ export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedCo
 							""
 						)}
 					</div>
-					<div className="flex gap-6 items-center">
-						<AgencySelect
-							agencies={agencies}
-							selectedAgency={selectedAgency}
-							setSelectedAgency={setSelectedAgency}
-						/>
-						<button
-							onClick={onDownload}
-							type="button"
-							className="flex  border h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
-							aria-label="Toggle dark mode"
-						>
-							<i className="fa fa-file-excel text-md text-green-500 "></i>
-							<span className="text-xs">Exportar a Excel</span>
-						</button>
+					<div className="grid gap-6 items-center justify-end">
+						<div className="flex justify-end gap-6 items-center">
+							<AgencySelect
+								agencies={agencies}
+								selectedAgency={selectedAgency}
+								setSelectedAgency={setSelectedAgency}
+							/>
+							<button
+								onClick={onDownload}
+								type="button"
+								className="flex  border h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+								aria-label="Toggle dark mode"
+							>
+								<i className="fa fa-file-excel text-md text-green-500 "></i>
+								<span className="text-xs">Exportar a Excel</span>
+							</button>
+						</div>
+						<StopStats selectedContainer={selectedContainer} />
+						<IncomeStats selectedContainer={selectedContainer} />
 					</div>
 				</div>
 				<div className="overflow-y-auto ">
