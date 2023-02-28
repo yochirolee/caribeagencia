@@ -12,6 +12,7 @@ const getUniqueAgencies = (productList) => {
 };
 
 export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedContainer }) => {
+	if (!productList) return null;
 	const tableRef = useRef();
 	const { onDownload } = useDownloadExcel({
 		currentTableRef: tableRef.current,
@@ -129,7 +130,9 @@ export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedCo
 										{product?.HBL.trim()}
 									</td>
 									<td className="text-xs text-gray-900   mpx-6   py-4 whitespace-nowrap">
-										<span className="bg-green-100 p-2 rounded-lg">{product?.locations?.LocationName}</span>
+										<span className="bg-green-100 p-2 rounded-lg">
+											{product?.locations?.LocationName}
+										</span>
 									</td>
 									<td className="text-xs text-gray-900 px-6  w-64  py-4">
 										<p className="inline-flex ">{product.Agency}</p>
