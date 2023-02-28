@@ -1,6 +1,7 @@
 import { format, parseISO } from "date-fns";
 import { React, useState, useMemo, useRef } from "react";
 import { useDownloadExcel } from "react-export-table-to-excel";
+import { useSelector } from "react-redux";
 import { TablePagination } from "../Pagination/TablePagination";
 import { IncomeStats } from "../Stats/IncomeStats";
 import { StopStats } from "../Stats/StopStats";
@@ -9,12 +10,17 @@ import AgencySelect from "../ui/Selects/AgencySelect";
 
 const getUniqueAgencies = (productList) => {
 	if (!productList) return [];
+
 	const uniqueAgencies = [...new Set(productList.map((product) => product.Agency))];
 	return uniqueAgencies;
 };
 
 export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedContainer }) => {
 	if (!productList) return null;
+	const { user } = useSelector((state) => state.Auth);
+
+	console.log(user)
+
 	const tableRef = useRef();
 	const { onDownload } = useDownloadExcel({
 		currentTableRef: tableRef.current,
@@ -89,8 +95,14 @@ export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedCo
 								<span className="text-xs">Exportar a Excel</span>
 							</button>
 						</div>
-						<StopStats selectedContainer={selectedContainer} />
-						<IncomeStats selectedContainer={selectedContainer} />
+						{user.email == "yleecruz@gmail.com" || user.email== "barroso@ctenvios.com" ? (
+							<div className="flex flex-col gap-2">
+								<StopStats selectedContainer={selectedContainer} />
+								<IncomeStats selectedContainer={selectedContainer} />
+							</div>
+						) : (
+							<div> </div>
+						)}
 					</div>
 				</div>
 				<div className="overflow-y-auto ">
