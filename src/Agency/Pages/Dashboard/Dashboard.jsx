@@ -40,9 +40,9 @@ export const Dashboard = () => {
 			<div className="container  p-2 lg:p-10">
 				<DashboardStats />
 
-				<div className="p-2  mt-4  ">
+				<div className="p-2   mt-4  ">
 					<div className=" lg:my-6  grid  items-center gap-6">
-						<div className="bg-gray-50 p-4 rounded-lg">
+						<div className="bg-gray-50  p-4 rounded-lg">
 							<InputHBL handleHBL={handleSearch} placeHolder="Buscar por Factura o HBL" />
 							<ContainerSelect
 								selectedContainer={selectedContainer}

@@ -45,9 +45,9 @@ export const ProductsTable = ({
 	});
 
 	return (
-		<div className="sm:-mx-6 lg:-mx-8">
+		<div className="sm:-mx-6 lg:-mx-8 grid overflow-auto">
 			<div className=" grid min-w-full sm:px-6 lg:px-8">
-				<div name="actions" className="my-4 flex gap-6 items-center justify-between">
+				<div name="actions" className="my-4 grid gap-6 items-center justify-between">
 					<div>
 						{selectedAgency ? (
 							<span
@@ -83,7 +83,7 @@ export const ProductsTable = ({
 						)}
 
 						<span className="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300">
-							{filteredProducts.length}
+							<p>HBL: </p>{filteredProducts.length}
 						</span>
 					</div>
 					<div className="grid gap-6 items-center justify-end">
@@ -101,7 +101,7 @@ export const ProductsTable = ({
 									aria-label="Toggle dark mode"
 								>
 									<i className="fa fa-file-excel text-md text-green-500 "></i>
-									<span className="text-xs">Exportar a Excel</span>
+									<span className="text-xs hidden sm:block">Exportar a Excel</span>
 								</button>
 
 								<button
@@ -111,7 +111,7 @@ export const ProductsTable = ({
 									aria-label="Toggle dark mode"
 								>
 									<i className="fa fa-file-invoice-dollar text-md text-green-500 "></i>
-									<span className="text-xs">Reporte del Contenedor</span>
+									<span className="text-xs hidden sm:block">Reporte del Contenedor</span>
 								</button>
 							</div>
 						</div>
@@ -180,7 +180,6 @@ export const ProductsTable = ({
 						</tbody>
 					</table>
 				</div>
-				<TablePagination />
 			</div>
 		</div>
 	);
