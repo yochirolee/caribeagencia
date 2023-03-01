@@ -58,6 +58,7 @@ export const Dashboard = () => {
 							<ProductsTable
 								productList={containerData}
 								selectedContainer={selectedContainer}
+								setSelectedContainer={setSelectedContainer}
 								handleOnSelectedProduct={handleOnSelectedProduct}
 								setOpenContainerStops={setOpenContainerStops}
 							/>

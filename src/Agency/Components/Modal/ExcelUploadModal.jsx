@@ -8,6 +8,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Dialog, Transition } from "@headlessui/react";
 import { TableImportProducts } from "../Tables/TableProductsToImport";
+import { InputHBL } from "../ui/Forms/InputHBL";
 
 export const ExcelUploadModal = ({ showModal, setShowModal, Location, setIsLoading }) => {
 	const [files, setFiles] = useState("");
@@ -20,6 +21,10 @@ export const ExcelUploadModal = ({ showModal, setShowModal, Location, setIsLoadi
 	const handleImport = async (event) => {
 		setFiles(event.target.files);
 	};
+/* 	const handleHbl = (hbl) => {
+		console.log(hbl);
+		productList.push(hbl);
+	}; */
 	const handleOnSave = () => {
 		mutationProductList.mutateAsync({
 			products: productList,
@@ -76,7 +81,8 @@ export const ExcelUploadModal = ({ showModal, setShowModal, Location, setIsLoadi
 										</button>
 									</div>
 									<div className="flex flex-col  justify-between gap-2 items-center p-4 lg:p-10">
-										<InputFiles handleImport={handleImport} />
+{/* 										<InputHBL handleHBL={handleHbl} />
+ */}										<InputFiles handleImport={handleImport} />
 										<ReactDatePicker
 											className="rounded-lg w-full text-sm border-gray-400"
 											selected={startDate}
