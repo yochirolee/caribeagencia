@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../Store/Auth/AuthSlice";
 import { setToggleSideBar } from "../../Store/Slices/Ui/uiSlice";
 import { GlobalLoadingIndicator } from "../GlobalLoadingIndicator";
@@ -7,9 +7,11 @@ export const Navbar = () => {
 	const dispatch = useDispatch();
 
 	return (
-		<div className="fixed border-b inset-x-0 top-0 z-50 flex h-14  items-center justify-between gap-12 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80 backdrop-blur-sm dark:backdrop-blur  bg-white dark:bg-zinc-900/[var(--bg-opacity-dark)]">
+		<div className=" border-b  inset-x-0 top-0  flex h-14  items-center justify-between gap-12 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80 backdrop-blur-sm dark:backdrop-blur  bg-white dark:bg-zinc-900/[var(--bg-opacity-dark)]">
 			<div className="absolute inset-x-0 top-full h-px transition bg-zinc-900/7.5 dark:bg-white/7.5"></div>
-			<div className="hidden lg:block lg:max-w-md lg:flex-auto"></div>
+			<div className="hidden lg:flex lg:flex-row lg:items-center gap-2  ">
+				<img src='ctelogo.png' alt="logo" className="h-8 w-8 mt-1 object-scale-down" />
+			</div>
 			<div className="flex items-center  gap-5 lg:hidden">
 				<button
 					type="button"
@@ -20,11 +22,12 @@ export const Navbar = () => {
 					<i className="fa fa-bars z-30 text-zinc-500  text-sm"></i>
 				</button>
 			</div>
+
 			<div className="flex items-center gap-5">
 				<GlobalLoadingIndicator />
-				<div className="hidden md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15"></div>
+				<div className=" md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15"></div>
 				<div className="flex gap-4">
-					<div className="contents lg:hidden">
+					<div className="contents ">
 						<button
 							type="button"
 							className="flex h-6 w-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5 lg:hidden "
@@ -52,7 +55,7 @@ export const Navbar = () => {
 				<div className="hidden min-[416px]:contents">
 					<a
 						className="inline-flex gap-0.5 justify-center overflow-hidden text-sm font-medium transition rounded-full bg-zinc-900 py-1 px-3 text-white hover:bg-zinc-700 dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-1 dark:ring-inset dark:ring-emerald-400/20 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:hover:ring-emerald-300"
-						href="/#"
+						href="/"
 					>
 						Sign in
 					</a>

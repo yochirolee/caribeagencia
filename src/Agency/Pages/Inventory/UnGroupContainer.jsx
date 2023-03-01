@@ -1,14 +1,10 @@
 import { React, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ListProducts } from "../../Components/ui/List/ListProducts";
 import { ListProductsInSelectedContainer } from "../../Components/ui/List/ListProductsInSelectedContainer";
 import { ProductModalDetails } from "../Tracking/Components/ProductModalDetails";
-import { useFetchProductsByLocation } from "../../hooks/useFetchProductsByLocationId";
 import { InputHBL } from "../../Components/ui/Forms/InputHBL";
 import { setAlert } from "../../Store/Slices/Alert/AlertSlice";
 import { UnGroupContainerStats } from "../../Components/ui/Stats/UnGroupContainerStats";
-import { LoadFromExcelModal } from "../../Components/Modal/LoadFromExcelModal";
-import { useSetProductListLocation } from "../../hooks/useSetProductListLocation";
 import ContainerOnPortSelect from "../../Components/ui/Selects/ContainerOnPortSelect";
 import { useFetchUngroupedProductsByContainer } from "../../hooks/useContainers/useFetchUngroupedProductsByContainer";
 import { useFetchProductByHBL } from "../../hooks/useFetchProductByHBL";
@@ -62,7 +58,6 @@ export const UnGroupContainer = () => {
 	};
 
 	const [showModal, setShowModal] = useState(false);
-	const [showUploadFromExcelModal, setUploadFromExcelModal] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState({});
 
 	const handleOnSelectedProduct = (HBL) => {
@@ -159,12 +154,6 @@ export const UnGroupContainer = () => {
 				selectedProduct={selectedProduct}
 				showModalDetails={showModal}
 				setShowModalDetails={setShowModal}
-			/>
-
-			<LoadFromExcelModal
-				showModal={showUploadFromExcelModal}
-				setShowModal={setUploadFromExcelModal}
-				selectedContainer={selectedContainer}
 			/>
 		</div>
 	);

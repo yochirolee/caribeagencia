@@ -1,14 +1,21 @@
 import { React } from "react";
 import { ProductTrackingHistory } from "../../Pages/Tracking/Components/ProductTrackingHistory/productTrackingHistory";
 
-export const SearchResult = ({ selectedProductDetails }) => {
+export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 	return (
 		<div className="relative w-full  h-auto">
-			
 			<div className="relative bg-white rounded-lg mt-10 dark:bg-gray-700">
 				{selectedProductDetails ? (
-					<div className="bg-gray-50 p-4 rounded-lg">
+					<div className="bg-gray-50 p-4 rounded-lg py-10">
 						<div className="">
+							<div className="flex justify-end">
+								<button
+									className=" flex justify-end border rounded-lg p-2 text-xs text-red-500 bg-red-50"
+									onClick={() => setSearch(undefined)}
+								>
+									Cerrar
+								</button>
+							</div>
 							<div className="flex items-center text-sm gap-6 ">
 								<div className="flex flex-row items-center  gap-2">
 									<span className="font-semibold"> Factura:</span>

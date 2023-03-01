@@ -3,8 +3,6 @@ import { React, useState, useMemo, useRef } from "react";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import { useSelector } from "react-redux";
 import { TablePagination } from "../Pagination/TablePagination";
-import { IncomeStats } from "../Stats/IncomeStats";
-import { StopStats } from "../Stats/StopStats";
 import TableDropDown from "../ui/Dropdowns/TableDropDown";
 import AgencySelect from "../ui/Selects/AgencySelect";
 
@@ -15,9 +13,14 @@ const getUniqueAgencies = (productList) => {
 	return uniqueAgencies;
 };
 
-export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedContainer,setOpenContainerStops }) => {
-	console.log(selectedContainer);
+export const ProductsTable = ({
+	productList,
+	handleOnSelectedProduct,
+	selectedContainer,
+	setOpenContainerStops,
+}) => {
 	if (!productList) return null;
+
 	const { user } = useSelector((state) => state.Auth);
 	const tableRef = useRef();
 
@@ -36,32 +39,32 @@ export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedCo
 	const { onDownload } = useDownloadExcel({
 		currentTableRef: tableRef.current,
 		filename: selectedAgency
-			? selectedAgency + "-" + selectedContainer.ContainerNumber
-			: selectedContainer.ContainerNumber,
-		sheet: selectedAgency ? selectedAgency : selectedContainer.ContainerNumber,
+			? selectedAgency + "-" + selectedContainer?.ContainerNumber
+			: selectedContainer?.ContainerNumber,
+		sheet: selectedAgency ? selectedAgency : selectedContainer?.ContainerNumber,
 	});
 
 	return (
-		<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-			<div className=" inline-block min-w-full sm:px-6 lg:px-8">
+		<div className="sm:-mx-6 lg:-mx-8">
+			<div className=" grid min-w-full sm:px-6 lg:px-8">
 				<div name="actions" className="my-4 flex gap-6 items-center justify-between">
 					<div>
 						{selectedAgency ? (
 							<span
 								id="badge-dismiss-dark"
-								class="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
+								className="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
 							>
 								{selectedAgency}
 								<button
 									onClick={() => setSelectedAgency(undefined)}
 									type="button"
-									class="inline-flex items-center p-0.5 ml-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+									className="inline-flex items-center p-0.5 ml-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
 									data-dismiss-target="#badge-dismiss-dark"
 									aria-label="Remove"
 								>
 									<svg
-										ariaHidden="true"
-										class="w-3.5 h-3.5"
+										aria-hidden="true"
+										className="w-3.5 h-3.5"
 										fill="currentColor"
 										viewBox="0 0 20 20"
 										xmlns="http://www.w3.org/2000/svg"
@@ -72,12 +75,16 @@ export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedCo
 											clipRule="evenodd"
 										></path>
 									</svg>
-									<span class="sr-only">Remove badge</span>
+									<span className="sr-only">Remove badge</span>
 								</button>
 							</span>
 						) : (
 							""
 						)}
+
+						<span className="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300">
+							{filteredProducts.length}
+						</span>
 					</div>
 					<div className="grid gap-6 items-center justify-end">
 						<div className="flex justify-end gap-6 items-center">
@@ -96,26 +103,18 @@ export const ProductsTable = ({ productList, handleOnSelectedProduct, selectedCo
 									<i className="fa fa-file-excel text-md text-green-500 "></i>
 									<span className="text-xs">Exportar a Excel</span>
 								</button>
+
 								<button
-								onClick={()=>setOpenContainerStops(true)}
-									type="button"
-									className="flex  border h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
-									aria-label="Toggle dark mode"
-								>
-									<i className="fa fa-truck-field text-md text-green-500 "></i>
-									<span className="text-xs">Reporte de Paradas</span>
-								</button>
-								<button
+									onClick={() => setOpenContainerStops(true)}
 									type="button"
 									className="flex  border h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
 									aria-label="Toggle dark mode"
 								>
 									<i className="fa fa-file-invoice-dollar text-md text-green-500 "></i>
-									<span className="text-xs">Reporte de Ganancia</span>
+									<span className="text-xs">Reporte del Contenedor</span>
 								</button>
 							</div>
 						</div>
-						
 					</div>
 				</div>
 				<div className="overflow-y-auto ">

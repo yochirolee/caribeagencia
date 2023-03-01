@@ -1,7 +1,5 @@
-import { React, useState } from "react";
-import { useSelector } from "react-redux";
+import { React, useState, useEffect } from "react";
 import ContainerStopsModal from "../../Components/Modal/ContainerStopsModal";
-import ContainerStopModal from "../../Components/Modal/ContainerStopsModal";
 import { SearchResult } from "../../Components/Search/searchResult";
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
 import { DashboardStats } from "../../Components/Stats/DashboardStats";
@@ -13,19 +11,21 @@ import { useFetchByInvoiceOrHBL } from "../../hooks/useFetchByInvoiceOrHBL";
 import { ProductModalDetails } from "../Tracking/Components/ProductModalDetails";
 
 export const Dashboard = () => {
-	const [search, setSearch] = useState("");
-	const { data, isLoading } = useFetchByInvoiceOrHBL(search);
+	const [search, setSearch] = useState(undefined);
+	const { data: searchResult, isLoadingSearch } = useFetchByInvoiceOrHBL(search);
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
 
-	const {
-		data: containerData,
-		isLoading: isLoadingContainerData,
-		error,
-	} = useFetchAllProductsByContainerId(selectedContainer?.ContainerId);
+	const { data: containerData, isLoading: isLoadingContainerData } =
+		useFetchAllProductsByContainerId(selectedContainer?.ContainerId);
+
+	useEffect(() => {
+		setSearch(undefined);
+	}, [selectedContainer]);
 
 	const [showModal, setShowModal] = useState(false);
 	const [openContainerStops, setOpenContainerStops] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState({});
+
 	const handleOnSelectedProduct = (HBL) => {
 		setSelectedProduct(HBL);
 		setShowModal(true);
@@ -41,26 +41,19 @@ export const Dashboard = () => {
 				<DashboardStats />
 
 				<div className="p-2  mt-4  ">
-					<div className="">
-						<InputHBL handleHBL={handleSearch} placeHolder="Buscar por Factura o HBL" />
-						{isLoading ? (
-							<SearchResultSkeleton />
-						) : (
-							<>
-								<SearchResult selectedProductDetails={data} />
-							</>
-						)}
-					</div>
-					<div className=" lg:my-6  grid grid-flow-row items-center gap-6">
-						<div className="">
+					<div className=" lg:my-6  grid  items-center gap-6">
+						<div className="bg-gray-50 p-4 rounded-lg">
+							<InputHBL handleHBL={handleSearch} placeHolder="Buscar por Factura o HBL" />
 							<ContainerSelect
 								selectedContainer={selectedContainer}
 								setSelectedContainer={setSelectedContainer}
+								setSearch={setSearch}
 							/>
-							{selectedContainer?.ContainerId}
 						</div>
-						{isLoadingContainerData ? (
+						{isLoadingContainerData || isLoadingSearch ? (
 							<SearchResultSkeleton />
+						) : searchResult ? (
+							<SearchResult selectedProductDetails={searchResult} setSearch={setSearch} />
 						) : (
 							<ProductsTable
 								productList={containerData}
