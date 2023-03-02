@@ -251,7 +251,7 @@ export const TableContainerIncome = ({ containerData }) => {
 					<thead className="border-b bg-gray-50">
 						<tr>
 							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Total de Facturas
+								Total de Facturas (Miscelaneas y Medicamentos)
 							</th>
 							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
 								Total a Pagar
@@ -291,19 +291,19 @@ export const TableContainerIncome = ({ containerData }) => {
 					<thead className="border-b bg-gray-50">
 						<tr>
 							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Total de Facturas Miscelaneas
+								Total HBL de Miscelaneas
 							</th>
 							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Facturas 6.6 Lbs
+								Miscelaneas 6.6 Lbs
 							</th>
 							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Facturas 11 Lbs
+								Miscelaneas 11 Lbs
 							</th>
 							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Facturas 22 Lbs
+								Miscelaneas 22 Lbs
 							</th>
 							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Facturas 44 Lbs
+								Miscelaneas 44 Lbs
 							</th>
 						</tr>
 					</thead>
