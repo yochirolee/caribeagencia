@@ -1,5 +1,5 @@
 import { React, useMemo } from "react";
-import { useFetchContainerIncome } from "../../hooks/useReports/useFetchContainerIncome";
+import { useFetchContainerReport } from "../../hooks/useReports/useFetchContainerReport";
 
 const calculateTotalPaidByAgencies = (containerData) => {
 	if (!containerData) return 0;
@@ -50,7 +50,7 @@ export const IncomeStats = ({ selectedContainer }) => {
 		data: containerData,
 		isError: isErrorFetchingContainer,
 		isLoading: isLoadingContainer,
-	} = useFetchContainerIncome(selectedContainer);
+	} = useFetchContainerReport(selectedContainer);
 
 	const totalPaidByAgencies = useMemo(
 		() => calculateTotalPaidByAgencies(containerData),

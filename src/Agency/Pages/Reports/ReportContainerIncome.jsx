@@ -3,7 +3,7 @@ import { useState } from "react";
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
 import { TableContainerIncome } from "../../Components/Tables/TableContainerIncome";
 import ContainerSelect from "../../Components/ui/Selects/ContainerSelect";
-import { useFetchContainerIncome } from "../../hooks/useReports/useFetchContainerIncome";
+import { useFetchContainerReport } from "../../hooks/useReports/useFetchContainerReport";
 
 export const ReportContainerIncome = () => {
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
@@ -11,7 +11,7 @@ export const ReportContainerIncome = () => {
 		data: containerData,
 		isError: isErrorFetchingContainer,
 		isLoading: isLoadingContainer,
-	} = useFetchContainerIncome(selectedContainer);
+	} = useFetchContainerReport(selectedContainer);
 
 	return (
 		<div className=" p-4 m-4">

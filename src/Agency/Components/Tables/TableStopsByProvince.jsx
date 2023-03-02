@@ -5,18 +5,18 @@ const calculateTotal = (provincia, municipio) => {
 	if (!provincia || !municipio) return 0;
 
 	if (provincia == "La Habana" || provincia == "Artemisa" || provincia == "Mayabeque") {
-		return 5;
+		return 6;
 	}
 	if (provincia == "Villa Clara" && municipio == "Santa Clara") {
-		return 10;
+		return 12;
 	}
 	if (provincia == "Granma" && municipio == "Bayamo") {
-		return 10;
+		return 12;
 	}
 	if (provincia.trim().toLowerCase() == municipio.trim().toLowerCase()) {
-		return 10;
+		return 12;
 	} else {
-		return 15;
+		return 18;
 	}
 };
 
