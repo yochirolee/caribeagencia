@@ -331,7 +331,7 @@ export const TableContainerIncome = ({ containerData }) => {
 					<thead className="border-b bg-gray-50">
 						<tr>
 							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Total de Facturas Medicamentos
+								Total de Medicamentos
 							</th>
 						</tr>
 					</thead>
