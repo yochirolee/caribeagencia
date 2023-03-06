@@ -1,5 +1,16 @@
 import { React, useMemo } from "react";
 import { useFetchLocations } from "../../hooks/useFetchLocations";
+
+const colorLocations = [
+	"bg-yellow-300",
+	"bg-red-300",
+
+	"bg-blue-300",
+	"bg-indigo-300",
+	"bg-purple-300",
+	"bg-pink-300",
+	"bg-green-300",
+];
 export const DashboardStats = ({ filteredProducts }) => {
 	if (!filteredProducts) return null;
 
@@ -24,9 +35,9 @@ export const DashboardStats = ({ filteredProducts }) => {
 
 	return (
 		<div className="p-1 flex flex-wrap flex-col lg:flex-row gap-2 lg:gap-10">
-			{locations?.map((location) => (
-				<div className="border flex gap-4 p-4 items-center rounded-lg text-sm">
-					<span className="p-2 bg-yellow-300 rounded-lg text-yellow-800">
+			{locations?.map((location, index) => (
+				<div key={index} className="border flex gap-4 p-4 items-center rounded-lg text-sm">
+					<span className={`p-2 ${colorLocations[location.LocationId]} rounded-lg text-gray-700`}>
 						{getLocationCount(location.LocationId)}
 					</span>
 					<h3>{location.LocationName}</h3>

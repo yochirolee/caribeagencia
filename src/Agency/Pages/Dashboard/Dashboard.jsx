@@ -10,22 +10,33 @@ import { useFetchAllProductsByContainerId } from "../../hooks/useContainers/useF
 import { useFetchByInvoiceOrHBL } from "../../hooks/useFetchByInvoiceOrHBL";
 import { ProductModalDetails } from "../Tracking/Components/ProductModalDetails";
 
+//filter by agency and location
+const filterProducts = (productList, selectedAgency, selectedLocation) => {
+	let filteredByAgency = selectedAgency
+		? productList?.filter((product) => product.Agency == selectedAgency)
+		: productList;
+
+	console.log(selectedLocation, filteredByAgency);
+	let filteredByLocation = selectedLocation
+		? filteredByAgency?.filter((product) => product.locations.LocationName == selectedLocation)
+		: filteredByAgency;
+	return filteredByLocation;
+};
+
 export const Dashboard = () => {
 	const [search, setSearch] = useState(undefined);
 	const { data: searchResult, isLoadingSearch } = useFetchByInvoiceOrHBL(search);
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
 	const [selectedAgency, setSelectedAgency] = useState(undefined);
+	const [selectedLocation, setSelectedLocation] = useState(undefined);
 
 	const { data: productList, isLoading: isLoadingContainerData } = useFetchAllProductsByContainerId(
 		selectedContainer?.ContainerId,
 	);
 
 	const filteredProducts = useMemo(
-		() =>
-			selectedAgency
-				? productList?.filter((product) => product.Agency == selectedAgency)
-				: productList,
-		[productList, selectedAgency],
+		() => filterProducts(productList, selectedAgency, selectedLocation),
+		[productList, selectedAgency,selectedLocation],
 	);
 	useEffect(() => {
 		setSearch(undefined);
@@ -69,11 +80,13 @@ export const Dashboard = () => {
 							<SearchResult selectedProductDetails={searchResult} setSearch={setSearch} />
 						) : (
 							<ProductsTable
-								productList={filteredProducts}
+								productList={productList}
 								selectedContainer={selectedContainer}
 								setSelectedContainer={setSelectedContainer}
 								setSelectedAgency={setSelectedAgency}
 								selectedAgency={selectedAgency}
+								selectedLocation={selectedLocation}
+								setSelectedLocation={setSelectedLocation}
 								filteredProducts={filteredProducts}
 								handleOnSelectedProduct={handleOnSelectedProduct}
 								setOpenContainerStops={setOpenContainerStops}
