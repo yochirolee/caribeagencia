@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useMemo, useEffect } from "react";
 import ContainerStopsModal from "../../Components/Modal/ContainerStopsModal";
 import { SearchResult } from "../../Components/Search/searchResult";
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
@@ -14,10 +14,19 @@ export const Dashboard = () => {
 	const [search, setSearch] = useState(undefined);
 	const { data: searchResult, isLoadingSearch } = useFetchByInvoiceOrHBL(search);
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
+	const [selectedAgency, setSelectedAgency] = useState(undefined);
 
-	const { data: containerData, isLoading: isLoadingContainerData } =
-		useFetchAllProductsByContainerId(selectedContainer?.ContainerId);
+	const { data: productList, isLoading: isLoadingContainerData } = useFetchAllProductsByContainerId(
+		selectedContainer?.ContainerId,
+	);
 
+	const filteredProducts = useMemo(
+		() =>
+			selectedAgency
+				? productList?.filter((product) => product.Agency == selectedAgency)
+				: productList,
+		[productList, selectedAgency],
+	);
 	useEffect(() => {
 		setSearch(undefined);
 	}, [selectedContainer]);
@@ -38,7 +47,11 @@ export const Dashboard = () => {
 	return (
 		<div className="flex flex-col min-h-screen  relative   ">
 			<div className="container  p-2 lg:p-10">
-				<DashboardStats />
+				{isLoadingContainerData ? (
+					<SearchResultSkeleton />
+				) : (
+					<DashboardStats filteredProducts={filteredProducts} />
+				)}
 
 				<div className="p-2   mt-4  ">
 					<div className=" lg:my-6  grid  items-center gap-6">
@@ -56,9 +69,12 @@ export const Dashboard = () => {
 							<SearchResult selectedProductDetails={searchResult} setSearch={setSearch} />
 						) : (
 							<ProductsTable
-								productList={containerData}
+								productList={filteredProducts}
 								selectedContainer={selectedContainer}
 								setSelectedContainer={setSelectedContainer}
+								setSelectedAgency={setSelectedAgency}
+								selectedAgency={selectedAgency}
+								filteredProducts={filteredProducts}
 								handleOnSelectedProduct={handleOnSelectedProduct}
 								setOpenContainerStops={setOpenContainerStops}
 							/>

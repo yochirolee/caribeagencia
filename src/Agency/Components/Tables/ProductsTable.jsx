@@ -19,6 +19,9 @@ export const ProductsTable = ({
 	selectedContainer,
 	setSelectedContainer,
 	setOpenContainerStops,
+	filteredProducts,
+	selectedAgency,
+	setSelectedAgency,
 }) => {
 	if (!productList) return null;
 
@@ -26,16 +29,6 @@ export const ProductsTable = ({
 	const tableRef = useRef();
 
 	const agencies = useMemo(() => getUniqueAgencies(productList), [productList]);
-
-	const [selectedAgency, setSelectedAgency] = useState(undefined);
-
-	const filteredProducts = useMemo(
-		() =>
-			selectedAgency
-				? productList?.filter((product) => product.Agency == selectedAgency)
-				: productList,
-		[productList, selectedAgency],
-	);
 
 	const { onDownload } = useDownloadExcel({
 		currentTableRef: tableRef.current,

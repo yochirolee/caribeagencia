@@ -242,7 +242,7 @@ export const TableContainerIncome = ({ containerData }) => {
 		[containerData],
 	);
 
-	console.log(duraderos, "duraderos");
+	
 
 	return (
 		<div className="flex flex-col border-b gap-4 text-xs my-4 p-4 ">
