@@ -12,9 +12,9 @@ export default function LocationSelect({ locations, selectedLocation, setSelecte
 			{({ open }) => (
 				<>
 					<div className="relative ">
-						<Listbox.Button className="relative max-w-64 cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+						<Listbox.Button className="relative max-w-44 cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
 							<span className="flex items-center">
-								<span className="ml-3 text-xs p-0.5 block truncate">
+								<span className="ml-3 text-xs  block truncate">
 									{selectedLocation ? selectedLocation : "Filtrar por Locacion"}
 								</span>
 							</span>

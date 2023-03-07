@@ -1,30 +1,13 @@
 import { React } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { Factura } from "../Components/Pdf/Factura";
 import { Layout } from "../Layout/Layout";
-import { AddReciever } from "../Pages/Recievers/AddReciever";
-import { Categories } from "../Pages/Categories/Categories";
-import { Customers } from "../Pages/Customers/Customers";
 import { Dashboard } from "../Pages/Dashboard/Dashboard";
-import { CreateOrder } from "../Pages/Orders/CreateOrder";
-import { ListOrders } from "../Pages/Orders/ListOrders";
-import { CreateProduct } from "../Pages/Products/CreateProduct";
-import { Recievers } from "../Pages/Recievers/Recievers";
-import { ScanQrProducts } from "../Pages/Tracking/ScanQrProducts";
-import { TrackingByProducts } from "../Pages/Tracking/TrackingByProducts";
-import { TrackingByInvoice } from "../Pages/Tracking/TrackingByInvoice";
-import { Containers } from "../Pages/Contenedores/Containers";
-import { Pallets } from "../Pages/Pallets/Pallets";
-import { CreateContainer } from "../Pages/Contenedores/CreateContainer";
 import { UnGroupContainer } from "../Pages/Inventory/UnGroupContainer";
 import { Users } from "../Pages/Users/Users";
-import { NationalizeProducts } from "../Pages/Inventory/NationalizeProducts";
-import { AlertPopup } from "../Components/Alert/AlertPopup";
-import { InDelivery } from "../Pages/Inventory/InDelivery";
-import { DeliveryDone } from "../Pages/Inventory/DeliveryDone";
 import { ContainerInPort } from "../Pages/Inventory/ContainerInPort";
 import { ReportContainerTransport } from "../Pages/Reports/ReportContainerTransport";
 import { ReportContainerIncome } from "../Pages/Reports/ReportContainerIncome";
+import { useSelector } from "react-redux";
 
 /*
 <Route path="/" element={<Dashboard />} />
@@ -48,19 +31,20 @@ import { ReportContainerIncome } from "../Pages/Reports/ReportContainerIncome";
  */
 
 export const AgencyRoutes = () => {
+	const { user } = useSelector((state) => state.Auth);
 	return (
 		<Layout>
 			<Routes>
 				<Route path="/" element={<Dashboard />} />
-				<Route path="tracking_products" element={<TrackingByProducts />} />
 				<Route path="container_port" element={<ContainerInPort />} />
 				<Route path="ungroup_container" element={<UnGroupContainer />} />
-				<Route path="nacionalize" element={<NationalizeProducts />} />
-				<Route path="in_delivery" element={<InDelivery />} />
-				<Route path="done_delivery" element={<DeliveryDone />} />
 				<Route path="users" element={<Users />} />
-				<Route path="reportContainerTransport" element={<ReportContainerTransport />} />
-				<Route path="reportContainerIncome" element={<ReportContainerIncome />} />
+				{user.isAdmin && (
+					<>
+						<Route path="reportContainerTransport" element={<ReportContainerTransport />} />
+						<Route path="reportContainerIncome" element={<ReportContainerIncome />} />
+					</>
+				)}
 
 				<Route path="/*" element={<Navigate to="/" />} />
 			</Routes>

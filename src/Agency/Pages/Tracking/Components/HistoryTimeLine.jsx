@@ -2,11 +2,11 @@ import { React } from "react";
 import { format, parseISO } from "date-fns";
 
 export const HistoryTimeLine = ({ history }) => {
-	if(!history) return null;
+	if (!history) return null;
 	const reversed = [...history].reverse();
 	return (
 		<>
-			<ol class="flex overflow-x-auto  w-full">
+			<ol className="flex overflow-x-auto  w-full">
 				{reversed.map((step, index) => (
 					<li key={index} className="relative h-20 text-xs p-2 mb-6">
 						<div className="flex  items-center w-28">

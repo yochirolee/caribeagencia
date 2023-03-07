@@ -8,27 +8,28 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Dialog, Transition } from "@headlessui/react";
 import { TableImportProducts } from "../Tables/TableProductsToImport";
-import { InputHBL } from "../ui/Forms/InputHBL";
+import { SelectLocations } from "../ui/Selects/SelectLocations";
 
-export const ExcelUploadModal = ({ showModal, setShowModal, Location, setIsLoading }) => {
+export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 	const [files, setFiles] = useState("");
 	const importedHBLSFromExcel = useImportHblsFromExcel(files);
 	const { data: productList, isLoading, isError } = useFetchProductsList(importedHBLSFromExcel);
 	const mutationProductList = useSetProductListLocation();
 	const { user } = useSelector((state) => state.Auth);
 	const [startDate, setStartDate] = useState(new Date());
+	const [location, setLocation] = useState(null);
 
 	const handleImport = async (event) => {
 		setFiles(event.target.files);
 	};
-/* 	const handleHbl = (hbl) => {
+	/* 	const handleHbl = (hbl) => {
 		console.log(hbl);
 		productList.push(hbl);
 	}; */
 	const handleOnSave = () => {
 		mutationProductList.mutateAsync({
 			products: productList,
-			locationId: Location.LocationId,
+			locationId: location.LocationId,
 			UserId: user,
 			CreatedAt: startDate,
 		});
@@ -68,9 +69,7 @@ export const ExcelUploadModal = ({ showModal, setShowModal, Location, setIsLoadi
 							>
 								<Dialog.Panel className="relative  transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-5xl">
 									<div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-										<h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-											Cambiar a {Location.LocationName}
-										</h3>
+										<h3 className="text-xl font-semibold text-gray-900 dark:text-white"></h3>
 										<button
 											onClick={() => handleCloseModal()}
 											type="button"
@@ -81,8 +80,19 @@ export const ExcelUploadModal = ({ showModal, setShowModal, Location, setIsLoadi
 										</button>
 									</div>
 									<div className="flex flex-col  justify-between gap-2 items-center p-4 lg:p-10">
-{/* 										<InputHBL handleHBL={handleHbl} />
- */}										<InputFiles handleImport={handleImport} />
+										{/* 										<InputHBL handleHBL={handleHbl} />
+										 */}
+										<div className="flex flex-col justify-between">
+											<div className=" inline-flex items-center  gap-4 mb-5 text-sm font-medium text-gray-900 dark:text-white">
+												<h3>Seleccione Ubicacion:</h3>
+												<span className="border p-2 rounded">
+													{location?.LocationName ? location?.LocationName : "Seleccione Locacion"}
+												</span>
+											</div>
+
+											<SelectLocations setLocation={setLocation} />
+										</div>
+										<InputFiles handleImport={handleImport} />
 										<ReactDatePicker
 											className="rounded-lg w-full text-sm border-gray-400"
 											selected={startDate}

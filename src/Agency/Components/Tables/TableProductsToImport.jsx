@@ -1,21 +1,10 @@
-import { format, parseISO } from "date-fns";
-import { React, useState, useMemo, useRef } from "react";
-import { useSelector } from "react-redux";
-import { TablePagination } from "../Pagination/TablePagination";
+import { React, useState, useMemo } from "react";
+import { getUniqueAgencies } from "../../Lib";
 
 import AgencySelect from "../ui/Selects/AgencySelect";
 
-const getUniqueAgencies = (productList) => {
-	if (!productList) return [];
-
-	const uniqueAgencies = [...new Set(productList.map((product) => product.Agency))];
-	return uniqueAgencies;
-};
-
 export const TableImportProducts = ({ productList }) => {
-	if (!productList || productList==0) return null;
-	const { user } = useSelector((state) => state.Auth);
-	const tableRef = useRef();
+	if (!productList || productList == 0) return null;
 
 	const agencies = useMemo(() => getUniqueAgencies(productList), [productList]);
 
@@ -30,7 +19,7 @@ export const TableImportProducts = ({ productList }) => {
 	);
 
 	return (
-		<div className="sm:-mx-6 lg:-mx-8">
+		<div className="">
 			<div name="actions" className="my-4  flex gap-6 items-center justify-between">
 				<div>
 					{selectedAgency ? (
@@ -70,8 +59,8 @@ export const TableImportProducts = ({ productList }) => {
 						id="badge-dismiss-dark"
 						className="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
 					>
-                        {filteredProducts?.length} Productos
-                    </span>
+						{filteredProducts?.length} Productos
+					</span>
 				</div>
 				<div className="grid gap-6 items-center justify-end">
 					<div className="flex justify-end gap-6 items-center">
@@ -93,9 +82,7 @@ export const TableImportProducts = ({ productList }) => {
 							<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
 								HBL
 							</th>
-							<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-								Lugar
-							</th>
+							
 							<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
 								Agencia
 							</th>
@@ -119,11 +106,7 @@ export const TableImportProducts = ({ productList }) => {
 								<td className="text-xs  text-gray-900  px-6   py-4 whitespace-nowrap">
 									{product?.HBL.trim()}
 								</td>
-								<td className="text-xs text-gray-900   mpx-6   py-4 whitespace-nowrap">
-									<span className="bg-green-100 p-2 rounded-lg">
-										{product?.locations?.LocationName}
-									</span>
-								</td>
+								
 								<td className="text-xs text-gray-900 px-6  w-64  py-4">
 									<p className="inline-flex ">{product.Agency}</p>
 								</td>

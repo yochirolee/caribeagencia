@@ -2,9 +2,6 @@ import { React } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { InventoryDropDownMenu } from "./Dropdowns/InventoryDropDownMenu";
-import { OrdersDropDownMenu } from "./Dropdowns/OrdersDropDownMenu";
-import { SettingsDropDownMenu } from "./Dropdowns/SettingsDropDownMenu copy";
-import { TrackingDropDownMenu } from "./Dropdowns/TrackingDropDownMenu";
 import { UsersDropDownMenu } from "./Dropdowns/UsersDropDownMenu";
 import { ReportsDropDownMenu } from "./Dropdowns/ReportsDropDownMenu";
 
@@ -32,12 +29,18 @@ export const Sidebar = () => {
 								<i className="fa fa-home text-blue-500 mr-4"></i>
 								<h3>Inicio</h3>
 							</Link>
-						</div>
+						</div
 					</li>
 					<InventoryDropDownMenu />
-					<TrackingDropDownMenu />
-					<UsersDropDownMenu />
-					<ReportsDropDownMenu />
+
+					{user.isAdmin ? (
+						<>
+							<ReportsDropDownMenu />
+							<UsersDropDownMenu />
+						</>
+					) : (
+						""
+					)}
 				</ul>
 			</div>
 		</aside>

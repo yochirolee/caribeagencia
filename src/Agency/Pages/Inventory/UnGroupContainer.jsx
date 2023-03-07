@@ -1,7 +1,6 @@
 import { React, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ListProductsInSelectedContainer } from "../../Components/ui/List/ListProductsInSelectedContainer";
-import { ProductModalDetails } from "../Tracking/Components/ProductModalDetails";
 import { InputHBL } from "../../Components/ui/Forms/InputHBL";
 import { setAlert } from "../../Store/Slices/Alert/AlertSlice";
 import { UnGroupContainerStats } from "../../Components/ui/Stats/UnGroupContainerStats";
@@ -13,6 +12,7 @@ import { createUnGroupedProduct } from "../../Helpers/createUnGroupProduct";
 import { useUnGroupProducts } from "../../hooks/useContainers/useUngroupProducts";
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
 import { TableUngroupedProducts } from "../../Components/Tables/TableUngroupedProducts";
+import { ProductModalDetails } from "../../Components/Modal/ProductModalDetails";
 
 export const UnGroupContainer = () => {
 	const dispatch = useDispatch();

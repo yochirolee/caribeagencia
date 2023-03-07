@@ -6,7 +6,7 @@ export const getProductsByContainerId = async (ContainerId) => {
 		try {
 			const { data, error } = await supabase
 				.from("productsTracking")
-				.select(`*,locations ( *)`)
+				.select(`*,locations (*)`)
 				.limit(50);
 
 			if (error) throw new Error(error.message);

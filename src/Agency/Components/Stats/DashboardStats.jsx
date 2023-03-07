@@ -24,19 +24,18 @@ export const DashboardStats = ({ filteredProducts }) => {
 		);
 	}, [filteredProducts]);
 
-	const { data: locations, isLoading } = useFetchLocations();
+	const { data: locations } = useFetchLocations();
 
 	const getLocationCount = (locationId) => {
 		const count = locationCount.find((loc) => locationId == loc.LocationId)?.count;
 		return count ? count : 0;
 	};
 
-	if (isLoading) return <div>Loading...</div>;
-
+	
 	return (
 		<div className="p-1 flex flex-wrap flex-col lg:flex-row gap-2 lg:gap-10">
 			{locations?.map((location, index) => (
-				<div key={index} className="border flex gap-4 p-4 items-center rounded-lg text-sm">
+				<div key={index} className=" flex gap-4 p-2 text-xs items-center rounded-lg ">
 					<span className={`p-2 ${colorLocations[location.LocationId]} rounded-lg text-gray-700`}>
 						{getLocationCount(location.LocationId)}
 					</span>

@@ -1,6 +1,6 @@
 import { React } from "react";
-import { ProductTrackingHistory } from "./ProductTrackingHistory/productTrackingHistory";
-import { useFetchProductByHBL } from "../../../hooks/useFetchProductByHBL";
+import { ProductTrackingHistory } from "../../Pages/Tracking/Components/ProductTrackingHistory/productTrackingHistory";
+import { useFetchProductByHBL } from "../../hooks/useFetchProductByHBL";
 import { Spinner } from "flowbite-react";
 
 export const ProductModalDetails = ({ selectedProduct, showModalDetails, setShowModalDetails }) => {

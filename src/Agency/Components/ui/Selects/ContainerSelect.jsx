@@ -7,22 +7,27 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
 }
 
-
-export default function ContainerSelect({ selectedContainer, setSelectedContainer }) {
+export default function ContainerSelect({
+	selectedContainer,
+	setSelectedContainer,
+	showCaption = true,
+}) {
 	const { data: containers } = useFetchAllContainers();
 
 	return (
-		<div className="max-w-sm">
+		<div className="max-w-lg">
 			<Listbox value={selectedContainer} onChange={setSelectedContainer}>
 				{({ open }) => (
 					<>
-						<Listbox.Label className="block text-sm font-medium mt-4 text-gray-700">
-							Seleccione Contenedor
-						</Listbox.Label>
-						<div className="relative mt-1">
+						{showCaption && (
+							<Listbox.Label className="block text-sm font-medium mt-4 text-gray-700">
+								Seleccione Contenedor
+							</Listbox.Label>
+						)}
+						<div className="relative ">
 							<Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
 								<span className="flex items-center">
-									<span className="ml-3 text-xs block truncate">
+									<span className="ml-3 w-48 text-xs block truncate">
 										{selectedContainer?.ContainerId
 											? selectedContainer?.ContainerNumber
 											: "Seleccione Contenedor"}
