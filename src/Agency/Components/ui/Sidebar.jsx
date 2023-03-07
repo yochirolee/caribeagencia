@@ -20,17 +20,16 @@ export const Sidebar = () => {
 					</div>
 				</div>
 				<ul className="space-y-2 mt-4 ">
-					<li>
-						<div className="text-sm ">
-							<Link
-								to="/"
-								className="flex  items-center p-2  font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-							>
-								<i className="fa fa-home text-blue-500 mr-4"></i>
-								<h3>Inicio</h3>
-							</Link>
-						</div
-					</li>
+					<div className="text-sm ">
+						<Link
+							to="/"
+							className="flex  items-center p-2  font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+						>
+							<i className="fa fa-home text-blue-500 mr-4"></i>
+							<h3>Inicio</h3>
+						</Link>
+					</div>
+
 					<InventoryDropDownMenu />
 
 					{user.isAdmin ? (
