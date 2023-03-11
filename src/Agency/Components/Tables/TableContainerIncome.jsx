@@ -1,12 +1,5 @@
 import { React, useMemo } from "react";
 
-const truncateString = (str, num) => {
-	if (str.length <= num) {
-		return str;
-	}
-	return str.slice(0, num) + "...";
-};
-
 const calculateTotalPaidByAgencies = (containerData) => {
 	if (!containerData) return 0;
 	const initialValue = 0;
@@ -151,6 +144,7 @@ const calculateTransportationCost = (containerData) => {
 
 const calculateTotalInvoices = (containerData) => {
 	let uniqueInvoices = GroupBy(containerData, "InvoiceId");
+	console.log(uniqueInvoices.length, "UniqueInvoices");
 	let Invoices = [];
 
 	for (const [key, value] of Object.entries(uniqueInvoices)) {
@@ -242,8 +236,6 @@ export const TableContainerIncome = ({ containerData }) => {
 		[containerData],
 	);
 
-	
-
 	return (
 		<div className="flex flex-col border-b gap-4 text-xs my-4 p-4 ">
 			<div className=" grid xl:grid-cols-2  gap-10">
@@ -287,6 +279,33 @@ export const TableContainerIncome = ({ containerData }) => {
 						</tr>
 					</tbody>
 				</table>
+				<table name="Miscelaneas Invoices Table" className="min-w-full text-center ">
+					<thead className="border-b bg-gray-50">
+						<tr>
+							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
+								Total de Facturas Duradero
+							</th>
+							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
+								Facturas Duradero Por Provincias
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="bg-white border-b">
+							<td className="px-6  py-4 whitespace-nowrap text-xs font-medium text-gray-900">
+								{duraderos.length}
+							</td>
+
+							{duraderosGroupByProvince.map((province) => (
+								<div className="flex justify-between p-2">
+									<td className="flex gap-4 border-red-500">{province.Province}</td>
+									<td className="flex gap-4 border-red-500">{province.InvoiceId.length}</td>
+								</div>
+							))}
+						</tr>
+					</tbody>
+				</table>
+
 				<table name="Miscelaneas Invoices Table" className="min-w-full text-center ">
 					<thead className="border-b bg-gray-50">
 						<tr>
@@ -343,125 +362,6 @@ export const TableContainerIncome = ({ containerData }) => {
 						</tr>
 					</tbody>
 				</table>
-				<table name="Miscelaneas Invoices Table" className="min-w-full text-center ">
-					<thead className="border-b bg-gray-50">
-						<tr>
-							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Total de Facturas Duradero
-							</th>
-							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Facturas Duradero Por Provincias
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr className="bg-white border-b">
-							<td className="px-6  py-4 whitespace-nowrap text-xs font-medium text-gray-900">
-								{duraderos.length}
-							</td>
-
-							{duraderosGroupByProvince.map((province) => (
-								<div className="flex justify-between p-2">
-									<td className="flex gap-4 border-red-500">{province.Province}</td>
-									<td className="flex gap-4 border-red-500">{province.InvoiceId.length}</td>
-								</div>
-							))}
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div className="overflow-x-auto sm:-mx-6 lg:-mx-8 ">
-				<div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
-					<div className="overflow-hidden h-[calc(100vh-21rem)] overflow-y-auto ">
-						<table className="min-w-full text-center ">
-							<thead className="border-b bg-gray-50">
-								<tr>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Agencia
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Factura
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										HBL
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Tipo de Producto
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Descripcion
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Peso (Lbs)
-									</th>
-
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Provincia
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Municipio
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Precio Agencia
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Descuento
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Pagado por Agencia
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-										Delivery
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{containerData?.map((data, index) => (
-									<tr key={index} className="bg-white border-b">
-										<td className="px-6  py-4 whitespace-nowrap text-xs font-medium text-gray-900">
-											{data?.AgencyName}
-										</td>
-										<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-											{data?.InvoiceId}
-										</td>
-										<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-											{data?.HBL}
-										</td>
-										<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-											{data?.ProductType}
-										</td>
-										<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-											{truncateString(data?.Description, 10)}
-										</td>
-										<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-											{data?.Weight}
-										</td>
-										<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-											{data?.Provincia}
-										</td>
-										<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-											{data?.Municipio}
-										</td>
-
-										<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-											{parseFloat(data.AgencyPayment / data?.Weight).toFixed(2)}
-										</td>
-
-										<td className="text-xm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{data?.Discount}
-										</td>
-										<td className="text-xm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{data?.AgencyPayment}
-										</td>
-										<td className="text-xm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{data?.DeliveryCost}
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				</div>
 			</div>
 		</div>
 	);

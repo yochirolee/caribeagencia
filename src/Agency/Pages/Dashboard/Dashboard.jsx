@@ -6,7 +6,7 @@ import { DashboardStats } from "../../Components/Stats/DashboardStats";
 import { ProductsTable } from "../../Components/Tables/ProductsTable";
 import { InputHBL } from "../../Components/ui/Forms/InputHBL";
 import { AgencySelect, ContainerSelect, LocationSelect } from "../../Components/ui/Selects";
-import { filterProducts, getUniqueAgencies, getUniqueLocations } from "../../Lib";
+import { filterProducts, getUniqueAgencies, getUniqueLocations } from "../../Utils";
 import { useFetchAllProductsByContainerId } from "../../hooks/useContainers/useFecthAllProductsByContainerId";
 import { useFetchByInvoiceOrHBL } from "../../hooks/useFetchByInvoiceOrHBL";
 import { ProductModalDetails } from "../../Components/Modal/ProductModalDetails";

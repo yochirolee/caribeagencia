@@ -28,6 +28,7 @@ export const ProductTrackingHistory = ({ product }) => {
 						<p>{product?.Weight} Lbs</p>
 					</div>
 				</div>
+	
 				<HistoryTimeLine history={productsDetails} />
 			</div>
 		</>

@@ -6,6 +6,7 @@ export const HistoryTimeLine = ({ history }) => {
 	const reversed = [...history].reverse();
 	return (
 		<>
+		
 			<ol className="flex overflow-x-auto  w-full">
 				{reversed.map((step, index) => (
 					<li key={index} className="relative h-20 text-xs p-2 mb-6">

@@ -37,6 +37,7 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 	};
 
 	const handleCloseModal = () => {
+		
 		setShowModal(false);
 	};
 

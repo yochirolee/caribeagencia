@@ -1,5 +1,5 @@
 import { React, useState, useMemo } from "react";
-import { getUniqueAgencies } from "../../Lib";
+import { getUniqueAgencies } from "../../Utils";
 
 import AgencySelect from "../ui/Selects/AgencySelect";
 
@@ -82,7 +82,7 @@ export const TableImportProducts = ({ productList }) => {
 							<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
 								HBL
 							</th>
-							
+
 							<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
 								Agencia
 							</th>
@@ -106,7 +106,7 @@ export const TableImportProducts = ({ productList }) => {
 								<td className="text-xs  text-gray-900  px-6   py-4 whitespace-nowrap">
 									{product?.HBL.trim()}
 								</td>
-								
+
 								<td className="text-xs text-gray-900 px-6  w-64  py-4">
 									<p className="inline-flex ">{product.Agency}</p>
 								</td>
