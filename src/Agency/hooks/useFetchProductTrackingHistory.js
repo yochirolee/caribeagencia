@@ -69,6 +69,5 @@ export const useFetchProductTrackingHistory = async (product) => {
 
 	if (isError) throw new Error(error.message);
 	if (productTrackingHistory) productHistory = [...productTrackingHistory, ...productHistory];
-	console.log(productHistory, "PRODUCT HISTORY");
 	return productHistory;
 };

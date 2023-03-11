@@ -60,17 +60,7 @@ export const Dashboard = () => {
 	return (
 		<div className="flex flex-col min-h-screen  relative   ">
 			<div className="container p-2">
-				<div className="flex  flex-wrap justify-end">
-					<button
-						onClick={() => setShowExcelUploadModal(true)}
-						type="button"
-						className="flex   h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
-						aria-label="Toggle dark mode"
-					>
-						<i className="fa fa-file-excel text-md text-green-500 "></i>
-						<span className="text-xs hidden sm:block">Importar desde Excel</span>
-					</button>
-				</div>
+				<div className="flex  flex-wrap justify-end"></div>
 				<div className="bg-gray-50  p-4 rounded-lg">
 					<InputHBL handleHBL={handleSearch} placeHolder="Buscar por Factura o HBL" />
 				</div>
@@ -83,7 +73,16 @@ export const Dashboard = () => {
 				<div className="p-2   mt-4  ">
 					<div className="  flex flex-wrap container justify-between  items-center gap-6">
 						<div className=" grid container  ">
-							<div className="flex  flex-wrap justify-end">
+							<div className="flex  my-2 flex-wrap justify-end">
+								<button
+									onClick={() => setShowExcelUploadModal(true)}
+									type="button"
+									className="flex   h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+									aria-label="Toggle dark mode"
+								>
+									<i className="fa fa-file-import text-md text-green-500 "></i>
+									<span className="text-xs hidden sm:block">Importar desde Excel</span>
+								</button>
 								<button
 									onClick={onDownload}
 									type="button"
