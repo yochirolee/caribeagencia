@@ -50,7 +50,7 @@ export const ProductsTable = ({ handleOnSelectedProduct, filteredProducts, table
 									</span>
 								</td>
 								<td className="text-xs text-gray-900 px-6  w-64  py-4">
-									<p className="inline-flex ">{product.Agency}</p>
+									<p className="inline-flex ">{product.AgencyName}</p>
 								</td>
 								<td className="text-xs text-gray-900 px-6  w-64  py-4">
 									<p className="inline-flex ">{product.Description}</p>
