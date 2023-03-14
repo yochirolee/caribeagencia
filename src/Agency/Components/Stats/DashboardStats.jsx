@@ -1,15 +1,40 @@
+import { BellSnoozeIcon } from "@heroicons/react/20/solid";
+import { Card, Flex, Text, Metric, Icon } from "@tremor/react";
 import { React, useMemo } from "react";
+import { FaBalanceScaleRight, FaShip, FaShippingFast, FaTruckLoading, FaWarehouse } from "react-icons/fa";
+import { MdOutlineDownloadDone } from "react-icons/md";
+import { GrUserPolice } from "react-icons/gr";
 import { useFetchLocations } from "../../hooks/useFetchLocations";
 
 const colorLocations = [
-	"bg-yellow-300",
-	"bg-red-300",
-
-	"bg-blue-300",
-	"bg-indigo-300",
-	"bg-purple-300",
-	"bg-pink-300",
-	"bg-green-300",
+	{
+		color: "gray",
+		icon: () => <FaShip />,
+	},
+	{
+		color: "gray",
+		icon: () => <FaShip />,
+	},
+	{
+		color: "pink",
+		icon: () => <GrUserPolice  />,
+	},
+	{
+		color: "violet",
+		icon: () => <FaWarehouse />,
+	},
+	{
+		color: "yellow",
+		icon: () => <FaTruckLoading />,
+	},
+	{
+		color: "blue",
+		icon: () => <FaShippingFast />,
+	},
+	{
+		color: "green",
+		icon: () => <MdOutlineDownloadDone />,
+	},
 ];
 export const DashboardStats = ({ filteredProducts }) => {
 	if (!filteredProducts) return null;
@@ -31,16 +56,27 @@ export const DashboardStats = ({ filteredProducts }) => {
 		return count ? count : 0;
 	};
 
-	
 	return (
-		<div className="p-1 flex flex-wrap flex-col lg:flex-row gap-2 lg:gap-10">
+		<div className="container  flex  flex-wrap align-middle xl:grid xl:grid-cols-6 gap-4  p-4  bg-gray-50  ">
 			{locations?.map((location, index) => (
-				<div key={index} className=" flex gap-4 p-2 text-xs items-center rounded-lg ">
-					<span className={`p-2 ${colorLocations[location.LocationId]} rounded-lg text-gray-700`}>
-						{getLocationCount(location.LocationId)}
-					</span>
-					<h3>{location.LocationName}</h3>
-				</div>
+				<Card
+					key={index}
+					decoration="top"
+					decorationColor={colorLocations[location?.LocationId]?.color}
+				>
+					<Flex justifyContent="start" className="space-x-4">
+						<Icon
+							icon={colorLocations[location?.LocationId]?.icon}
+							variant="light"
+							size="sm"
+							color={colorLocations[location?.LocationId]?.color}
+						/>
+						<div className="truncate ">
+							<Text>{location?.LocationName}</Text>
+							<Metric className="text-xl">{getLocationCount(location?.LocationId)}</Metric>
+						</div>
+					</Flex>
+				</Card>
 			))}
 		</div>
 	);
