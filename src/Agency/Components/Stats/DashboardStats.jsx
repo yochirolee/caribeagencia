@@ -1,7 +1,13 @@
 import { BellSnoozeIcon } from "@heroicons/react/20/solid";
 import { Card, Flex, Text, Metric, Icon } from "@tremor/react";
 import { React, useMemo } from "react";
-import { FaBalanceScaleRight, FaShip, FaShippingFast, FaTruckLoading, FaWarehouse } from "react-icons/fa";
+import {
+	FaBalanceScaleRight,
+	FaShip,
+	FaShippingFast,
+	FaTruckLoading,
+	FaWarehouse,
+} from "react-icons/fa";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { GrUserPolice } from "react-icons/gr";
 import { useFetchLocations } from "../../hooks/useFetchLocations";
@@ -17,7 +23,7 @@ const colorLocations = [
 	},
 	{
 		color: "pink",
-		icon: () => <GrUserPolice  />,
+		icon: () => <GrUserPolice />,
 	},
 	{
 		color: "violet",
@@ -59,11 +65,7 @@ export const DashboardStats = ({ filteredProducts }) => {
 	return (
 		<div className="container  flex  flex-wrap align-middle xl:grid xl:grid-cols-6 gap-4  p-4  bg-gray-50  ">
 			{locations?.map((location, index) => (
-				<Card
-					key={index}
-					decoration="top"
-					decorationColor={colorLocations[location?.LocationId]?.color}
-				>
+				<Card key={index}>
 					<Flex justifyContent="start" className="space-x-4">
 						<Icon
 							icon={colorLocations[location?.LocationId]?.icon}
