@@ -1,3 +1,4 @@
+
 import { React, useMemo } from "react";
 import { useFetchContainerReport } from "../../hooks/useReports/useFetchContainerReport";
 
@@ -67,6 +68,7 @@ export const IncomeStats = ({ selectedContainer }) => {
 		return <div className="h-8 w-xl bg-gray-50 rounde-lg animate-pulse"></div>;
 	return (
 		<div className="flex  gap-4 text-xs  ">
+			
 			<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
 				<div className="flex flex-col  gap-4 mx-6 ">
 					<h1 className="text-sm">Total de Ganancias del Contenedor</h1>

@@ -2,6 +2,8 @@ import { React, useMemo } from "react";
 import { useState } from "react";
 import { ProductModalDetails } from "../../Components/Modal/ProductModalDetails";
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
+import { MiscelaneasHBLStats } from "../../Components/Stats/MiscelaneasHBLStats";
+import { ReportInvoicesTable } from "../../Components/Tables/ReportInvoicesTable";
 import { ReportProductsTable } from "../../Components/Tables/ReportProductsTable";
 import { TableContainerIncome } from "../../Components/Tables/TableContainerIncome";
 import { AgencySelect } from "../../Components/ui/Selects";
@@ -145,7 +147,9 @@ export const ReportContainerIncome = () => {
 							filteredProducts={filteredProducts}
 							selectedAgency={selectedAgency}
 						/>
+						<MiscelaneasHBLStats filteredProducts={filteredProducts} />
 					</div>
+					<ReportInvoicesTable containerData={filteredProducts} />
 					<ReportProductsTable
 						containerData={filteredProducts}
 						setSelectedProduct={setSelectedProduct}

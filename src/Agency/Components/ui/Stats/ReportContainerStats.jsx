@@ -1,3 +1,6 @@
+import { BarsArrowDownIcon } from "@heroicons/react/20/solid";
+import { FaBalanceScaleRight, FaDollarSign } from "react-icons/fa";
+import { Card, Flex, Icon, Metric, Text } from "@tremor/react";
 import { React, useMemo } from "react";
 import { sumFields } from "../../../Utils/calculateCostByContainer";
 
@@ -23,35 +26,65 @@ export const ReportContainerStats = ({ filteredProducts, selectedAgency }) => {
 	const discount = useMemo(() => sumFields(uniqueInvoices, "Discount"), [uniqueInvoices]);
 
 	return (
-		<div className="mt-6 grid  justify-center flex-wrap bg-gray-50 w-full ">
-			<div className="p-1 flex flex-wrap flex-col lg:flex-row gap-2 lg:gap-10">
-				<div className=" flex gap-4 p-2 text-xs items-center rounded-lg ">
-					<span className="p-2 rounded-lg text-gray-700">No. Facturas</span>
-					<h3>{uniqueInvoices?.length}</h3>
-				</div>
-				<div className=" flex gap-4 p-2 text-xs items-center rounded-lg ">
-					<span className="p-2 rounded-lg text-gray-700">Peso:</span>
-					<h3>{weight} Lbs</h3>
-				</div>
-				<div className=" flex gap-4 p-2 text-xs items-center rounded-lg ">
-					<span className="p-2 rounded-lg text-gray-700">Total Cobrado</span>
-					<h3>$ {total}</h3>
-				</div>
-				<div className=" flex gap-4 p-2 text-xs items-center rounded-lg ">
-					<span className="p-2 rounded-lg text-gray-700">Total Descontado</span>
-					<h3>$ {discount}</h3>
-				</div>
+		<div className="container mt-6 flex  flex-wrap align-middle xl:grid xl:grid-cols-6 gap-4  p-4  bg-gray-50  ">
+			<Card decoration="top" decorationColor="gray">
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={BarsArrowDownIcon} variant="light" size="sm" color="gray"/>
+					<div className="truncate">
+						<Text>No Facturas</Text>
+						<Metric className="text-xl">{uniqueInvoices.length}</Metric>
+					</div>
+				</Flex>
+			</Card>
+			<Card decoration="top" decorationColor="orange">
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={FaBalanceScaleRight} variant="light" size="sm" color="orange" />
+					<div className="truncate ">
+						<Text>Peso</Text>
+						<Metric className="text-xl">
+							{weight} <span className="text-xs">Lbs</span>
+						</Metric>
+					</div>
+				</Flex>
+			</Card>
 
-				<div className=" flex gap-4 p-2 text-xs items-center rounded-lg ">
-					<span className="p-2 rounded-lg text-gray-700">Total Delivery Cobrado</span>
-					<h3>$ {delivery}</h3>
-				</div>
+			<Card decoration="top">
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={FaBalanceScaleRight} variant="light" size="sm" />
+					<div className="truncate ">
+						<Text>Total Facturado</Text>
+						<Metric className="text-xl">$ {total}</Metric>
+					</div>
+				</Flex>
+			</Card>
+			<Card decoration="top" decorationColor="red">
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={FaBalanceScaleRight} variant="light" size="sm" color="red" />
+					<div className="truncate ">
+						<Text>Descuento</Text>
+						<Metric className="text-xl">$ {discount}</Metric>
+					</div>
+				</Flex>
+			</Card>
 
-				<div className=" flex gap-4 p-2 text-xs items-center rounded-lg ">
-					<span className="p-2 rounded-lg text-gray-700">Ganancia:</span>
-					<h3>$ {parseFloat(total - discount).toFixed(2)}</h3>
-				</div>
-			</div>
+			<Card decoration="top" decorationColor="yellow">
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={FaBalanceScaleRight} variant="light" size="sm" color="yellow" />
+					<div className="truncate ">
+						<Text>Total Delivery</Text>
+						<Metric className="text-xl">$ {delivery}</Metric>
+					</div>
+				</Flex>
+			</Card>
+			<Card decoration="top" decorationColor={'green'}>
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={FaDollarSign} variant="light" size="sm" color="green" />
+					<div className="truncate ">
+						<Text>Ganancia</Text>
+						<Metric  className="text-xl">$ {parseFloat(total - discount).toFixed(2)}</Metric>
+					</div>
+				</Flex>
+			</Card>
 		</div>
 	);
 };

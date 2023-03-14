@@ -1,3 +1,4 @@
+import { BarList, Bold, Card, Flex, Text, Title } from "@tremor/react";
 import { React, useMemo } from "react";
 
 const calculateTotalPaidByAgencies = (containerData) => {
@@ -76,17 +77,15 @@ const getDuraderosByProvince = (containerData) => {
 	return { duraderosGroupByProvince, duraderos };
 };
 
-const calculateTotalMedicamentos = (containerData) => {
-	const medicinas = containerData.filter((item) => item.ProductType == "4");
-	return medicinas;
-};
+
 
 const calculateTotalMiscelaneas = (containerData) => {
 	let miscelaneas6 = 0;
 	let miscelaneas11 = 0;
 	let miscelaneas22 = 0;
 	let miscelaneas44 = 0;
-	let medicamentos = calculateTotalMedicamentos(containerData);
+	let cantMiscelaneas = [];
+	let medicamentos = containerData.filter((item) => item.ProductType == "4");
 	const miscelaneas = containerData.filter((item) => item.ProductType == "1");
 
 	miscelaneas.forEach((item) => {
@@ -103,8 +102,17 @@ const calculateTotalMiscelaneas = (containerData) => {
 			miscelaneas44 += 1;
 		}
 	});
+	cantMiscelaneas.push({ name: "Miscelaneas 6.6 Lbs", value: miscelaneas6 });
+	cantMiscelaneas.push({ name: "Miscelaneas 11 Lbs", value: miscelaneas11 });
+	cantMiscelaneas.push({ name: "Miscelaneas 22 Lbs", value: miscelaneas22 });
+	cantMiscelaneas.push({ name: "Miscelaneas 44 Lbs", value: miscelaneas44 });
+	cantMiscelaneas.push({ name: "Medicina", value: medicamentos.length });
 
-	return { miscelaneas, miscelaneas6, miscelaneas11, miscelaneas22, miscelaneas44, medicamentos };
+	return {
+		miscelaneas,
+		medicamentos,
+		cantMiscelaneas,
+	};
 };
 
 /* --------------------------------COSTOS-------------------------------- */
@@ -144,7 +152,6 @@ const calculateTransportationCost = (containerData) => {
 
 const calculateTotalInvoices = (containerData) => {
 	let uniqueInvoices = GroupBy(containerData, "InvoiceId");
-	console.log(uniqueInvoices.length, "UniqueInvoices");
 	let Invoices = [];
 
 	for (const [key, value] of Object.entries(uniqueInvoices)) {
@@ -223,8 +230,10 @@ export const TableContainerIncome = ({ containerData }) => {
 		[containerData],
 	);
 
-	const { miscelaneas, miscelaneas11, miscelaneas22, miscelaneas6, miscelaneas44, medicamentos } =
-		useMemo(() => calculateTotalMiscelaneas(containerData), [containerData]);
+	const { miscelaneas, cantMiscelaneas } = useMemo(
+		() => calculateTotalMiscelaneas(containerData),
+		[containerData],
+	);
 
 	/* const { totalByInvoices, stops, invoices, totalByStops } = useMemo(
 		() => calculateTransportationCost(containerData),
@@ -239,6 +248,7 @@ export const TableContainerIncome = ({ containerData }) => {
 	return (
 		<div className="flex flex-col border-b gap-4 text-xs my-4 p-4 ">
 			<div className=" grid xl:grid-cols-2  gap-10">
+				
 				<table name="Transportation Cost Table" className="min-w-full text-center ">
 					<thead className="border-b bg-gray-50">
 						<tr>
@@ -296,69 +306,12 @@ export const TableContainerIncome = ({ containerData }) => {
 								{duraderos.length}
 							</td>
 
-							{duraderosGroupByProvince.map((province) => (
-								<div className="flex justify-between p-2">
+							{duraderosGroupByProvince.map((province, index) => (
+								<div key={index} className="flex justify-between p-2">
 									<td className="flex gap-4 border-red-500">{province.Province}</td>
 									<td className="flex gap-4 border-red-500">{province.InvoiceId.length}</td>
 								</div>
 							))}
-						</tr>
-					</tbody>
-				</table>
-
-				<table name="Miscelaneas Invoices Table" className="min-w-full text-center ">
-					<thead className="border-b bg-gray-50">
-						<tr>
-							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Total HBL de Miscelaneas
-							</th>
-							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Miscelaneas 6.6 Lbs
-							</th>
-							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Miscelaneas 11 Lbs
-							</th>
-							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Miscelaneas 22 Lbs
-							</th>
-							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Miscelaneas 44 Lbs
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr className="bg-white border-b">
-							<td className="px-6  py-4 whitespace-nowrap text-xs font-medium text-gray-900">
-								{miscelaneas.length}
-							</td>
-							<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-								{miscelaneas6}
-							</td>
-							<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-								{miscelaneas11}
-							</td>
-							<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-								{miscelaneas22}
-							</td>
-							<td className="text-xm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
-								{miscelaneas44}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<table name="Miscelaneas Invoices Table" className="min-w-full text-center ">
-					<thead className="border-b bg-gray-50">
-						<tr>
-							<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">
-								Total de Medicamentos
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr className="bg-white border-b">
-							<td className="px-6  py-4 whitespace-nowrap text-xs font-medium text-gray-900">
-								{medicamentos.length}
-							</td>
 						</tr>
 					</tbody>
 				</table>
