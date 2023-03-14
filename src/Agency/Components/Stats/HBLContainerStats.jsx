@@ -36,13 +36,13 @@ const calculateTotalMiscelaneas = (filteredProducts) => {
 		cantMiscelaneas,
 	};
 };
-export const MiscelaneasHBLStats = ({filteredProducts}) => {
+export const HBLContainerStats = ({filteredProducts}) => {
 	const {  cantMiscelaneas } = useMemo(
 		() => calculateTotalMiscelaneas(filteredProducts),
 		[filteredProducts],
 	);
 	return (
-		<Card className="max-w-lg mt-4">
+		<Card className="max-w-md mt-4">
 			<Title>
 				Total de HBL: <span className="p-2 bg-gray-200 rounded-lg"> {filteredProducts.length}</span>
 			</Title>

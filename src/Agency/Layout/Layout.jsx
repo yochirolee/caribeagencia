@@ -5,11 +5,11 @@ import { Sidebar } from "../Components/ui/Sidebar";
 
 export const Layout = ({ children }) => {
 	return (
-		<div className="flex  ">
+		<div className="flex   ">
 			<Sidebar />
 			<div className=" w-full  h-screen overflow-y-auto ">
 				<Navbar />
-				<div className=" h-screen-[56px] mt-14 relative  ">
+				<div className=" h-screen-[56px] mt-10  relative  ">
 					<AlertPopup />
 					{children}
 				</div>

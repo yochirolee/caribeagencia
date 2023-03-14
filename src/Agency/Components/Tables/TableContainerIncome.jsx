@@ -165,7 +165,6 @@ const calculateTotalInvoices = (containerData) => {
 		});
 	}
 
-	console.log(Invoices, "IncoiesMiscelaneas");
 
 	const totalPagar = Invoices.reduce((accumulator, currentValue) => {
 		return parseFloat(accumulator) + parseFloat(currentValue.TrasportationCost);

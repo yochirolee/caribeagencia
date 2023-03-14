@@ -2,7 +2,9 @@ import { React, useMemo } from "react";
 import { useState } from "react";
 import { ProductModalDetails } from "../../Components/Modal/ProductModalDetails";
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
-import { MiscelaneasHBLStats } from "../../Components/Stats/MiscelaneasHBLStats";
+import { HBLContainerStats } from "../../Components/Stats/HBLContainerStats";
+import { InvoiceContainerStats } from "../../Components/Stats/InvoicesContainerStats";
+import { InvoicesProvincesContainerStats } from "../../Components/Stats/InvoicesProvincesContainerStats";
 import { ReportInvoicesTable } from "../../Components/Tables/ReportInvoicesTable";
 import { ReportProductsTable } from "../../Components/Tables/ReportProductsTable";
 import { TableContainerIncome } from "../../Components/Tables/TableContainerIncome";
@@ -33,9 +35,7 @@ export const ReportContainerIncome = () => {
 
 	const agencies = useMemo(() => getUniqueAgencies(productList), [productList]);
 
-	const groupedByInvoice = useMemo(() => GroupBy(filteredProducts, "InvoiceId"), [filterProducts]);
 
-	console.log(groupedByInvoice, "GROUPED BY INVOICE");
 
 	return (
 		<div className=" px-4 mx-2 relative">
@@ -142,12 +142,17 @@ export const ReportContainerIncome = () => {
 									setSelectedAgency={setSelectedAgency}
 								/>
 							</div>
+							{selectedContainer.ContainerId}
 						</div>
 						<ReportContainerStats
 							filteredProducts={filteredProducts}
 							selectedAgency={selectedAgency}
 						/>
-						<MiscelaneasHBLStats filteredProducts={filteredProducts} />
+						<div className="flex flex-wrap gap-4 justify-between px-2">
+							<HBLContainerStats filteredProducts={filteredProducts} />
+							<InvoiceContainerStats filteredProducts={filteredProducts} />
+							<InvoicesProvincesContainerStats filteredProducts={filteredProducts} />
+						</div>
 					</div>
 					<ReportInvoicesTable containerData={filteredProducts} />
 					<ReportProductsTable
