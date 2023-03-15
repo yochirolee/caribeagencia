@@ -25,19 +25,17 @@ export const CalculateDeliveryForContainer = (invoicesWithDelivery) => {
 	}, 0);
 
 	const InvoicesHabArtMay = invoicesWithDelivery.filter(
-		(item) =>
-			item.Provincia == "La Habana" ||
-			item.Provincia == "Artemisa" ||
-			item.Provincia == "Mayabeque",
-	);
-	const InvoicesRestoProvincias = invoicesWithDelivery.filter(
-		(item) =>
-			item.Provincia != "La Habana" &&
-			item.Provincia != "Artemisa" &&
-			item.Provincia != "Mayabeque",
+		(invoice) =>
+			invoice.Provincia == "La Habana" ||
+			invoice.Provincia == "Artemisa" ||
+			invoice.Provincia == "Mayabeque",
 	);
 
-	const Provincias = InvoicesRestoProvincias.filter(
+	const InvoicesRestoProvincias = invoicesWithDelivery.filter(
+		(invoice) => !InvoicesHabArtMay.includes(invoice),
+	);
+
+	const InvoicesProvincias = InvoicesRestoProvincias.filter(
 		(currentValue) =>
 			(currentValue.Provincia == "Villa Clara" && currentValue.Municipio == "Santa Clara") ||
 			(currentValue.Provincia == "Granma" && currentValue.Municipio == "Bayamo") ||
@@ -45,17 +43,17 @@ export const CalculateDeliveryForContainer = (invoicesWithDelivery) => {
 	);
 
 	const InvoicesMunicipios = InvoicesRestoProvincias.filter(
-		(invoice) => !Provincias.includes(invoice),
+		(invoice) => !InvoicesProvincias.includes(invoice),
 	);
 
-	console.log(Provincias, "Resto de Provincias");
+	console.log(InvoicesProvincias, "Resto de Provincias");
 	console.log(InvoicesMunicipios, "Resto de Municipios");
 
 	const pagarHabArtMay = InvoicesHabArtMay.reduce((accumulator, currentValue) => {
 		return parseFloat(accumulator) + parseFloat(currentValue.PaymentForDelivery);
 	}, 0);
 
-	const pagarCabezeras = Provincias.reduce((accumulator, currentValue) => {
+	const pagarCabezeras = InvoicesProvincias.reduce((accumulator, currentValue) => {
 		return parseFloat(accumulator) + parseFloat(currentValue.PaymentForDelivery);
 	}, 0);
 	const pagarMunicipios = InvoicesMunicipios.reduce((accumulator, currentValue) => {
@@ -66,7 +64,7 @@ export const CalculateDeliveryForContainer = (invoicesWithDelivery) => {
 
 	return {
 		InvoicesHabArtMay,
-		InvoicesRestoProvincias,
+		InvoicesProvincias,
 		InvoicesMunicipios,
 		totalPagar,
 		pagarHabArtMay,

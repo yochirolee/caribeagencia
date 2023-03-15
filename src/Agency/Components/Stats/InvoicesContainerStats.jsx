@@ -63,7 +63,7 @@ export const InvoiceContainerStats = ({ filteredProducts }) => {
 
 	const {
 		InvoicesHabArtMay,
-		InvoicesRestoProvincias,
+		InvoicesProvincias,
 		InvoicesMunicipios,
 		totalPagar,
 		pagarHabArtMay,
@@ -105,7 +105,7 @@ export const InvoiceContainerStats = ({ filteredProducts }) => {
 				</ListItem>
 				<ListItem>
 					<span>Pago Provincias</span>
-					<span>No Facturas {InvoicesRestoProvincias?.length}</span>
+					<span>No Facturas {InvoicesProvincias?.length}</span>
 					<span>$ {pagarCabezeras}</span>
 				</ListItem>
 				<ListItem>
