@@ -9,6 +9,8 @@ const calculateTotalMiscelaneas = (filteredProducts) => {
 	let medicamentos = filteredProducts.filter((item) => item.ProductType == "4");
 	const miscelaneas = filteredProducts.filter((item) => item.ProductType == "1");
 	const duraderos = filteredProducts.filter((item) => item.ProductType == "2");
+	const online = filteredProducts.filter((item) => item.ProductType == "3");
+	const miscelaneasEna = filteredProducts.filter((item) => item.ProductType == "6");
 
 	miscelaneas.forEach((item) => {
 		if (parseFloat(item.Weight).toFixed(2) == 6.6) {
@@ -30,14 +32,15 @@ const calculateTotalMiscelaneas = (filteredProducts) => {
 	cantMiscelaneas.push({ name: "Miscelaneas 22 Lbs", value: miscelaneas22 });
 	cantMiscelaneas.push({ name: "Miscelaneas 44 Lbs", value: miscelaneas44 });
 	cantMiscelaneas.push({ name: "Medicina", value: medicamentos.length });
+	cantMiscelaneas.push({ name: "Productos Online", value: online.length });
+	cantMiscelaneas.push({ name: "Miscelaneas ENa", value: miscelaneasEna.length });
 
 	return {
-		
 		cantMiscelaneas,
 	};
 };
-export const HBLContainerStats = ({filteredProducts}) => {
-	const {  cantMiscelaneas } = useMemo(
+export const HBLContainerStats = ({ filteredProducts }) => {
+	const { cantMiscelaneas } = useMemo(
 		() => calculateTotalMiscelaneas(filteredProducts),
 		[filteredProducts],
 	);

@@ -7,10 +7,13 @@ const getTypeOfInvoice = (uniqueInvoices) => {
 		(item) => item.ProductType == "4" || item.ProductType == "1",
 	);
 	const duraderos = uniqueInvoices.filter((item) => item.ProductType == "2");
+	const online = uniqueInvoices.filter((item) => item.ProductType == "3");
+	const miscelaneasEna = uniqueInvoices.filter((item) => item.ProductType == "6");
 
 	InvoicesType.push({ name: "Duraderos", value: duraderos.length });
 	InvoicesType.push({ name: "Miscelaneas o Medicinas", value: miscelaneas.length });
-
+	InvoicesType.push({ name: "Productos Online", value: online.length });
+	InvoicesType.push({ name: "Miscelaneas ENa", value: miscelaneasEna.length });
 	return {
 		InvoicesType,
 	};
