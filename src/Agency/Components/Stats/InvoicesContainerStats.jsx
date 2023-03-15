@@ -93,24 +93,21 @@ export const InvoiceContainerStats = ({ filteredProducts }) => {
 					<Bold>{invoicesWithDelivery.length}</Bold>
 				</Badge>
 			</div>
-			<List>
-				<ListItem>
+			<List className="">
+				<ListItem className="font-bold">
 					<span>Total a Pagar</span>
 					<span>$ {totalPagar}</span>
 				</ListItem>
-				<ListItem>
-					<span>Pago (Hav-Art-May)</span>
-					<span>No Facturas {InvoicesHabArtMay?.length}</span>
+				<ListItem >
+					<span>(Hav-Art-May) - Facturas: {InvoicesHabArtMay?.length}</span>
 					<span>$ {pagarHabArtMay}</span>
 				</ListItem>
 				<ListItem>
-					<span>Pago Provincias</span>
-					<span>No Facturas {InvoicesProvincias?.length}</span>
+					<span>Cabeceras de Provincias - Facturas: {InvoicesProvincias?.length}</span>
 					<span>$ {pagarCabezeras}</span>
 				</ListItem>
 				<ListItem>
-					<span>Pago Municipios</span>
-					<span>No Facturas {InvoicesMunicipios?.length}</span>
+					<span>Municipios - Facturas: {InvoicesMunicipios?.length} </span>
 					<span>$ {pagarMunicipios}</span>
 				</ListItem>
 			</List>
