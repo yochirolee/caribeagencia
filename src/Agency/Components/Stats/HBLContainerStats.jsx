@@ -8,22 +8,22 @@ const calculateTotalMiscelaneas = (filteredProducts) => {
 	let cantMiscelaneas = [];
 	let medicamentos = filteredProducts.filter((item) => item.ProductType == "4");
 	const miscelaneas = filteredProducts.filter((item) => item.ProductType == "1");
-	const duraderos = filteredProducts.filter((item) => item.ProductType == "2");
-	const online = filteredProducts.filter((item) => item.ProductType == "3");
-	const miscelaneasEna = filteredProducts.filter((item) => item.ProductType == "6");
+	const duraderos = filteredProducts.filter(
+		(item) => item.ProductType == "2" || item.ProductType == "6" || item.ProductType == "3",
+	);
 
 	miscelaneas.forEach((item) => {
 		if (parseFloat(item.Weight).toFixed(2) == 6.6) {
-			miscelaneas6 += 1;
+			miscelaneas6++;
 		}
 		if (parseFloat(item.Weight).toFixed(2) == 11.0) {
-			miscelaneas11 += 1;
+			miscelaneas11++;
 		}
 		if (parseFloat(item.Weight).toFixed(2) == 22.0) {
-			miscelaneas22 += 1;
+			miscelaneas22++;
 		}
 		if (parseFloat(item.Weight).toFixed(2) == 44.0) {
-			miscelaneas44 += 1;
+			miscelaneas44++;
 		}
 	});
 	cantMiscelaneas.push({ name: "Duraderos", value: duraderos.length });
@@ -32,8 +32,6 @@ const calculateTotalMiscelaneas = (filteredProducts) => {
 	cantMiscelaneas.push({ name: "Miscelaneas 22 Lbs", value: miscelaneas22 });
 	cantMiscelaneas.push({ name: "Miscelaneas 44 Lbs", value: miscelaneas44 });
 	cantMiscelaneas.push({ name: "Medicina", value: medicamentos.length });
-	cantMiscelaneas.push({ name: "Productos Online", value: online.length });
-	cantMiscelaneas.push({ name: "Miscelaneas ENa", value: miscelaneasEna.length });
 
 	return {
 		cantMiscelaneas,

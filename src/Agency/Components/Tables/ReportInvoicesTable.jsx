@@ -12,11 +12,11 @@ export const ReportInvoicesTable = ({ containerData, setSelectedProduct, setShow
 			Provincia: value[0].Provincia,
 			Municipio: value[0].Municipio,
 			ProductType: value[0].ProductType,
-			TotalWeight:value.map((item)=>item.Weight).reduce((a,b)=>a+b,0),
+			TotalWeight:value.map((item)=>parseFloat(item.Weight)).reduce((a,b)=>a+b,0),
 			HBLS: [...value],
 		});
 	}
-	console.log(uniqueInvoices,Invoices, "INVOICES");
+	
 
 	const handleShowDetails = (data) => {
 		setSelectedProduct(data);

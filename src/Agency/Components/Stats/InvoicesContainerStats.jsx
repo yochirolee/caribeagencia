@@ -1,34 +1,80 @@
-import { BarList, Bold, Card, Flex, Text, Title } from "@tremor/react";
+import {
+	Badge,
+	BarList,
+	Bold,
+	Card,
+	Divider,
+	Flex,
+	List,
+	ListItem,
+	Text,
+	Title,
+} from "@tremor/react";
 import { React, useMemo } from "react";
+import { CalculateDeliveryForContainer } from "../../Utils/calculateDelivery";
+import { GroupByFormatter } from "../../Utils/GroupBy";
 
-const getTypeOfInvoice = (uniqueInvoices) => {
+const getTypeOfInvoice = (filteredProducts) => {
+	let uniqueInvoices = GroupByFormatter(filteredProducts, "InvoiceId");
 	let InvoicesType = [];
 	let miscelaneas = uniqueInvoices.filter(
 		(item) => item.ProductType == "4" || item.ProductType == "1",
 	);
-	const duraderos = uniqueInvoices.filter((item) => item.ProductType == "2");
-	const online = uniqueInvoices.filter((item) => item.ProductType == "3");
-	const miscelaneasEna = uniqueInvoices.filter((item) => item.ProductType == "6");
+	const duraderos = uniqueInvoices.filter(
+		(item) => item.ProductType == "2" || item.ProductType == "3" || item.ProductType == "6",
+	);
 
-	InvoicesType.push({ name: "Duraderos", value: duraderos.length });
-	InvoicesType.push({ name: "Miscelaneas o Medicinas", value: miscelaneas.length });
-	InvoicesType.push({ name: "Productos Online", value: online.length });
-	InvoicesType.push({ name: "Miscelaneas ENa", value: miscelaneasEna.length });
+	let invoicesDuraderosDelivery = duraderos.filter((item) => item.TotalWeight < 100);
+	let invoicesMiscelaneasDelivery = miscelaneas.filter((item) => item.TotalWeight < 100);
+	let invoicesWithDelivery = uniqueInvoices.filter((item) => item.TotalWeight < 100);
+
+	InvoicesType.push({
+		name: "Facturas Duraderos (Delivery)",
+		value: invoicesDuraderosDelivery.length,
+	});
+
+	InvoicesType.push({
+		name: "Facturas Miscelaneas o Medicinas (Delivery)",
+		value: miscelaneas.length,
+	});
+	if (!miscelaneas.length == invoicesMiscelaneasDelivery.length) {
+		InvoicesType.push({
+			name: "Facturas Miscelaneas  (Delivery)",
+			value: invoicesMiscelaneasDelivery.length,
+		});
+	}
+	InvoicesType.push({
+		name: " Facturas Duraderos Recogida en Transcargo",
+		value: duraderos.length - invoicesDuraderosDelivery.length,
+	});
+
 	return {
+		uniqueInvoices,
 		InvoicesType,
+		invoicesWithDelivery,
 	};
 };
 
 export const InvoiceContainerStats = ({ filteredProducts }) => {
-	const uniqueInvoices = [
-		...new Map(filteredProducts?.map((item) => [item["InvoiceId"], item])).values(),
-	];
+	const { InvoicesType, uniqueInvoices, invoicesWithDelivery } = useMemo(
+		() => getTypeOfInvoice(filteredProducts),
+		[filteredProducts],
+	);
 
-	const { InvoicesType } = useMemo(() => getTypeOfInvoice(uniqueInvoices), [filteredProducts]);
+	const {
+		InvoicesHabArtMay,
+		InvoicesRestoProvincias,
+		InvoicesMunicipios,
+		totalPagar,
+		pagarHabArtMay,
+		pagarCabezeras,
+		pagarMunicipios,
+	} = useMemo(() => CalculateDeliveryForContainer(invoicesWithDelivery));
+
 	return (
 		<Card className="max-w-md mt-4">
 			<Title>
-				Total de Facturas:{" "}
+				Total de Facturas:
 				<span className="p-2 bg-gray-200 rounded-lg"> {uniqueInvoices.length}</span>
 			</Title>
 			<Flex className="mt-4">
@@ -40,6 +86,34 @@ export const InvoiceContainerStats = ({ filteredProducts }) => {
 				</Text>
 			</Flex>
 			{<BarList data={InvoicesType} className="mt-2" />}
+			<Divider />
+			<div className="flex justify-between my-4">
+				<Title>Total de Facturas con Delivery:</Title>
+				<Badge>
+					<Bold>{invoicesWithDelivery.length}</Bold>
+				</Badge>
+			</div>
+			<List>
+				<ListItem>
+					<span>Total a Pagar</span>
+					<span>$ {totalPagar}</span>
+				</ListItem>
+				<ListItem>
+					<span>Pago (Hav-Art-May)</span>
+					<span>No Facturas {InvoicesHabArtMay?.length}</span>
+					<span>$ {pagarHabArtMay}</span>
+				</ListItem>
+				<ListItem>
+					<span>Pago Provincias</span>
+					<span>No Facturas {InvoicesRestoProvincias?.length}</span>
+					<span>$ {pagarCabezeras}</span>
+				</ListItem>
+				<ListItem>
+					<span>Pago Municipios</span>
+					<span>No Facturas {InvoicesMunicipios?.length}</span>
+					<span>$ {pagarMunicipios}</span>
+				</ListItem>
+			</List>
 		</Card>
 	);
 };

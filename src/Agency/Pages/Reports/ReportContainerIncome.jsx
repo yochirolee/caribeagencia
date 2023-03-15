@@ -35,8 +35,6 @@ export const ReportContainerIncome = () => {
 
 	const agencies = useMemo(() => getUniqueAgencies(productList), [productList]);
 
-
-
 	return (
 		<div className=" px-4 mx-2 relative">
 			<h1>Reporte de Facturacion por Contenedor</h1>
@@ -160,7 +158,7 @@ export const ReportContainerIncome = () => {
 						setSelectedProduct={setSelectedProduct}
 						setShowModalDetails={setShowModalDetails}
 					/>
-					<TableContainerIncome containerData={filteredProducts} />
+					{/*  <TableContainerIncome containerData={filteredProducts} />*/}
 				</div>
 			)}
 			<ProductModalDetails
