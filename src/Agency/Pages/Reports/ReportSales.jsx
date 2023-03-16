@@ -63,24 +63,10 @@ const groupAndMerge = (arr, groupBy, mergeWith) => {
 
 const calculateAgencySalesCTE = (invoices, groupBy, mergeWith) => {
 	if (!invoices) return [];
-	//group by user
+
 	const filteredInvoices = invoices.filter((invoice) => invoice.cod_agencia == 2);
 	let groupedAndMerge = groupAndMerge(filteredInvoices, groupBy, mergeWith);
 
-	/* const groupedByUser = filteredInvoices.reduce((acc, invoice) => {
-		const user = invoice.usuario;
-		if (!acc[user]) {
-			acc[user] = {
-				usuario: user,
-				total: 0,
-			};
-
-			acc[user].total += parseFloat(invoice.total);
-		} else {
-			acc[user].total += parseFloat(invoice.total);
-		}
-		return acc;
-	}, {}); */
 	return groupedAndMerge.map((invoice) => {
 		let sumTotal = invoice.total.reduce((accumulator, currentValue) => {
 			return parseFloat(accumulator) + parseFloat(currentValue);
@@ -121,6 +107,7 @@ const calculateAgenciesSales = (invoices, groupBy, mergeWith) => {
 		return {
 			name: invoice.agencia,
 			sales: sumTotal,
+			value: parseFloat(sumTotal).toFixed(2),
 		};
 	});
 };
@@ -133,12 +120,10 @@ const valueFormatter = (number) => `$ ${Intl.NumberFormat("us").format(number).t
 export const ReportSales = () => {
 	const [value, setValue] = useState([Date.now(), Date.now()]);
 	const { data: invoices, isLoading } = useFetchInvoicesByDateRange(value[0], value[1]);
-
 	const agenciesSales = useMemo(
 		() => calculateAgenciesSales(invoices, "agencia", "total"),
 		[invoices],
 	);
-
 	const agencySalesCte = useMemo(
 		() => calculateAgencySalesCTE(invoices, "usuario", "total"),
 		[invoices],
@@ -176,6 +161,7 @@ export const ReportSales = () => {
 						valueFormatter={valueFormatter}
 						colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
 					/>
+					<BarList data={agenciesSales} className="mt-2" />
 				</Card>
 			</div>
 			<Card className="mt-6">
