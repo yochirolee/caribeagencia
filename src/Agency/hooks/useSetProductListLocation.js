@@ -76,7 +76,6 @@ const upsertProductsTracking = async (productsList, locationId) => {
 };
 
 const changeProductListLocation = async ({ products, locationId, user, StatusId, CreatedAt }) => {
-	console.log(products, locationId, "PORDUCTS AND LOCATION ID");
 	try {
 		let prod = await products.map((product) => {
 			return {
@@ -93,7 +92,7 @@ const changeProductListLocation = async ({ products, locationId, user, StatusId,
 				CityId: product?.CityId,
 				StateId: product?.StateId,
 				PalletId: product?.PalletId,
-				Agency: product?.Agency,
+				AgencyName: product?.Agency,
 				ProductWeight: product?.ProductWeight,
 				StatusId: StatusId,
 				CreatedAt: CreatedAt,

@@ -9,3 +9,4 @@ export const sumFields = (containerData, key) => {
 	return parseFloat(sumTotal).toFixed(2);
 	// Expected output: 10
 };
+

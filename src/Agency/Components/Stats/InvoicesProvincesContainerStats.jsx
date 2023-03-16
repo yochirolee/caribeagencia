@@ -5,7 +5,6 @@ const getInvoicesByProvinces = (filteredProducts) => {
 	const uniqueProvinces = [
 		...new Map(filteredProducts?.map((item) => [item["InvoiceId"], item])).values(),
 	];
-	console.log(uniqueProvinces, "UNIQUE PROVINCES");
 	const provinces = uniqueProvinces.reduce((group, product) => {
 		const { Provincia } = product;
 		group[Provincia] = group[Provincia] ?? [];
