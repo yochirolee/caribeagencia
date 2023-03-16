@@ -4,6 +4,8 @@ import { useQuery } from "react-query";
 
 export const getInvoicesByDateRange = async (initialDate, finalDate) => {
 	//format date to yyy-MM-dd
+	if(finalDate==null)
+	 finalDate=initialDate;
 	const startDate = format(initialDate, "yyyy-MM-dd");
 	const endDate = format(finalDate, "yyyy-MM-dd");
 	console.log(startDate, endDate, "RUNNNINNGNGNGNG");

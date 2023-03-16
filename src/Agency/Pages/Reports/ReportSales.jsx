@@ -128,10 +128,11 @@ export const ReportSales = () => {
 		() => calculateAgencySalesCTE(invoices, "usuario", "total"),
 		[invoices],
 	);
-
+       console.log(value, "value")
 	return (
 		<div className="px-4 mx-2 relative">
 			<h1> ReportSales</h1>
+			
 			<DateRangePicker
 				className="max-w-md mx-auto"
 				value={value}
