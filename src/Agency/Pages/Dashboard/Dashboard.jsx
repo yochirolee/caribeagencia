@@ -11,8 +11,10 @@ import { useFetchAllProductsByContainerId } from "../../hooks/useContainers/useF
 import { useFetchByInvoiceOrHBL } from "../../hooks/useFetchByInvoiceOrHBL";
 import { ProductModalDetails } from "../../Components/Modal/ProductModalDetails";
 import { ExcelUploadModal } from "../../Components/Modal/ExcelUploadModal";
+import { useSelector } from "react-redux";
 
 export const Dashboard = () => {
+	const { user } = useSelector((state) => state.Auth);
 	const [search, setSearch] = useState(undefined);
 	const { data: searchResult, isLoadingSearch } = useFetchByInvoiceOrHBL(search);
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
@@ -41,7 +43,7 @@ export const Dashboard = () => {
 		filename: selectedAgency
 			? selectedAgency + "-" + selectedContainer?.ContainerNumber
 			: selectedContainer?.ContainerNumber,
-		sheet: selectedAgency ? selectedAgency : selectedContainer?.ContainerNumber,
+		sheet: selectedAgency ? selectedAgency : "test",
 	});
 
 	const [showModal, setShowModal] = useState(false);
@@ -74,15 +76,19 @@ export const Dashboard = () => {
 					<div className="  flex flex-wrap container justify-between  items-center gap-6">
 						<div className=" grid container  ">
 							<div className="flex  my-2 flex-wrap justify-end">
-								<button
-									onClick={() => setShowExcelUploadModal(true)}
-									type="button"
-									className="flex   h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
-									aria-label="Toggle dark mode"
-								>
-									<i className="fa fa-file-import text-md text-green-500 "></i>
-									<span className="text-xs hidden sm:block">Importar desde Excel</span>
-								</button>
+								{user.isAdmin ? (
+									<button
+										onClick={() => setShowExcelUploadModal(true)}
+										type="button"
+										className="flex   h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+										aria-label="Toggle dark mode"
+									>
+										<i className="fa fa-file-import text-md text-green-500 "></i>
+										<span className="text-xs hidden sm:block">Importar desde Excel</span>
+									</button>
+								) : (
+									""
+								)}
 								<button
 									onClick={onDownload}
 									type="button"

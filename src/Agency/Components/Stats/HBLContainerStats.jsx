@@ -1,18 +1,19 @@
 import { BarList, Bold, Card, Flex, Text, Title } from "@tremor/react";
 import { React, useMemo } from "react";
-const calculateTotalMiscelaneas = (filteredProducts) => {
+const calculateTotalMiscelaneas = (products) => {
 	let miscelaneas6 = 0;
 	let miscelaneas11 = 0;
 	let miscelaneas22 = 0;
 	let miscelaneas44 = 0;
 	let cantMiscelaneas = [];
-	let medicamentos = filteredProducts.filter((item) => item.ProductType == "4");
-	const miscelaneas = filteredProducts.filter((item) => item.ProductType == "1");
-	const duraderos = filteredProducts.filter(
-		(item) => item.ProductType == "2" || item.ProductType == "6" || item.ProductType == "3",
+	if (!products) return { cantMiscelaneas };
+	let medicamentos = products?.filter((item) => item.ProductType == "4");
+	const miscelaneas = products?.filter((item) => item.ProductType == "1");
+	const duraderos = products?.filter(
+		(item) => item?.ProductType == "2" || item?.ProductType == "6" || item?.ProductType == "3",
 	);
 
-	miscelaneas.forEach((item) => {
+	miscelaneas?.forEach((item) => {
 		if (parseFloat(item.Weight).toFixed(2) == 6.6) {
 			miscelaneas6++;
 		}
@@ -37,15 +38,12 @@ const calculateTotalMiscelaneas = (filteredProducts) => {
 		cantMiscelaneas,
 	};
 };
-export const HBLContainerStats = ({ filteredProducts }) => {
-	const { cantMiscelaneas } = useMemo(
-		() => calculateTotalMiscelaneas(filteredProducts),
-		[filteredProducts],
-	);
+export const HBLContainerStats = ({ products }) => {
+	const { cantMiscelaneas } = useMemo(() => calculateTotalMiscelaneas(products), [products]);
 	return (
 		<Card className="max-w-md mt-4">
 			<Title>
-				Total de HBL: <span className="p-2 bg-gray-200 rounded-lg"> {filteredProducts.length}</span>
+				Total de HBL: <span className="p-2 bg-gray-200 rounded-lg"> {products.length}</span>
 			</Title>
 			<Flex className="mt-4">
 				<Text>

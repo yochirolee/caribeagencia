@@ -1,19 +1,41 @@
-import { React } from "react";
+import { React, useRef } from "react";
 import { truncateString } from "../../Utils/truncateString";
+import { useDownloadExcel } from "react-export-table-to-excel";
+
 export const ReportProductsTable = ({
 	containerData,
 	setSelectedProduct,
 	setShowModalDetails,
+	selectedContainer,
 }) => {
+	const tableRef = useRef();
+
+	const { onDownload } = useDownloadExcel({
+		currentTableRef: tableRef.current,
+		filename: selectedContainer?.ContainerNumber,
+		sheet: selectedContainer.ContainerNumber,
+	});
+
 	const handleShowDetails = (data) => {
 		setSelectedProduct(data);
 		setShowModalDetails(true);
 	};
 	return (
 		<div className="overflow-x-auto container text-sx ">
+			<div className="flex  flex-wrap justify-end">
+				<button
+					onClick={onDownload}
+					type="button"
+					className="flex   h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+					aria-label="Toggle dark mode"
+				>
+					<i className="fa fa-file-excel text-md text-green-500 "></i>
+					<span className="text-xs hidden sm:block">Exportar a Excel</span>
+				</button>
+			</div>
 			<div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
 				<div className="overflow-hidden h-[calc(100vh-40rem)] overflow-y-auto ">
-					<table className="min-w-full text-center ">
+					<table ref={tableRef} className="min-w-full text-center ">
 						<thead className="border-b bg-gray-50">
 							<tr>
 								<th scope="col" className="text-xs font-medium text-gray-900 px-4 py-4">

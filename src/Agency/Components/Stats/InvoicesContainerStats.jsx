@@ -12,21 +12,18 @@ import {
 } from "@tremor/react";
 import { React, useMemo } from "react";
 import { CalculateDeliveryForContainer } from "../../Utils/calculateDelivery";
-import { GroupByFormatter } from "../../Utils/GroupBy";
 
-const getTypeOfInvoice = (filteredProducts) => {
-	let uniqueInvoices = GroupByFormatter(filteredProducts, "InvoiceId");
+const getTypeOfInvoice = (invoices) => {
+	if (!invoices) return [];
 	let InvoicesType = [];
-	let miscelaneas = uniqueInvoices.filter(
-		(item) => item.ProductType == "4" || item.ProductType == "1",
-	);
-	const duraderos = uniqueInvoices.filter(
+	let miscelaneas = invoices.filter((item) => item.ProductType == "4" || item.ProductType == "1");
+	const duraderos = invoices.filter(
 		(item) => item.ProductType == "2" || item.ProductType == "3" || item.ProductType == "6",
 	);
 
-	let invoicesDuraderosDelivery = duraderos.filter((item) => item.TotalWeight < 100);
-	let invoicesMiscelaneasDelivery = miscelaneas.filter((item) => item.TotalWeight < 100);
-	let invoicesWithDelivery = uniqueInvoices.filter((item) => item.TotalWeight < 100);
+	let invoicesDuraderosDelivery = duraderos.filter((item) => item.TotalWeight <= 100);
+	let invoicesMiscelaneasDelivery = miscelaneas.filter((item) => item.TotalWeight <= 100);
+	let invoicesWithDelivery = invoices.filter((item) => item.TotalWeight <= 100);
 
 	InvoicesType.push({
 		name: "Facturas Duraderos (Delivery)",
@@ -49,16 +46,16 @@ const getTypeOfInvoice = (filteredProducts) => {
 	});
 
 	return {
-		uniqueInvoices,
+		invoices,
 		InvoicesType,
 		invoicesWithDelivery,
 	};
 };
 
-export const InvoiceContainerStats = ({ filteredProducts }) => {
-	const { InvoicesType, uniqueInvoices, invoicesWithDelivery } = useMemo(
-		() => getTypeOfInvoice(filteredProducts),
-		[filteredProducts],
+export const InvoiceContainerStats = ({ invoicesList }) => {
+	const { InvoicesType, invoices, invoicesWithDelivery } = useMemo(
+		() => getTypeOfInvoice(invoicesList),
+		[invoicesList],
 	);
 
 	const {
@@ -69,13 +66,13 @@ export const InvoiceContainerStats = ({ filteredProducts }) => {
 		pagarHabArtMay,
 		pagarCabezeras,
 		pagarMunicipios,
-	} = useMemo(() => CalculateDeliveryForContainer(invoicesWithDelivery));
+	} = useMemo(() => CalculateDeliveryForContainer(invoicesWithDelivery), [invoicesWithDelivery]);
 
 	return (
 		<Card className="max-w-md mt-4">
 			<Title>
 				Total de Facturas:
-				<span className="p-2 bg-gray-200 rounded-lg"> {uniqueInvoices.length}</span>
+				<span className="p-2 mx-2 bg-gray-200 rounded-lg"> {invoices.length}</span>
 			</Title>
 			<Flex className="mt-4">
 				<Text>
@@ -88,17 +85,13 @@ export const InvoiceContainerStats = ({ filteredProducts }) => {
 			{<BarList data={InvoicesType} className="mt-2" />}
 			<Divider />
 			<div className="flex justify-between my-4">
-				<Title>Total de Facturas con Delivery:</Title>
+				<Title>Total de Facturas con Delivery: </Title>
 				<Badge>
 					<Bold>{invoicesWithDelivery.length}</Bold>
 				</Badge>
 			</div>
 			<List className="">
-				<ListItem className="font-bold">
-					<span>Total a Pagar</span>
-					<span>$ {totalPagar}</span>
-				</ListItem>
-				<ListItem >
+				<ListItem>
 					<span>(Hav-Art-May) - Facturas: {InvoicesHabArtMay?.length}</span>
 					<span>$ {pagarHabArtMay}</span>
 				</ListItem>
@@ -109,6 +102,10 @@ export const InvoiceContainerStats = ({ filteredProducts }) => {
 				<ListItem>
 					<span>Municipios - Facturas: {InvoicesMunicipios?.length} </span>
 					<span>$ {pagarMunicipios}</span>
+				</ListItem>
+				<ListItem>
+					<span>Recogida - Facturas: {invoicesList?.length - invoicesWithDelivery?.length} </span>
+					<span>$ {(invoicesList?.length - invoicesWithDelivery?.length) * 10}</span>
 				</ListItem>
 			</List>
 		</Card>

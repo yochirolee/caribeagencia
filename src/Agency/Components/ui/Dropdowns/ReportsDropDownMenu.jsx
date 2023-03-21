@@ -38,14 +38,15 @@ export const ReportsDropDownMenu = () => {
 					<i className="fa fa-dollar text-gray-500 px-1"></i>
 					<span className="flex-1 ml-3 whitespace-nowrap">Reporte de Ventas</span>
 				</Link>
+
 				<Link
-					to="/reportContainerIncome"
+					to="/reportContainerTransport"
 					className={`${
 						toggle ? "flex" : "hidden"
 					} items-center  p-2  pl-5 font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
 				>
-					<i className="fa fa-dollar text-gray-500 px-1"></i>
-					<span className="flex-1 ml-3 whitespace-nowrap">Facturado por Contenedor</span>
+					<i className="fa fa-truck text-gray-500 px-1"></i>
+					<span className="flex-1 ml-3 whitespace-nowrap">Reporte Transportacion</span>
 				</Link>
 			</div>
 		</li>

@@ -19,7 +19,7 @@ export const ReportContainerStats = ({ filteredProducts, selectedAgency }) => {
 	);
 
 	const delivery = useMemo(
-		() => sumFields(filteredProducts, "DeliveryCost"),
+		() => sumFields(filteredProducts, "Delivery"),
 		[uniqueInvoices, selectedAgency],
 	);
 

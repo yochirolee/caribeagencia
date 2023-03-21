@@ -5,6 +5,10 @@ export const findProductsByHBL = async (productListToSearch) => {
 	const config = {
 		"Content-Type": "application/json",
 		Accept: "application/json",
+		headers: {
+			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+		},
 	};
 
 	try {
@@ -31,7 +35,7 @@ export const useFetchProductsList = (productListToSearch) => {
 	);
 	if (Array.isArray(data)) return { data, isLoading, isError };
 	else {
-		data=[]
+		data = [];
 	}
-	return { data, isLoading, isError }
+	return { data, isLoading, isError };
 };

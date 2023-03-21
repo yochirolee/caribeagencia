@@ -22,7 +22,7 @@ export const NewUserForm = () => {
 	};
 	return (
 		<>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4 p-10">
+			<form onSubmit={handleSubmit} className="flex min-w-full flex-col gap-4 p-10">
 				<h3 className="font-semibold">Crear nuevo usuario</h3>
 				<label htmlFor="input-email">Email</label>
 				<input

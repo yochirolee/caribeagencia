@@ -76,6 +76,7 @@ const upsertProductsTracking = async (productsList, locationId) => {
 };
 
 const changeProductListLocation = async ({ products, locationId, user, StatusId, CreatedAt }) => {
+	console.log(products, "PRODUCTS");
 	try {
 		let prod = await products.map((product) => {
 			return {
@@ -92,7 +93,7 @@ const changeProductListLocation = async ({ products, locationId, user, StatusId,
 				CityId: product?.CityId,
 				StateId: product?.StateId,
 				PalletId: product?.PalletId,
-				AgencyName: product?.Agency,
+				AgencyName: product?.AgencyName,
 				ProductWeight: product?.ProductWeight,
 				StatusId: StatusId,
 				CreatedAt: CreatedAt,
@@ -100,10 +101,11 @@ const changeProductListLocation = async ({ products, locationId, user, StatusId,
 		});
 
 		console.log(prod, "PRODUCTS For upsert at productsTracking");
-
+		const uniqueProducts = prod.filter((v, i, a) => a.findIndex((t) => t.HBL === v.HBL) === i);
+		console.log(uniqueProducts, "UNIQUE PRODUCTS");
 		const { data, error } = await supabase
 			.from("productsTracking")
-			.upsert(prod, { onConflict: "HBL" })
+			.upsert(uniqueProducts, { onConflict: "HBL" })
 			.select("*");
 		if (error) throw new Error(error.message);
 		if (data) {

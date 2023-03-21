@@ -27,6 +27,7 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 		productList.push(hbl);
 	}; */
 	const handleOnSave = () => {
+		if(!location) return;
 		mutationProductList.mutateAsync({
 			products: productList,
 			locationId: location.LocationId,
@@ -37,7 +38,6 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 	};
 
 	const handleCloseModal = () => {
-		
 		setShowModal(false);
 	};
 
@@ -99,14 +99,19 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 											selected={startDate}
 											onChange={(date) => setStartDate(date)}
 										/>
-										<TableImportProducts
-											productList={productList}
-											isLoading={isLoading}
-											isError={isError}
-										/>
+										{isLoading ? <p className="my-2 text-blue-500">Cargando...</p> : ""}
+										<TableImportProducts productList={productList}  />
 										<div>
+											{isError ? (
+												<p className="my-2 text-red-500">
+													Demasiados HBLS a cargar,o sin formato Correcto
+												</p>
+											) : (
+												""
+											)}
 											<button
 												type="button"
+												disabled={isError || !location || isLoading}
 												onClick={() => handleOnSave()}
 												className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
 											>

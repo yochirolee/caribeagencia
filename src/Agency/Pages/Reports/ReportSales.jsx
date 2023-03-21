@@ -1,16 +1,9 @@
 import { React, useMemo, useState } from "react";
-import {
-	AreaChart,
-	BarList,
-	Bold,
-	Card,
-	DateRangePicker,
-	DonutChart,
-	Flex,
-	Text,
-	Title,
-} from "@tremor/react";
+import { AreaChart, BarList, Card, DateRangePicker, DonutChart, Title } from "@tremor/react";
 import { useFetchInvoicesByDateRange } from "../../hooks/useReports/useFetchInvoicesByDateRange";
+import { groupAndMerge } from "../../Utils/groupAndMerge";
+import { ContainerBarChart } from "../../Components/BarCharts/ContainerBarChart";
+import { SalesChart } from "../../Components/BarCharts/SalesChart";
 
 const chartdata = [
 	{
@@ -44,22 +37,6 @@ const chartdata = [
 		"The Pragmatic Engineer": 1726,
 	},
 ];
-
-const groupAndMerge = (arr, groupBy, mergeWith) => {
-	if (!arr) return [];
-	return Array.from(
-		arr
-			.reduce(
-				(m, o) =>
-					m.set(o[groupBy], {
-						...o,
-						[mergeWith]: [...(m.get(o[groupBy])?.[mergeWith] ?? []), o[mergeWith]],
-					}),
-				new Map(),
-			)
-			.values(),
-	);
-};
 
 const calculateAgencySalesCTE = (invoices, groupBy, mergeWith) => {
 	if (!invoices) return [];
@@ -98,12 +75,11 @@ const calculateAgenciesSales = (invoices, groupBy, mergeWith) => {
 		}
 		return acc;
 	}, {}); */
-	console.log(groupedAndMerge, "groupAndMerge");
+
 	return groupedAndMerge.map((invoice) => {
 		let sumTotal = invoice.total.reduce((accumulator, currentValue) => {
 			return parseFloat(accumulator) + parseFloat(currentValue);
 		}, 0);
-		console.log(sumTotal, "sumTotal");
 		return {
 			name: invoice.agencia,
 			sales: sumTotal,
@@ -128,17 +104,33 @@ export const ReportSales = () => {
 		() => calculateAgencySalesCTE(invoices, "usuario", "total"),
 		[invoices],
 	);
-       console.log(value, "value")
+
 	return (
-		<div className="px-4 mx-2 relative">
+		<div className="p-4  mx-2 relative">
 			<h1> ReportSales</h1>
-			
+
 			<DateRangePicker
 				className="max-w-md mx-auto"
 				value={value}
 				onValueChange={setValue}
 				dropdownPlaceholder="Seleccionar"
 			/>
+			<div className="mt-4">
+				<SalesChart invoices={invoices} />
+				{/* <ContainerBarChart />
+				<Card className="mt-6">
+					<Title>Newsletter revenue over time (USD)</Title>
+
+					<AreaChart
+						className="h-72 mt-4"
+						data={chartdata}
+						index="date"
+						categories={["SemiAnalysis", "The Pragmatic Engineer"]}
+						colors={["indigo", "cyan"]}
+						valueFormatter={dataFormatter}
+					/>
+				</Card> */}
+			</div>
 			<div className="flex flex-wrap justify-evenly">
 				<Card className="max-w-lg mt-6">
 					<Title>Ventas de CTE</Title>
@@ -165,17 +157,6 @@ export const ReportSales = () => {
 					<BarList data={agenciesSales} className="mt-2" />
 				</Card>
 			</div>
-			<Card className="mt-6">
-				<Title>Newsletter revenue over time (USD)</Title>
-				<AreaChart
-					className="h-72 mt-4"
-					data={chartdata}
-					index="date"
-					categories={["SemiAnalysis", "The Pragmatic Engineer"]}
-					colors={["indigo", "cyan"]}
-					valueFormatter={dataFormatter}
-				/>
-			</Card>
 		</div>
 	);
 };

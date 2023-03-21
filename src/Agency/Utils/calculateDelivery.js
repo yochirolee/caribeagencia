@@ -1,28 +1,51 @@
-export const calculateDeliveryForInvoice = (provincia, municipio) => {
+export const calculateDeliveryByLocation = (provincia, municipio) => {
 	if (!provincia || !municipio) return 0;
 
 	if (provincia == "La Habana" || provincia == "Artemisa" || provincia == "Mayabeque") {
-		return 6;
+		return 5;
 	}
 	if (provincia == "Villa Clara" && municipio == "Santa Clara") {
-		return 12;
+		return 10;
 	}
 	if (provincia == "Granma" && municipio == "Bayamo") {
-		return 12;
+		return 10;
 	}
 	if (provincia.trim().toLowerCase() == municipio.trim().toLowerCase()) {
-		return 12;
+		return 10;
 	} else {
-		return 18;
+		return 15;
 	}
 };
 
-export const CalculateDeliveryForContainer = (invoicesWithDelivery) => {
-	console.log(invoicesWithDelivery, "INVOICES WITH DELIVERY");
+export const calculateDeliveryCost = (weight, provincia, municipio) => {
+	let deliveryByLocation = 0;
+	let deliveryByOverweight = 0;
+	let deliveryByHandling = 0;
+	let hasDelivery = false;
+	if (weight > 100) {
+		deliveryByHandling = 10;
+		return { deliveryByLocation, deliveryByOverweight, deliveryByHandling, hasDelivery };
+	}
 
-	const totalPagar = invoicesWithDelivery.reduce((accumulator, currentValue) => {
-		return parseFloat(accumulator) + parseFloat(currentValue.PaymentForDelivery);
-	}, 0);
+	if (weight <= 100) deliveryByLocation = calculateDeliveryByLocation(provincia, municipio);
+	if (weight > 50 && weight <= 100) deliveryByOverweight = (weight - 50) * 0.1;
+
+	return { deliveryByLocation, deliveryByOverweight, deliveryByHandling, hasDelivery: true };
+};
+
+export const CalculateDeliveryForContainer = (invoicesWithDelivery) => {
+	const totalPagar = parseFloat(
+		invoicesWithDelivery.reduce((accumulator, currentValue) => {
+			return (
+				parseFloat(accumulator) +
+				parseFloat(
+					currentValue.DeliveryByHandling +
+						currentValue.DeliveryByLocation +
+						currentValue.DeliveryByOverWeight,
+				)
+			);
+		}, 0),
+	).toFixed(2);
 
 	const InvoicesHabArtMay = invoicesWithDelivery.filter(
 		(invoice) =>
@@ -46,21 +69,43 @@ export const CalculateDeliveryForContainer = (invoicesWithDelivery) => {
 		(invoice) => !InvoicesProvincias.includes(invoice),
 	);
 
-	console.log(InvoicesProvincias, "Resto de Provincias");
-	console.log(InvoicesMunicipios, "Resto de Municipios");
+	const pagarHabArtMay = parseFloat(
+		InvoicesHabArtMay.reduce((accumulator, currentValue) => {
+			return (
+				parseFloat(accumulator) +
+				parseFloat(
+					currentValue.DeliveryByHandling +
+						currentValue.DeliveryByLocation +
+						currentValue.DeliveryByOverWeight,
+				)
+			);
+		}, 0),
+	).toFixed(2);
 
-	const pagarHabArtMay = InvoicesHabArtMay.reduce((accumulator, currentValue) => {
-		return parseFloat(accumulator) + parseFloat(currentValue.PaymentForDelivery);
-	}, 0);
-
-	const pagarCabezeras = InvoicesProvincias.reduce((accumulator, currentValue) => {
-		return parseFloat(accumulator) + parseFloat(currentValue.PaymentForDelivery);
-	}, 0);
-	const pagarMunicipios = InvoicesMunicipios.reduce((accumulator, currentValue) => {
-		return parseFloat(accumulator) + parseFloat(currentValue.PaymentForDelivery);
-	}, 0);
-
-	console.log(totalPagar, pagarCabezeras, pagarHabArtMay, "TOTAL A PAGAR");
+	const pagarCabezeras = parseFloat(
+		InvoicesProvincias.reduce((accumulator, currentValue) => {
+			return (
+				parseFloat(accumulator) +
+				parseFloat(
+					currentValue.DeliveryByHandling +
+						currentValue.DeliveryByLocation +
+						currentValue.DeliveryByOverWeight,
+				)
+			);
+		}, 0),
+	).toFixed(2);
+	const pagarMunicipios = parseFloat(
+		InvoicesMunicipios.reduce((accumulator, currentValue) => {
+			return (
+				parseFloat(accumulator) +
+				parseFloat(
+					currentValue.DeliveryByHandling +
+						currentValue.DeliveryByLocation +
+						currentValue.DeliveryByOverWeight,
+				)
+			);
+		}, 0),
+	).toFixed(2);
 
 	return {
 		InvoicesHabArtMay,

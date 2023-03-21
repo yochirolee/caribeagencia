@@ -6,7 +6,6 @@ import { UnGroupContainer } from "../Pages/Inventory/UnGroupContainer";
 import { Users } from "../Pages/Users/Users";
 import { ContainerInPort } from "../Pages/Inventory/ContainerInPort";
 import { ReportContainerTransport } from "../Pages/Reports/ReportContainerTransport";
-import { ReportContainerIncome } from "../Pages/Reports/ReportContainerIncome";
 import { useSelector } from "react-redux";
 import { ReportSales } from "../Pages/Reports/ReportSales";
 
@@ -44,7 +43,6 @@ export const AgencyRoutes = () => {
 					<>
 						<Route path="reportContainerTransport" element={<ReportContainerTransport />} />
 						<Route path="reportSales" element={<ReportSales />} />
-						<Route path="reportContainerIncome" element={<ReportContainerIncome />} />
 					</>
 				)}
 
