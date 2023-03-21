@@ -65,19 +65,21 @@ export const ContainerInPort = () => {
 				{isLoading ? (
 					<div>Loading....</div>
 				) : (
-					<div
-						id="container_stats"
-						className="flex flex-col gap-4 mt-4 bg-white rouded-white p-2 border rounded-lg text-xs"
-					>
-						<h3>Container: {container?.data?.ContainerNumber}</h3>
-						<h3>Sello: {container?.data?.SealedNumber}</h3>
-						<h3>Peso en Lbs: {container?.data?.Weight} Lbs</h3>
-						<h3>Total de HBL: {container?.products?.length} </h3>
-					</div>
+					selectedContainer && (
+						<div
+							id="container_stats"
+							className="flex flex-col gap-4 mt-4 bg-white rouded-white p-2 border rounded-lg text-xs"
+						>
+							<h3>Container: {container?.data?.ContainerNumber}</h3>
+							<h3>Sello: {container?.data?.SealedNumber}</h3>
+							<h3>Peso en Lbs: {container?.data?.Weight} Lbs</h3>
+							<h3>Total de HBL: {container?.products?.length} </h3>
+						</div>
+					)
 				)}
 				<div className="flex items-center mt-4 justify-center">
 					<button
-						disabled={isLoading}
+						disabled={isLoading && !selectedContainer}
 						onClick={() => handleContainerToPort()}
 						className="p-2 border bg-blue-500 text-white text-xs rounded-lg"
 					>
