@@ -50,7 +50,7 @@ export const ReportContainerTransport = () => {
 						products={finalFormattedInvoices}
 						amountToPayForDelivery={amountToPayForDelivery}
 					/>
-					<div className="flex gap-4 lg:gap-10 justify-center">
+					<div className="flex flex-col lg:flex-row gap-4 lg:gap-10  justify-center">
 						<HBLContainerStats products={productList} />
 						<InvoiceContainerStats invoicesList={finalFormattedInvoices} />
 					</div>

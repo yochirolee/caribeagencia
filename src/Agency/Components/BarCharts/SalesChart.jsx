@@ -4,7 +4,10 @@ import { groupAndMerge } from "../../Utils/groupAndMerge";
 import { format, parseISO } from "date-fns";
 
 const performance = (invoices) => {
+  console.log(invoices, "invoices")
 	const mergedInvoices = groupAndMerge(invoices, "fecha", "total");
+	console.log(mergedInvoices, "mergedInvoices");
+
 	return mergedInvoices.map((invoice) => {
 		let sumTotal = parseFloat(
 			invoice.total
@@ -17,6 +20,7 @@ const performance = (invoices) => {
 		return {
 			name: invoice.agencia,
 			Sales: sumTotal,
+			Invoices: invoice.total?.length,
 			date: format(parseISO(invoice.fecha), "dd/MM/yyyy"),
 		};
 	});
@@ -46,8 +50,7 @@ export const SalesChart = ({ invoices }) => {
 						onValueChange={(value) => setSelectedKpi(value)}
 					>
 						<ToggleItem value="Sales" text="Ventas" />
-						<ToggleItem value="Profit" text="Profit" />
-						<ToggleItem value="Customers" text="Customers" />
+						<ToggleItem value="Invoices" text="Facturas" />
 					</Toggle>
 				</div>
 			</div>
