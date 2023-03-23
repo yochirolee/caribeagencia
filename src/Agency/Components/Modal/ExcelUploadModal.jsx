@@ -1,4 +1,4 @@
-import { Fragment, React, useState } from "react";
+import { Fragment, React, useMemo, useState } from "react";
 import { useFetchProductsList } from "../../hooks/useFetchTrackingByHBL";
 import { useImportHblsFromExcel } from "../../hooks/useExcel/useImportHblsFromExcel";
 import { useSetProductListLocation } from "../../hooks/useSetProductListLocation";
@@ -11,7 +11,7 @@ import { TableImportProducts } from "../Tables/TableProductsToImport";
 import { SelectLocations } from "../ui/Selects/SelectLocations";
 
 export const ExcelUploadModal = ({ showModal, setShowModal }) => {
-	const [files, setFiles] = useState("");
+	const [files, setFiles] = useState(undefined);
 	const importedHBLSFromExcel = useImportHblsFromExcel(files);
 	const { data: productList, isLoading, isError } = useFetchProductsList(importedHBLSFromExcel);
 	const mutationProductList = useSetProductListLocation();
@@ -27,7 +27,7 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 		productList.push(hbl);
 	}; */
 	const handleOnSave = () => {
-		if(!location) return;
+		if (!location) return;
 		mutationProductList.mutateAsync({
 			products: productList,
 			locationId: location.LocationId,
@@ -38,6 +38,8 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 	};
 
 	const handleCloseModal = () => {
+		setFiles(undefined);
+
 		setShowModal(false);
 	};
 
@@ -100,7 +102,7 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 											onChange={(date) => setStartDate(date)}
 										/>
 										{isLoading ? <p className="my-2 text-blue-500">Cargando...</p> : ""}
-										<TableImportProducts productList={productList}  />
+										{files && <TableImportProducts productList={productList} />}
 										<div>
 											{isError ? (
 												<p className="my-2 text-red-500">

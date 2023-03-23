@@ -1,5 +1,5 @@
 import { React } from "react";
-export const UnGroupContainerStats = ({ productList, selectedContainer,productsInContainer }) => {
+export const UnGroupContainerStats = ({ productList,productsInContainer }) => {
 	if (!productList) return;
 	const undeclared = productList?.filter((product) => product?.StatusId == 3);
 

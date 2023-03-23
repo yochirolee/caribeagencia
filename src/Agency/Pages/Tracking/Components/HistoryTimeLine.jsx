@@ -2,11 +2,11 @@ import { React } from "react";
 import { format, parseISO } from "date-fns";
 
 export const HistoryTimeLine = ({ history }) => {
+	console.log(history, "history");
 	if (!history) return null;
 	const reversed = [...history].reverse();
 	return (
 		<>
-		
 			<ol className="flex overflow-x-auto  w-full">
 				{reversed.map((step, index) => (
 					<li key={index} className="relative h-20 text-xs p-2 mb-6">
@@ -20,7 +20,7 @@ export const HistoryTimeLine = ({ history }) => {
 							<h3 className="text-xs  text-gray-900 dark:text-white">{step.Location}</h3>
 							<p className="text-xs">{step?.Container}</p>
 							<time className=" text-xs font-normal leading-none text-gray-400 dark:text-gray-500">
-								{step.CreatedAt ? format(parseISO(step?.CreatedAt), "MMM d h:mm a") : ""}
+								{step.CreatedAt ? format(parseISO(step?.CreatedAt), "MM/dd/Y ") : ""}
 							</time>
 						</div>
 					</li>

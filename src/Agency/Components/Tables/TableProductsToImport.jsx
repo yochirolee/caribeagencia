@@ -31,13 +31,13 @@ export const TableImportProducts = ({ productList }) => {
 							<button
 								onClick={() => setSelectedAgency(undefined)}
 								type="button"
-								class="inline-flex items-center p-0.5 ml-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+								className="inline-flex items-center p-0.5 ml-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
 								data-dismiss-target="#badge-dismiss-dark"
 								aria-label="Remove"
 							>
 								<svg
 									aria-hidden="true"
-									class="w-3.5 h-3.5"
+									className="w-3.5 h-3.5"
 									fill="currentColor"
 									viewBox="0 0 20 20"
 									xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ export const TableImportProducts = ({ productList }) => {
 										clipRule="evenodd"
 									></path>
 								</svg>
-								<span class="sr-only">Remove badge</span>
+								<span className="sr-only">Remove badge</span>
 							</button>
 						</span>
 					) : (

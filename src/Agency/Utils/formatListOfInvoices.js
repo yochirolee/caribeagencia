@@ -4,11 +4,8 @@ import { groupAndMerge } from "./groupAndMerge";
 export const formatListOfInvoices = (invoices, selectedContainer) => {
 	if (!invoices || !selectedContainer) {
 		const finalFormattedInvoices = [];
-		const TotalDelivery = 0;
-		return {
-			finalFormattedInvoices,
-			TotalDelivery,
-		};
+
+		return finalFormattedInvoices;
 	}
 
 	const ContainerNumber = selectedContainer?.ContainerNumber;
@@ -55,7 +52,6 @@ export const formatListOfInvoices = (invoices, selectedContainer) => {
 		});
 	});
 	const merged = groupAndMerge(formattedInvoices, "InvoiceId", "Products");
-	let amountToPayForDelivery = 0;
 	const finalFormattedInvoices = merged.map((invoice) => {
 		let sumTotalWeight = invoice.Products.reduce((accumulator, currentValue) => {
 			return parseFloat(accumulator) + parseFloat(currentValue.Weight);
@@ -66,7 +62,6 @@ export const formatListOfInvoices = (invoices, selectedContainer) => {
 		const { deliveryByLocation, deliveryByOverweight, deliveryByHandling, hasDelivery } =
 			calculateDeliveryCost(sumTotalWeight, invoice.Provincia, invoice.Municipio);
 
-		amountToPayForDelivery += deliveryByLocation + deliveryByOverweight + deliveryByHandling;
 		return {
 			...invoice,
 			TotalPayment: sumTotalPayment,
@@ -77,5 +72,6 @@ export const formatListOfInvoices = (invoices, selectedContainer) => {
 			DeliveryByHandling: deliveryByHandling,
 		};
 	});
-	return { finalFormattedInvoices, amountToPayForDelivery };
+
+	return finalFormattedInvoices;
 };

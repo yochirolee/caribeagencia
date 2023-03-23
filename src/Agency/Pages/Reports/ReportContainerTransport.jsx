@@ -1,36 +1,50 @@
-import {
-	SelectBox,
-	SelectBoxItem,
-} from "@tremor/react";
-import { useMemo, useState, React, useRef } from "react";
+import { Card, MultiSelectBoxItem, MultiSelectBox, SelectBox, SelectBoxItem } from "@tremor/react";
+import { useMemo, useState, React, useRef, useEffect } from "react";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
 import { HBLContainerStats } from "../../Components/Stats/HBLContainerStats";
 import { InvoiceContainerStats } from "../../Components/Stats/InvoicesContainerStats";
+import TableReportContainerTransport from "../../Components/Tables/TableReportContainerTransport";
+import { AgencySelect } from "../../Components/ui/Selects";
 import ContainerSelect from "../../Components/ui/Selects/ContainerSelect";
 import { ContainerTransportStats } from "../../Components/ui/Stats/ContainerTransportStats";
 import { useFetchContainerReport } from "../../hooks/useReports/useFetchContainerReport";
 import { formatListOfInvoices } from "../../Utils/formatListOfInvoices";
+import { getUniqueAgencies } from "../../Utils/getUniqueAgencies";
+import { filterProducts } from "../../Utils/filterProducts";
+import { InvoicesProvincesContainerStats } from "../../Components/Stats/InvoicesProvincesContainerStats";
 
 export const ReportContainerTransport = () => {
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
+	const [selectedAgency, setSelectedAgency] = useState(undefined);
+	const { data: productList, isLoading: isLoadingProducts } =
+		useFetchContainerReport(selectedContainer);
 
-	const {
-		data: productList,
-		isLoading: isLoadingProducts,
-	} = useFetchContainerReport(selectedContainer);
-
-	const { finalFormattedInvoices, amountToPayForDelivery } = useMemo(
+	const invoices = useMemo(
 		() => formatListOfInvoices(productList, selectedContainer),
 		[productList],
 	);
+	const agencies = useMemo(() => getUniqueAgencies(invoices), [invoices]);
+
+	const filteredInvoices = useMemo(
+		() =>
+			selectedAgency
+				? invoices?.filter((invoice) => invoice.AgencyName == selectedAgency)
+				: invoices,
+		[selectedAgency, productList],
+	);
+	const filteredProducts = useMemo(
+		() => filterProducts(productList, selectedAgency, ""),
+		[selectedAgency, productList],
+	);
 
 	const tableRef = useRef();
-
 	const { onDownload } = useDownloadExcel({
 		currentTableRef: tableRef.current,
-		filename: selectedContainer?.ContainerNumber,
-		sheet: selectedContainer?.ContainerNumber,
+		filename: selectedAgency
+			? selectedAgency + "-" + selectedContainer?.ContainerNumber
+			: selectedContainer?.ContainerNumber,
+		sheet: selectedAgency ? selectedAgency : "test",
 	});
 
 	return (
@@ -46,149 +60,76 @@ export const ReportContainerTransport = () => {
 				<SearchResultSkeleton />
 			) : (
 				<div className=" text-xs ">
-					<ContainerTransportStats
-						products={finalFormattedInvoices}
-						amountToPayForDelivery={amountToPayForDelivery}
-					/>
-					<div className="flex flex-col lg:flex-row gap-4 lg:gap-10  justify-center">
-						<HBLContainerStats products={productList} />
-						<InvoiceContainerStats invoicesList={finalFormattedInvoices} />
-					</div>
-					<div className="flex justify-end py-4  min-w-full sm:px-6 lg:px-8">
-						<button
-							onClick={onDownload}
-							type="button"
-							className="flex h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
-							aria-label="Toggle dark mode"
-						>
-							<i className="fa fa-file-excel text-md text-green-500 "></i>
-							<span className="text-xs hidden sm:block">Exportar a Excel</span>
-						</button>
-					</div>
-					<div className="container  h-[calc(100vh-21rem)] overflow-x-auto ">
-						<table ref={tableRef} className="min-w-full text-center ">
-							<thead className="border-b bg-gray-50">
-								<tr>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Factura
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Contenedor
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Total HBL
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										HBLs
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Destinatario
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Direccion Destinatario
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Telefonos Destinatario
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Con Entrega
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										<SelectBox
-											onValueChange={(value) => console.log("the new value is", value)}
-											defaultValue="1"
+					<ContainerTransportStats invoices={filteredInvoices} />
+
+					<div className=" grid grid-cols-2">
+						<div name="actions" className=" flex gap-4 items-center justify-between">
+							<div>
+								{selectedAgency ? (
+									<span
+										id="badge-dismiss-dark"
+										className="inline-flex items-center px-2 py-1 mr-2 text-xs font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
+									>
+										{selectedAgency}
+										<button
+											onClick={() => setSelectedAgency(undefined)}
+											type="button"
+											className="inline-flex items-center p-0.5 ml-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+											data-dismiss-target="#badge-dismiss-dark"
+											aria-label="Remove"
 										>
-											<SelectBoxItem value="1" text="Kilometers" />
-											<SelectBoxItem value="2" text="Meters" />
-										</SelectBox>
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Municipio
-									</th>
+											<svg
+												aria-hidden="true"
+												className="w-3.5 h-3.5"
+												fill="currentColor"
+												viewBox="0 0 20 20"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fillRule="evenodd"
+													d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+													clipRule="evenodd"
+												></path>
+											</svg>
+											<span className="sr-only">Remove badge</span>
+										</button>
+									</span>
+								) : (
+									""
+								)}
+							</div>
+						</div>
 
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Descuento
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Peso de Factura
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Pagar Manipulacion
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Pagar Entrega
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										Pagar SobrePeso
-									</th>
-									<th scope="col" className="text-xs font-medium text-gray-900 px-6 py-4">
-										SubTotal Entrega
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{finalFormattedInvoices?.map((invoice, index) => (
-									<tr key={index} className="bg-white border-b">
-										<td className="px-6  py-4 whitespace-nowrap text-xs font-medium text-gray-900">
-											{invoice.InvoiceId}
-										</td>
-										<td className="text-xs text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{invoice.ContainerNumber}
-										</td>
-										<td className="text-xs text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{invoice.Products.length}
-										</td>
-										<td className="text-xs text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											<span>{invoice?.Products[0]?.HBL}</span>
-										</td>
-
-										<td className="text-xs text-gray-900 text-left font-light px-6 py-4 whitespace-nowrap">
-											{invoice.RecieverName}
-										</td>
-										<td className="text-xs text-gray-900 text-left font-light px-6 py-4 whitespace-nowrap">
-											{invoice.RecieverAddress}
-										</td>
-										<td className="text-xs text-gray-900 text-left font-light px-6 py-4 whitespace-nowrap">
-											{invoice.Phones}
-										</td>
-										<td className="text-xs text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{invoice.HasDelivery ? "Si" : "No"}
-										</td>
-										<td className="text-xs text-gray-900 text-left font-light px-6 py-4 whitespace-nowrap">
-											{invoice.Provincia}
-										</td>
-										<td className="text-xs text-gray-900 text-left font-light px-6 py-4 whitespace-nowrap">
-											{invoice.Municipio}
-										</td>
-
-										<td className="text-xs text-gray-900 text-left font-light px-6 py-4 whitespace-nowrap">
-											{parseFloat(invoice.Discount).toFixed(2)}
-										</td>
-
-										<td className="text-xs text-gray-900 text-left font-light px-6 py-4 whitespace-nowrap">
-											{parseFloat(invoice.TotalWeight).toFixed(2)}
-										</td>
-										<td className="text-xs text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{invoice.DeliveryByHandling}
-										</td>
-										<td className="text-xs text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{invoice.DeliveryByLocation}
-										</td>
-										<td className="text-xs text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{parseFloat(invoice.DeliveryByOverWeight).toFixed(2)}
-										</td>
-										<td className="text-xs text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-											{parseFloat(
-												invoice.DeliveryByLocation +
-													invoice.DeliveryByOverWeight +
-													invoice.DeliveryByHandling,
-											).toFixed(2)}
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
+						<div className="flex flex-wrap justify-end gap-2 items-center">
+							<AgencySelect
+								agencies={agencies}
+								selectedAgency={selectedAgency}
+								setSelectedAgency={setSelectedAgency}
+							/>
+						</div>
 					</div>
+					<div className="flex flex-col container items-center lg:items-start lg:justify-between lg:flex-row gap-4 lg:gap-10">
+						<HBLContainerStats products={filteredProducts} />
+						<InvoiceContainerStats invoicesList={filteredInvoices} />
+						<InvoicesProvincesContainerStats invoicesList={filteredInvoices} />
+					</div>
+					<Card className="mt-6">
+						<div className="flex flex-wrap justify-end">
+							<button
+								onClick={onDownload}
+								type="button"
+								className="flex   h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+								aria-label="Toggle dark mode"
+							>
+								<i className="fa fa-file-excel text-md text-green-500 "></i>
+								<span className="text-xs hidden sm:block">Exportar a Excel</span>
+							</button>
+						</div>
+
+						<div className="max-h-[600px] overflow-y-auto">
+							<TableReportContainerTransport invoices={filteredInvoices} tableRef={tableRef} />
+						</div>
+					</Card>
 				</div>
 			)}
 		</div>

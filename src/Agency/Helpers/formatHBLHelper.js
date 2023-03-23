@@ -1,7 +1,7 @@
-export const formatHBLHelper = async (listHBL) => {
+export const formatHBLHelper =  (listHBL) => {
 	if (!listHBL) return;
 
-	let formattedListHBL = await listHBL.map((row) => {
+	let formattedListHBL =  listHBL.map((row) => {
 		if (!row) return;
 		if (row && row?.HBL?.toUpperCase().trim()) {
 			let hbl = row?.HBL.toUpperCase().trim();

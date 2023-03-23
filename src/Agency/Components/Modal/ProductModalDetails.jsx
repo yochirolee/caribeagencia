@@ -11,6 +11,7 @@ export const ProductModalDetails = ({ selectedProduct, showModalDetails, setShow
 		error: error,
 	} = useFetchProductByHBL(selectedProduct?.HBL);
 
+	console.log(selectedProductDetails,"selectedProductDetails")
 	if (isError) <div>{error.message}</div>;
 
 	return (

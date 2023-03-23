@@ -26,7 +26,7 @@ export const findProductsByHBL = async (productListToSearch) => {
 };
 
 export const useFetchProductsList = (productListToSearch) => {
-	if (!productListToSearch) return;
+	if (!productListToSearch) return  [];
 
 	let { data, isLoading, isError } = useQuery(
 		["searchProducts", productListToSearch],

@@ -13,6 +13,7 @@ import {
 import { React, useMemo } from "react";
 import { CalculateDeliveryForContainer } from "../../Utils/calculateDelivery";
 
+
 const getTypeOfInvoice = (invoices) => {
 	if (!invoices) return [];
 	let InvoicesType = [];
@@ -51,6 +52,7 @@ const getTypeOfInvoice = (invoices) => {
 		invoicesWithDelivery,
 	};
 };
+
 
 export const InvoiceContainerStats = ({ invoicesList }) => {
 	const { InvoicesType, invoices, invoicesWithDelivery } = useMemo(
@@ -104,7 +106,7 @@ export const InvoiceContainerStats = ({ invoicesList }) => {
 					<span>$ {pagarMunicipios}</span>
 				</ListItem>
 				<ListItem>
-					<span>Recogida - Facturas: {invoicesList?.length - invoicesWithDelivery?.length} </span>
+					<span>Recogida - Facturas: {invoices?.length - invoicesWithDelivery?.length} </span>
 					<span>$ {(invoicesList?.length - invoicesWithDelivery?.length) * 10}</span>
 				</ListItem>
 			</List>

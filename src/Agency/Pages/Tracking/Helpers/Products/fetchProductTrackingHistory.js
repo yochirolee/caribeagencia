@@ -6,6 +6,7 @@ const createLocation = (index, product) => {
 			return {
 				HBL: product.HBL,
 				Location: "Facturado",
+				CreatedAt:product?.InvoiceDate
 			};
 
 		case 1:

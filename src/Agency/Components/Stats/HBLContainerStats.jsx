@@ -39,6 +39,7 @@ const calculateTotalMiscelaneas = (products) => {
 	};
 };
 export const HBLContainerStats = ({ products }) => {
+	if (!products) return null;
 	const { cantMiscelaneas } = useMemo(() => calculateTotalMiscelaneas(products), [products]);
 	return (
 		<Card className="max-w-md mt-4">

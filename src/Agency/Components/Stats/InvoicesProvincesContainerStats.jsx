@@ -24,10 +24,11 @@ const getInvoicesByProvinces = (filteredProducts) => {
 	return Invoices;
 };
 
-export const InvoicesProvincesContainerStats = ({ filteredProducts }) => {
+export const InvoicesProvincesContainerStats = ({ invoicesList }) => {
+	console.log("filteredProducts", invoicesList);
 	const invoicesGroupByProvince = useMemo(
-		() => getInvoicesByProvinces(filteredProducts),
-		[filteredProducts],
+		() => getInvoicesByProvinces(invoicesList),
+		[invoicesList],
 	);
 
 	return (

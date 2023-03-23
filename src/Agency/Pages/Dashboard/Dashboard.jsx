@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 export const Dashboard = () => {
 	const { user } = useSelector((state) => state.Auth);
 	const [search, setSearch] = useState(undefined);
-	const { data: searchResult, isLoadingSearch } = useFetchByInvoiceOrHBL(search);
+	const { data: searchResult, isLoading: isLoadingSearch } = useFetchByInvoiceOrHBL(search);
 	const [selectedContainer, setSelectedContainer] = useState(undefined);
 	const [selectedAgency, setSelectedAgency] = useState(undefined);
 	const [selectedLocation, setSelectedLocation] = useState(undefined);
