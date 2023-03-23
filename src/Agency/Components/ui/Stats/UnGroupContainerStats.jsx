@@ -1,35 +1,53 @@
+import { BarsArrowDownIcon } from "@heroicons/react/20/solid";
+import { MdDone } from "react-icons/md";
+import { FaBoxes } from "react-icons/fa";
+import { Card, Flex, Icon, Metric, Text } from "@tremor/react";
 import { React } from "react";
-export const UnGroupContainerStats = ({ productList,productsInContainer }) => {
+export const UnGroupContainerStats = ({ productList, productsInContainer }) => {
 	if (!productList) return;
 	const undeclared = productList?.filter((product) => product?.StatusId == 3);
 
 	return (
-		<div className="flex border-b py-2 items-center md:gap-6 justify-end   ">
-			<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
-				Total Desagrupado:
-				<span className="mx-2 px-2 py-1  text-violet-700 bg-violet-100  rounded-lg ">
-					{productList?.length + undeclared.length}
-				</span>
-			</div>
-			<div className=" p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
-				Correctos:
-				<span className="mx-2 px-2 py-1  text-green-700 bg-green-100  rounded-lg ">
-					{productList?.length}
-				</span>
-			</div>
-			<div className=" p-2 text-xs flex flex-col md:flex-row items-center text-center  ">
-				No Manifestados:
-				<span className=" mx-2 py-1 px-2 text-orange-700 bg-orange-100 rounded-lg">
-					{undeclared?.length}
-				</span>
-			</div>
-
-			<div className="p-2 text-xs flex flex-col md:flex-row items-center text-center">
-				Faltantes:
-				<span className="mx-2 px-2 py-1 text-red-700 bg-red-100 rounded-lg ">
-					{productsInContainer ? productsInContainer.length :0 }
-				</span>
-			</div>
+		<div className="   mt-6 flex  flex-wrap align-middle xl:grid xl:grid-cols-4 gap-4  p-4  bg-gray-50  ">
+			<Card>
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={FaBoxes} variant="light" size="sm" color="blue" />
+					<div className="truncate">
+						<Text>Total Desagrupado:</Text>
+						<Metric className="text-xl"> {productList?.length + undeclared.length}</Metric>
+					</div>
+				</Flex>
+			</Card>
+			<Card>
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={MdDone} variant="light" size="sm" color="green" />
+					<div className="truncate">
+						<Text>Correctos:</Text>
+						<Metric className="text-xl"> {productList?.length}</Metric>
+					</div>
+				</Flex>
+			</Card>
+			<Card>
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={BarsArrowDownIcon} variant="light" size="sm" color="gray" />
+					<div className="truncate">
+						<Text>No Manifestados:</Text>
+						<Metric className="text-xl"> {undeclared?.length}</Metric>
+					</div>
+				</Flex>
+			</Card>
+			<Card>
+				<Flex justifyContent="start" className="space-x-4">
+					<Icon icon={BarsArrowDownIcon} variant="light" size="sm" color="gray" />
+					<div className="truncate">
+						<Text>Faltantes:</Text>
+						<Metric className="text-xl">
+							{" "}
+							{productsInContainer ? productsInContainer.length : 0}
+						</Metric>
+					</div>
+				</Flex>
+			</Card>
 		</div>
 	);
 };

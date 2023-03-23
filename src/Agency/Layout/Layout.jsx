@@ -9,7 +9,7 @@ export const Layout = ({ children }) => {
 			<Sidebar />
 			<div className=" w-full  h-screen overflow-y-auto ">
 				<Navbar />
-				<div className="container h-screen-[56px]   relative  ">
+				<div className=" h-screen-[56px]   relative  ">
 					<AlertPopup />
 					{children}
 				</div>

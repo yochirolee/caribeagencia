@@ -126,7 +126,7 @@ export const ReportContainerTransport = () => {
 							</button>
 						</div>
 
-						<div className="max-h-[600px] overflow-y-auto">
+						<div className="max-h-[600px]  overflow-auto">
 							<TableReportContainerTransport invoices={filteredInvoices} tableRef={tableRef} />
 						</div>
 					</Card>

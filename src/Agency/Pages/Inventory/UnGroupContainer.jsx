@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ListProductsInSelectedContainer } from "../../Components/ui/List/ListProductsInSelectedContainer";
 import { InputHBL } from "../../Components/ui/Forms/InputHBL";
@@ -13,6 +13,7 @@ import { useUnGroupProducts } from "../../hooks/useContainers/useUngroupProducts
 import { SearchResultSkeleton } from "../../Components/Skeletons/searchResultSkeleton";
 import { TableUngroupedProducts } from "../../Components/Tables/TableUngroupedProducts";
 import { ProductModalDetails } from "../../Components/Modal/ProductModalDetails";
+import { Card } from "@tremor/react";
 
 export const UnGroupContainer = () => {
 	const dispatch = useDispatch();
@@ -66,8 +67,8 @@ export const UnGroupContainer = () => {
 	};
 
 	return (
-		<div className="flex flex-col  lg:max-h-[calc(100vh-60px)] md:flex-row relative   overflow-y-auto ">
-			<aside className="w-[300px] lg:w-2/6  overflow-x-hidden flex flex-col  border-r p-4  text-sm overflow-y-auto bg-gray-50">
+		<div className="flex flex-col  lg:flex-row ">
+			<aside className="lg:min-w-[300px] lg:max-w-[300px] lg:min-w-2/6  overflow-x-hidden flex flex-col  border-r p-4  text-sm overflow-y-auto bg-gray-50">
 				<ContainerOnPortSelect
 					selectedContainer={selectedContainer}
 					setSelectedContainer={setSelectedContainer}
@@ -110,34 +111,34 @@ export const UnGroupContainer = () => {
 					/>
 				)}
 			</aside>
-			<div className=" container px-4 pt-8 border bg-gray-100 overflow-y-auto ">
+			<div className="flex flex-col w-full  gap-2  p-4  ">
 				{selectedContainer ? (
-					<>
-						<div className="flex justify-between items-center  px-4">
-							<InputHBL
-								handleHBL={handleUngroupContainer}
-								isLoadingProducts={isLoadingProducts}
-								placeHolder="Producto a Desagrupar"
-							/>
-							<UnGroupContainerStats
-								productList={unGroupProductList}
-								productsInContainer={productsInContainer}
-								selectedContainer={selectedContainer}
-							/>
-						</div>
+					isLoading ? (
+						<SearchResultSkeleton />
+					) : (
+						<>
+							<div className="flex flex-col  ">
+								<InputHBL
+									handleHBL={handleUngroupContainer}
+									isLoadingProducts={isLoadingProducts}
+									placeHolder="Producto a Desagrupar"
+								/>
+								<UnGroupContainerStats
+									productList={unGroupProductList}
+									productsInContainer={productsInContainer}
+									selectedContainer={selectedContainer}
+								/>
+							</div>
 
-						{isLoading ? (
-							SearchResultSkeleton
-						) : (
-							<div className="flex flex-col justify-end border-b gap-4 text-xs  px-4 ">
+							<Card className="grid max-h-screen overflow-y-auto">
 								<TableUngroupedProducts
 									isLoading={isLoading}
 									productList={unGroupProductList}
 									handleOnSelectedProduct={handleOnSelectedProduct}
 								/>
-							</div>
-						)}
-					</>
+							</Card>
+						</>
+					)
 				) : (
 					<div
 						className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-gray-800 dark:text-green-400"
