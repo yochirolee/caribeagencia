@@ -13,6 +13,36 @@ import { ProductModalDetails } from "../../Components/Modal/ProductModalDetails"
 import { ExcelUploadModal } from "../../Components/Modal/ExcelUploadModal";
 import { useSelector } from "react-redux";
 
+import { Page, Text, View, Document,PDFViewer, StyleSheet, PDFDownloadLink } from "@react-pdf/renderer";
+
+const styles = StyleSheet.create({
+	page: {
+		flexDirection: "row",
+		backgroundColor: "#E4E4E4",
+	},
+	section: {
+		margin: 10,
+		padding: 10,
+		flexGrow: 1,
+	},
+});
+
+const MyDocument = () => (
+	<Document>
+		<Page size="A4" style={styles.page}>
+			<View style={styles.section}>
+				<Text>Sección 1</Text>
+				<p>asdfasd</p>
+			</View>
+			<View style={styles.section}>
+				<Text>Sección 2</Text>
+			</View>
+		</Page>
+	</Document>
+);
+
+export default MyDocument;
+
 export const Dashboard = () => {
 	const { user } = useSelector((state) => state.Auth);
 	const [search, setSearch] = useState(undefined);
@@ -73,6 +103,16 @@ export const Dashboard = () => {
 				)}
 
 				<div className="p-2   mt-4  ">
+				{/* 	<div>
+						<PDFDownloadLink document={<MyDocument />} fileName="documento.pdf">
+							{({ blob, url, loading, error }) =>
+								loading ? "Cargando documento..." : "Descargar documento PDF"
+							}
+						</PDFDownloadLink>
+						<PDFViewer>
+							<MyDocument />
+						</PDFViewer>
+					</div> */}
 					<div className="  flex flex-wrap container justify-between  items-center gap-6">
 						<div className=" grid container  ">
 							<div className="flex  my-2 flex-wrap justify-end">
