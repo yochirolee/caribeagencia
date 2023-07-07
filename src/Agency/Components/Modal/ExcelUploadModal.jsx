@@ -1,6 +1,6 @@
 import { Fragment, React, useMemo, useState } from "react";
+import readXlsxFile from "read-excel-file";
 import { useFetchProductsList } from "../../hooks/useFetchTrackingByHBL";
-import { useImportHblsFromExcel } from "../../hooks/useExcel/useImportHblsFromExcel";
 import { useSetProductListLocation } from "../../hooks/useSetProductListLocation";
 import { InputFiles } from "../ui/Inputs/InputFiles";
 import { useSelector } from "react-redux";
@@ -10,16 +10,62 @@ import { Dialog, Transition } from "@headlessui/react";
 import { TableImportProducts } from "../Tables/TableProductsToImport";
 import { SelectLocations } from "../ui/Selects/SelectLocations";
 
+const schema = {
+	HBL: {
+		// JSON object property name.
+		prop: "HBL",
+		type: String,
+	},
+	HBLS: {
+		// JSON object property name.
+		prop: "HBLs",
+		type: Number,
+	},
+
+	Invoices: {
+		// JSON object property name.
+		prop: "InvoiceId",
+		type: String,
+	},
+	Telefono: {
+		// JSON object property name.
+		prop: "Telefono",
+		type: String,
+	},
+};
+
+const importFromExcel = (files) => {
+	if (!files) return;
+	const importedFromExcel = [];
+	readXlsxFile(files[0], { schema }).then((rows) => {
+		rows.rows.forEach((row) => {
+			if (row.InvoiceId) {
+				importedFromExcel.push({ InvoiceId: row.InvoiceId.replace("-CTE", "") });
+			} else {
+				importedFromExcel.push({ HBL: row.HBL });
+			}
+		});
+	});
+	return importedFromExcel;
+};
+
 export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 	const [files, setFiles] = useState(undefined);
-	const importedHBLSFromExcel = useImportHblsFromExcel(files);
-	const { data: productList, isLoading, isError } = useFetchProductsList(importedHBLSFromExcel);
+	const importedFromExcel = useMemo(() => {
+		if (files) {
+			const result = importFromExcel(files);
+			return result;
+		}
+		return [];
+	}, [files]);
+
+	const { data: productList, isLoading, isError } = useFetchProductsList(importedFromExcel);
 	const mutationProductList = useSetProductListLocation();
 	const { user } = useSelector((state) => state.Auth);
 	const [startDate, setStartDate] = useState(new Date());
 	const [location, setLocation] = useState(null);
 
-	const handleImport = async (event) => {
+	const handleImport = (event) => {
 		setFiles(event.target.files);
 	};
 	/* 	const handleHbl = (hbl) => {
@@ -35,12 +81,13 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 			CreatedAt: startDate,
 		});
 		setShowModal(false);
+		setFiles(undefined);
 	};
 
 	const handleCloseModal = () => {
-		setFiles(undefined);
-
+		setLocation(null);
 		setShowModal(false);
+		setFiles(undefined);
 	};
 
 	return (
@@ -95,13 +142,42 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 
 											<SelectLocations setLocation={setLocation} />
 										</div>
-										<InputFiles handleImport={handleImport} />
-										<ReactDatePicker
-											className="rounded-lg w-full text-sm border-gray-400"
-											selected={startDate}
-											onChange={(date) => setStartDate(date)}
-										/>
-										{isLoading ? <p className="my-2 text-blue-500">Cargando...</p> : ""}
+										{location && (
+											<>
+												<ReactDatePicker
+													className="rounded-lg w-full text-sm border-gray-400"
+													selected={startDate}
+													onChange={(date) => setStartDate(date)}
+												/>
+												<div className="w-full">
+													<div className="inline-flex items-center gap-2">
+														<p className="text-base font-semibold leading-7 text-indigo-600">
+															Como Insertar
+														</p>
+														<h1 className="  font-bold tracking-tight text-gray-900 ">
+															Desde Excel
+														</h1>
+													</div>
+
+													<p className="mt-1 text-xs leading-8 text-gray-700">
+														<b>Invoices:</b> Para importar por Facturas desde Excel, la Columna
+														referente a sus Facturas, debe tener el nombre de Invoices
+													</p>
+													<p className="text-xs leading-8 text-gray-700">
+														<b>HBL:</b> Para importar por HBL su Excel, la Columna de referente a
+														los HBL debe tener el nombre de HBL
+													</p>
+												</div>
+
+												<InputFiles handleImport={handleImport} />
+											</>
+										)}
+
+										{isLoading ? (
+											<p className="my-2 text-blue-500">Cargando por favor espere...</p>
+										) : (
+											""
+										)}
 										{files && <TableImportProducts productList={productList} />}
 										<div>
 											{isError ? (

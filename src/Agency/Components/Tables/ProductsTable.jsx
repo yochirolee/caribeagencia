@@ -1,7 +1,6 @@
 import { format, parseISO } from "date-fns";
 
 export const ProductsTable = ({ handleOnSelectedProduct, filteredProducts, tableRef }) => {
-	console.log(filteredProducts,"filteredProducts");
 	if (!filteredProducts) return null;
 
 	return (

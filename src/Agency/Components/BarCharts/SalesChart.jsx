@@ -4,9 +4,7 @@ import { groupAndMerge } from "../../Utils/groupAndMerge";
 import { format, parseISO } from "date-fns";
 
 const performance = (invoices) => {
-  console.log(invoices, "invoices")
 	const mergedInvoices = groupAndMerge(invoices, "fecha", "total");
-	console.log(mergedInvoices, "mergedInvoices");
 
 	return mergedInvoices.map((invoice) => {
 		let sumTotal = parseFloat(

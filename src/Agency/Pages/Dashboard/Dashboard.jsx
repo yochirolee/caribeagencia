@@ -13,7 +13,16 @@ import { ProductModalDetails } from "../../Components/Modal/ProductModalDetails"
 import { ExcelUploadModal } from "../../Components/Modal/ExcelUploadModal";
 import { useSelector } from "react-redux";
 
-import { Page, Text, View, Document,PDFViewer, StyleSheet, PDFDownloadLink } from "@react-pdf/renderer";
+import {
+	Page,
+	Text,
+	View,
+	Document,
+	PDFViewer,
+	StyleSheet,
+	PDFDownloadLink,
+} from "@react-pdf/renderer";
+import { LayoutModal } from "../../Components/Modal/LayoutModal";
 
 const styles = StyleSheet.create({
 	page: {
@@ -78,6 +87,7 @@ export const Dashboard = () => {
 
 	const [showModal, setShowModal] = useState(false);
 	const [showExcelUploadModal, setShowExcelUploadModal] = useState(false);
+	const [isOpenLocationModal, setIsOpenLocationModal] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState({});
 
 	const handleOnSelectedProduct = (HBL) => {
@@ -103,7 +113,7 @@ export const Dashboard = () => {
 				)}
 
 				<div className="p-2   mt-4  ">
-				{/* 	<div>
+					{/* 	<div>
 						<PDFDownloadLink document={<MyDocument />} fileName="documento.pdf">
 							{({ blob, url, loading, error }) =>
 								loading ? "Cargando documento..." : "Descargar documento PDF"
@@ -116,16 +126,33 @@ export const Dashboard = () => {
 					<div className="  flex flex-wrap container justify-between  items-center gap-6">
 						<div className=" grid container  ">
 							<div className="flex  my-2 flex-wrap justify-end">
+								<LayoutModal isOpen={isOpenLocationModal} setIsOpen={setIsOpenLocationModal}>
+									<div className="border w-full">
+										<InputHBL placeHolder={"Ingrese HBL"} />
+										<h1>Children</h1>
+									</div>
+								</LayoutModal>
 								{user.isAdmin ? (
-									<button
-										onClick={() => setShowExcelUploadModal(true)}
-										type="button"
-										className="flex   h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
-										aria-label="Toggle dark mode"
-									>
-										<i className="fa fa-file-import text-md text-green-500 "></i>
-										<span className="text-xs hidden sm:block">Importar desde Excel</span>
-									</button>
+									<>
+									{/* 	<button
+											onClick={() => setIsOpenLocationModal(true)}
+											type="button"
+											className="flex   h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+											aria-label="Toggle dark mode"
+										>
+											<i className="fa fa-file-import text-md text-green-500 "></i>
+											<span className="text-xs hidden sm:block">Importar</span>
+										</button> */}
+										<button
+											onClick={() => setShowExcelUploadModal(true)}
+											type="button"
+											className="flex   h-10 gap-4 px-2  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+											aria-label="Toggle dark mode"
+										>
+											<i className="fa fa-file-import text-md text-green-500 "></i>
+											<span className="text-xs hidden sm:block">Importar desde Excel</span>
+										</button>
+									</>
 								) : (
 									""
 								)}

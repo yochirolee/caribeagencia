@@ -6,7 +6,7 @@ export const InventoryDropDownMenu = () => {
 
 	return (
 		<li>
-			<div className="text-sm ">
+		
 				<div
 					onClick={() => setToggle(!toggle)}
 					className="flex   items-center p-2  font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -38,7 +38,7 @@ export const InventoryDropDownMenu = () => {
 					<i className="fas fa-plus text-gray-500"></i>
 					<span className="flex-1 ml-3 whitespace-nowrap">Desagrupar Contenedor</span>
 				</Link>
-			</div>
+			
 		</li>
 	);
 };

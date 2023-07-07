@@ -13,5 +13,17 @@ export const formatHBLHelper =  (listHBL) => {
 			}
 		}
 	});
+	console.log(formattedListHBL, "formattedListHBL")
 	return formattedListHBL;
 };
+
+export const formatInvoicesHelper = (listInvoices) => {
+	if (!listInvoices) return;
+
+	let formattedListInvoices = listInvoices.map((invoiceId) => {
+		if (!invoiceId) return;
+		invoiceId = invoiceId?.replace("-CTE","").trim();
+	});
+	return formattedListInvoices;
+}
+

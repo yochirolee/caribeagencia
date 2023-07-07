@@ -20,6 +20,7 @@ export const SelectLocations = ({ setLocation }) => {
 				{locations &&
 					locations?.map((location) => (
 						<ToggleItem
+							key={location.LocationId}
 							value={location}
 							className="text-sm"
 							text={location?.LocationName}

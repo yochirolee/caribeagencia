@@ -25,7 +25,6 @@ const getInvoicesByProvinces = (filteredProducts) => {
 };
 
 export const InvoicesProvincesContainerStats = ({ invoicesList }) => {
-	console.log("filteredProducts", invoicesList);
 	const invoicesGroupByProvince = useMemo(
 		() => getInvoicesByProvinces(invoicesList),
 		[invoicesList],

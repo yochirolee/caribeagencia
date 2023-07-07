@@ -25,7 +25,9 @@ export const RouterApp = () => {
 	return (
 		<Routes>
 			{user.aud === "authenticated" ? (
+				<>
 				<Route path="/*" element={<AgencyRoutes />} />
+				</>
 			) : (
 				<Route path="/auth/*" element={<AuthRoutes />} />
 			)}
