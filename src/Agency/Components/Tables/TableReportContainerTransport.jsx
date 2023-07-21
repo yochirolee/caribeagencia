@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 
 
 export default function TableReportContainerTransport({ invoices, tableRef }) {
+	console.log(invoices,"invoices")
 	return (
 		<Table ref={tableRef}>
 			<TableHead>
