@@ -65,7 +65,7 @@ const calculateTotalMiscelaneas = (products) => {
 		faltantes.push(item);
 	});
 
-	cantMiscelaneas.push({ name: "Duraderos" , value: duraderos.length });
+	cantMiscelaneas.push({ name: "Duraderos", value: duraderos.length });
 	cantMiscelaneas.push({ name: "Celulares", value: celulares.length });
 	cantMiscelaneas.push({ name: "Miscelaneas 6.6 Lbs", value: miscelaneas6 });
 	cantMiscelaneas.push({ name: "Miscelaneas 11 Lbs", value: miscelaneas11 });
@@ -76,13 +76,25 @@ const calculateTotalMiscelaneas = (products) => {
 	cantMiscelaneas.push({ name: "Comida/Aseo/Medicamentos 22 Lbs", value: comida22 });
 	cantMiscelaneas.push({ name: "Comida/Aseo/Medicamentos 44 Lbs", value: comida44 });
 
+
+	console.log(miscelaneas2.length)
+	const totalToPay =
+		miscelaneas2.length * 50 +
+		miscelaneas6 * 50 +
+		miscelaneas11 * 194 +
+		miscelaneas22 * 554;
+
 	return {
 		cantMiscelaneas,
+		totalToPay,
 	};
 };
 export const HBLContainerStats = ({ products }) => {
 	if (!products) return null;
-	const { cantMiscelaneas } = useMemo(() => calculateTotalMiscelaneas(products), [products]);
+	const { cantMiscelaneas, totalToPay } = useMemo(
+		() => calculateTotalMiscelaneas(products),
+		[products],
+	);
 	return (
 		<Card className="max-w-md mt-4">
 			<Title>
@@ -97,6 +109,10 @@ export const HBLContainerStats = ({ products }) => {
 				</Text>
 			</Flex>
 			<BarList data={cantMiscelaneas} className="mt-2" />
+			<div className="flex justify-between mt-4 p-4 text-lg border rounded-lg bg-blue-50 ">
+				<p>Total a Pagar en CUP</p>
+				<b>{parseFloat(totalToPay).toFixed(2)}</b>
+			</div>
 		</Card>
 	);
 };

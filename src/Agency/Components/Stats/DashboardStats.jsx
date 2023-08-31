@@ -22,12 +22,12 @@ const colorLocations = [
 		icon: () => <FaShip />,
 	},
 	{
-		color: "pink",
-		icon: () => <GrUserPolice />,
-	},
-	{
 		color: "violet",
 		icon: () => <FaWarehouse />,
+	},
+	{
+		color: "red",
+		icon: () => <GrUserPolice />,
 	},
 	{
 		color: "yellow",

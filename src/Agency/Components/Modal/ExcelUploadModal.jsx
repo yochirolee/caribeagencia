@@ -38,6 +38,7 @@ const importFromExcel = (files) => {
 	if (!files) return;
 	const importedFromExcel = [];
 	readXlsxFile(files[0], { schema }).then((rows) => {
+		console.log(rows, "rows");
 		rows.rows.forEach((row) => {
 			if (row.InvoiceId) {
 				importedFromExcel.push({ InvoiceId: row.InvoiceId.replace("-CTE", "") });

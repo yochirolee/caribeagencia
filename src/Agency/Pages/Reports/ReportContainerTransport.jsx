@@ -108,7 +108,7 @@ export const ReportContainerTransport = () => {
 							/>
 						</div>
 					</div>
-					<div className="flex flex-col container items-center lg:items-start lg:justify-between lg:flex-row gap-4 lg:gap-10">
+					<div className="flex flex-col container items-center lg:items-start lg:justify-between lg:flex-row gap-4 ">
 						<HBLContainerStats products={filteredProducts} />
 						<InvoiceContainerStats invoicesList={filteredInvoices} />
 						<InvoicesProvincesContainerStats invoicesList={filteredInvoices} />
