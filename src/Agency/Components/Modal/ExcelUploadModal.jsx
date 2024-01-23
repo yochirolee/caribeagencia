@@ -47,20 +47,25 @@ const importFromExcel = (files) => {
 			}
 		});
 	});
+
+	console.log(importedFromExcel, "importedFromExcel");
 	return importedFromExcel;
 };
 
-export const ExcelUploadModal = ({ showModal, setShowModal }) => {
+export const  ExcelUploadModal = ({ showModal, setShowModal }) => {
 	const [files, setFiles] = useState(undefined);
 	const importedFromExcel = useMemo(() => {
 		if (files) {
 			const result = importFromExcel(files);
+			console.log(result, "result");
 			return result;
 		}
 		return [];
 	}, [files]);
 
 	const { data: productList, isLoading, isError } = useFetchProductsList(importedFromExcel);
+
+	console.log(productList,"productList")
 	const mutationProductList = useSetProductListLocation();
 	const { user } = useSelector((state) => state.Auth);
 	const [startDate, setStartDate] = useState(new Date());
@@ -115,7 +120,7 @@ export const ExcelUploadModal = ({ showModal, setShowModal }) => {
 								enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 								enterTo="opacity-100 translate-y-0 sm:scale-100"
 								leave="ease-in duration-200"
-								leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+			jajaj					leaveFrom="opacity-100 translate-y-0 sm:scale-100"
 								leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 							>
 								<Dialog.Panel className="relative  transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-5xl">

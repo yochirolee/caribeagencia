@@ -106,6 +106,7 @@ const changeProductListLocation = async ({ products, locationId, user, StatusId,
 			.select("*");
 		if (error) throw new Error(error.message);
 		if (data) {
+			console.log(data)
 			//let trackingResult = await upsertProductsTracking(data, 1);
 			//console.log(trackingResult, "TARCKING RESULT");
 			if (data) await upsertProductsTrakingHistory(data, user);

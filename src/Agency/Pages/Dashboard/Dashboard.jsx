@@ -113,16 +113,7 @@ export const Dashboard = () => {
 				)}
 
 				<div className="p-2   mt-4  ">
-					{/* 	<div>
-						<PDFDownloadLink document={<MyDocument />} fileName="documento.pdf">
-							{({ blob, url, loading, error }) =>
-								loading ? "Cargando documento..." : "Descargar documento PDF"
-							}
-						</PDFDownloadLink>
-						<PDFViewer>
-							<MyDocument />
-						</PDFViewer>
-					</div> */}
+				
 					<div className="  flex flex-wrap container justify-between  items-center gap-6">
 						<div className=" grid container  ">
 							<div className="flex  my-2 flex-wrap justify-end">

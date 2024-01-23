@@ -2,6 +2,7 @@ import { React } from "react";
 import { ProductTrackingHistory } from "../../Pages/Tracking/Components/ProductTrackingHistory/productTrackingHistory";
 
 export const SearchResult = ({ selectedProductDetails, setSearch }) => {
+	console.log(selectedProductDetails, "search result");
 	return (
 		<div className="relative w-full  h-auto">
 			<div className="relative bg-white rounded-lg mt-10 dark:bg-gray-700">
@@ -40,7 +41,7 @@ export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 											target="_blank"
 											href={`https://systemcaribetravel.com/ordenes/factura_print.php?id=${selectedProductDetails?.InvoiceId}`}
 										>
-											{selectedProductDetails?.InvoiceId}
+											{selectedProductDetails?.invoiceId}
 										</a>
 									</p>
 								</div>
@@ -49,9 +50,9 @@ export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 									<p className="rounded p-1  text-yellow-600  border bg-yellow-200">
 										<a
 											target="_blank"
-											href={`https://systemcaribetravel.com/ordenes/etiqueta_print_transcargo.php?id=${selectedProductDetails?.InvoiceId}`}
+											href={`https://systemcaribetravel.com/ordenes/etiqueta_print_transcargo.php?id=${selectedProductDetails?.invoiceId}`}
 										>
-											{selectedProductDetails?.InvoiceId}
+											{selectedProductDetails?.invoiceId}
 										</a>
 									</p>
 								</div>
@@ -59,15 +60,15 @@ export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 							<div className="flex flex-col  mt-4 text-xs p-2 gap-2">
 								<p>
 									<span className="font-semibold">Provincia:</span>{" "}
-									{selectedProductDetails?.Reciever?.Province}
+									{selectedProductDetails?.reciever?.province}
 								</p>
 								<p>
 									<span className="font-semibold">Municipio:</span>{" "}
-									{selectedProductDetails?.Reciever?.Municipality}
+									{selectedProductDetails?.reciever?.municipality}
 								</p>
 								<p>
 									<span className="font-semibold">Direccion:</span>{" "}
-									{selectedProductDetails?.Reciever?.Address}
+									{selectedProductDetails?.reciever?.address}
 								</p>
 							</div>
 						</div>
@@ -76,13 +77,13 @@ export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 								<span className="font-semibold">Cliente:</span>
 								<div className="flex gap-2 ">
 									<p>Nombre:</p>
-									{selectedProductDetails?.Customer?.Name +
+									{selectedProductDetails?.customer?.name +
 										" " +
-										selectedProductDetails?.Customer?.LastName}
+										selectedProductDetails?.customer?.lastName}
 								</div>
 								<div className="flex gap-2 ">
 									<p>Movil:</p>
-									{selectedProductDetails?.Customer?.Mobile}
+									{selectedProductDetails?.customer?.mobile}
 								</div>
 							</div>
 
@@ -90,22 +91,22 @@ export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 								<span className="font-semibold">Recibe:</span>
 								<div className="flex gap-2 ">
 									<p>Nombre:</p>
-									{selectedProductDetails?.Reciever?.Name +
+									{selectedProductDetails?.reciever?.name +
 										" " +
-										selectedProductDetails?.Reciever?.LastName}
+										selectedProductDetails?.reciever?.lastName}
 								</div>
 								<div className="flex gap-2 ">
 									<p>Movil:</p>
-									{selectedProductDetails?.Reciever?.Mobile}
+									{selectedProductDetails?.reciever?.mobile}
 								</div>
 							</div>
 						</div>
 						<div className="px-6">
 							<div className="  flex flex-col text-sm gap-2 mb-4 overflow-x-auto ">
-								{selectedProductDetails?.Products ? (
+								{selectedProductDetails?.packages ? (
 									<div>
-										{selectedProductDetails?.Products.map((product, index) => (
-											<ProductTrackingHistory key={index} product={product} />
+										{selectedProductDetails?.packages.map((product, index) => (
+											<ProductTrackingHistory key={index}  product={product} />
 										))}
 									</div>
 								) : (
