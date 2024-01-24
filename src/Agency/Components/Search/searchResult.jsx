@@ -2,7 +2,6 @@ import { React } from "react";
 import { ProductTrackingHistory } from "../../Pages/Tracking/Components/ProductTrackingHistory/productTrackingHistory";
 
 export const SearchResult = ({ selectedProductDetails, setSearch }) => {
-	console.log(selectedProductDetails, "search result");
 	return (
 		<div className="relative w-full  h-auto">
 			<div className="relative bg-white rounded-lg mt-10 dark:bg-gray-700">
@@ -39,7 +38,7 @@ export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 									<p className="rounded p-1  text-blue-600  border bg-blue-200">
 										<a
 											target="_blank"
-											href={`https://systemcaribetravel.com/ordenes/factura_print.php?id=${selectedProductDetails?.InvoiceId}`}
+											href={`https://systemcaribetravel.com/ordenes/factura_print.php?id=${selectedProductDetails?.invoiceId}`}
 										>
 											{selectedProductDetails?.invoiceId}
 										</a>
@@ -106,7 +105,7 @@ export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 								{selectedProductDetails?.packages ? (
 									<div>
 										{selectedProductDetails?.packages.map((product, index) => (
-											<ProductTrackingHistory key={index}  product={product} />
+											<ProductTrackingHistory key={index} product={product} />
 										))}
 									</div>
 								) : (

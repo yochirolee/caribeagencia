@@ -21,6 +21,7 @@ export const HistoryTimeLine = ({ history }) => {
 								<div className="mt-3  text-left ">
 									<h3 className="text-xs  text-gray-900 dark:text-white">{step.location}</h3>
 									<p className="text-xs">{step?.container}</p>
+									<p className="text-xs">{step?.pallet}</p>
 									<time className=" text-xs font-normal leading-none text-gray-400 dark:text-gray-500">
 										{step.createdAt ? format(parseISO(step?.createdAt), "MM/dd/Y ") : ""}
 									</time>
