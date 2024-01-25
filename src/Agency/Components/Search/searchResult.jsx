@@ -2,6 +2,7 @@ import { React } from "react";
 import { ProductTrackingHistory } from "../../Pages/Tracking/Components/ProductTrackingHistory/productTrackingHistory";
 
 export const SearchResult = ({ selectedProductDetails, setSearch }) => {
+	console.log(selectedProductDetails, "selectedProductDetails");
 	return (
 		<div className="relative w-full  h-auto">
 			<div className="relative bg-white rounded-lg mt-10 dark:bg-gray-700">
@@ -102,15 +103,9 @@ export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 						</div>
 						<div className="px-6">
 							<div className="  flex flex-col text-sm gap-2 mb-4 overflow-x-auto ">
-								{selectedProductDetails?.packages ? (
-									<div>
-										{selectedProductDetails?.packages.map((product, index) => (
-											<ProductTrackingHistory key={index} product={product} />
-										))}
-									</div>
-								) : (
-									<ProductTrackingHistory product={selectedProductDetails} />
-								)}
+								{selectedProductDetails?.packages.map((product, index) => (
+									<ProductTrackingHistory key={index} product={product} />
+								))}
 							</div>
 						</div>
 					</div>
