@@ -22,8 +22,8 @@ export const SearchResult = ({ selectedProductDetails, setSearch }) => {
 								</button>
 							</div>
 
-							<div className="flex items-center border rounded-lg bg-white text-sm gap-6 ">
-								<div className="flex px-6 my-2 items-center ">
+							<div className="flex justifty-center border rounded-lg bg-white text-sm gap-6 ">
+								<div className="flex flex-col lg:flex-row  lg:px-6 my-2 items-center justify-center ">
 									<div className="  font-bold text-xl">{selectedProductDetails?.agency}</div>
 									<div className="flex gap-4 p-4">
 										<div className="flex flex-row  items-center  gap-2">

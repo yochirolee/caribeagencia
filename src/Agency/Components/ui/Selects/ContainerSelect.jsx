@@ -13,7 +13,8 @@ export default function ContainerSelect({
 	showCaption = true,
 }) {
 	const { data: containers } = useFetchAllContainers();
-	if (!containers) return null;
+	console.log(containers, "containers");
+	if (containers?.lenght==0) return null;
 	return (
 		<div className="max-w-lg">
 			<Listbox value={selectedContainer} onChange={setSelectedContainer}>
