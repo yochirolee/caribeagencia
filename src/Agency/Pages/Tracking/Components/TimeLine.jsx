@@ -1,8 +1,7 @@
 import { React } from "react";
 import { format, parseISO } from "date-fns";
-import { FaList, FaListUl, FaPallet, FaShip, FaShippingFast, FaTruckLoading } from "react-icons/fa";
+import { FaListUl, FaPallet, FaShip, FaShippingFast, FaTruckLoading } from "react-icons/fa";
 import { DocumentCheckIcon } from "@heroicons/react/20/solid";
-import { GrUserPolice } from "react-icons/gr";
 import { MdLocalPolice, MdOutlineDownloadDone } from "react-icons/md";
 
 const getIcon = (status) => {

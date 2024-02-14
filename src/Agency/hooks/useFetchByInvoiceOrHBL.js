@@ -2,13 +2,13 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 const getInvoiceById = async (id) => {
-	const { data } = await axios.get("https://ctenviosbackend.onrender.com/tracking/invoice/" + id);
+	const { data } = await axios.get("https://ctenviosapi.vercel.app/api/tracking/invoice/" + id);
 	console.log(data, "data");
 	return data;
 };
 
 const getProductByHBL = async (id) => {
-	const { data } = await axios.get("https://ctenviosbackend.onrender.com/tracking/hbl/" + id);
+	const { data } = await axios.get("https://ctenviosapi.vercel.app/api/tracking/hbl/" + id);
 	console.log(data, "data");
 	return data;
 };
